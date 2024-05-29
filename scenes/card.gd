@@ -5,14 +5,14 @@ var card_name: String = ""
 var card_description: String = ""
 var card_order: int = 0
 
-func damage(enemy: Player, damage: int):
-	var dmg_buffer: int = damage
+func damage(enemy: Player, dmg: int):
+	var dmg_buffer: int = dmg
 	if enemy.wall > 0:
 		dmg_buffer -= enemy.wall
-		enemy.wall = enemy.wall - damage
+		enemy.wall = enemy.wall - dmg
 		enemy.tower -= max(0, dmg_buffer)
 	else:
-		enemy.tower -= damage
+		enemy.tower -= dmg
 	
 func play(player: Player, enemy: Player) -> bool:
 	match card_name:

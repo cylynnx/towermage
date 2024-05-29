@@ -34,7 +34,7 @@ func _ready():
 	deck = create_deck()
 	enemy_deck = create_deck()
 	init_player_hand()
-	init_buildings()
+	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
 
 func init_players():
@@ -59,12 +59,10 @@ func init_player_hand():
 		draw_card(card_order)
 	Globals.cards_on_screen = PLAYER_CARD_NUM
 
-
-func init_buildings() -> void:
-	init_building(player.get_child(TOWER), tower_scene, player.tower_offset, player.get_child(TOWER_TOP), 48, player.tower)
-	init_building(player.get_child(WALL), wall_scene, player.wall_offset, player.get_child(WALL_TOP), 14, player.wall)
-	init_building(enemy.get_child(TOWER), tower_scene, enemy.tower_offset, enemy.get_child(TOWER_TOP), 48, enemy.tower)
-	init_building(enemy.get_child(WALL), wall_scene, enemy.wall_offset, enemy.get_child(WALL_TOP), 14, enemy.wall)
+func init_buildings(players: Array[Player]) -> void:
+	for _player in players:
+		init_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
+		init_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 14, _player.wall)
 
 func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, top_offset: float, init_hp: int):
 	for i in range(init_hp):
@@ -76,11 +74,10 @@ func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, to
 		offset.y += 8
 		top.position = Vector2(offset.x, 700 - offset.y - top_offset)
 		
-func update_buildings() -> void:
-	update_building(player.get_child(WALL), wall_scene, player.wall_offset, player.get_child(WALL_TOP), 14, player.wall)
-	update_building(player.get_child(TOWER), tower_scene, player.tower_offset, player.get_child(TOWER_TOP), 48, player.tower)
-	update_building(enemy.get_child(WALL), wall_scene, enemy.wall_offset, enemy.get_child(WALL_TOP), 14, enemy.wall)
-	update_building(enemy.get_child(TOWER), tower_scene, enemy.tower_offset, enemy.get_child(TOWER_TOP), 48, enemy.tower)
+func update_buildings(players: Array[Player]) -> void:
+	for _player in players:
+		update_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 14, _player.wall)
+		update_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
 	
 func update_building(building: Node2D, scene: PackedScene, offset, top_piece: Node2D, top_offset: float, hp: int):
 	if offset.y < 0:
@@ -103,16 +100,16 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 		
 	if dif < 0:
 		for i in range(abs(dif)):
-			var t = create_tween()
+			var _t = create_tween()
 			new_slice = scene.instantiate() as Node2D
 			new_slice.position = Vector2(offset.x, 700)
 			# Visually cap the tower or wall at 50 nodes tall
 			if total > 50:
 				# Unnecessary tween just to shut up the debugger
-				t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.03)
+				_t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.03)
 				break
 			building.add_child(new_slice)
-			t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.2)
+			_t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.2)
 			offset.y += 8
 			total += 1
 	var t = create_tween()
@@ -149,7 +146,6 @@ func delete_card(card: Card) -> void:
 	Globals.cards_on_screen -= 1
 	shift_cards = true
 	
-
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
 		_player.resources += player.mine
@@ -176,7 +172,7 @@ func ai_move():
 		enemy_card_on_screen = true
 		$Timers/FadeOutCardTimer.start()
 	update_resources([player, enemy])
-	update_buildings()
+	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
 	
 func next_turn():
@@ -211,6 +207,7 @@ func update_player_hand():
 		Globals.cards_on_screen += 1
 
 func update_game() -> void:
+	interactive_cards()
 	if enemy_card_on_screen:
 		if fade_out_card:
 			if $EnemyCard.get_child_count():
@@ -222,6 +219,7 @@ func update_game() -> void:
 	if turn_ended:
 		next_turn()
 		
+func interactive_cards() -> void:
 	if Globals.current_card:
 		var tween = create_tween()
 		tween.set_parallel(true)
@@ -236,7 +234,7 @@ func update_game() -> void:
 			tween.set_parallel(true)
 			tween.tween_property(last_card, "scale", Vector2(1, 1), 0.3)
 			last_card = null
-
+	
 func _input(event):
 	if event.is_action_released("left_click"):
 		if Globals.current_card and Globals.current_player == player:
