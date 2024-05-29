@@ -31,8 +31,8 @@ var clean_up_card: bool = false
 
 func _ready():
 	init_players()
-	deck = create_deck()
-	enemy_deck = create_deck()
+	deck = create_deck(player)
+	enemy_deck = create_deck(enemy)
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
@@ -41,7 +41,7 @@ func init_players():
 	player = create_player(0)
 	enemy = create_player(1)
 	Globals.current_player = player
-	Globals.acting_enemy = enemy
+	Globals.current_enemy = enemy
 	
 func create_player(player_id: int) -> Player:
 	var _player = player_scene.instantiate() as Player
@@ -49,9 +49,9 @@ func create_player(player_id: int) -> Player:
 	add_child(_player)
 	return _player
 	
-func create_deck(_belongs_to: Node2D = null) -> Deck:
+func create_deck(belongs_to: Player) -> Deck:
 	var _deck = deck_scene.instantiate() as Deck
-	_deck.create()
+	_deck.create(belongs_to)
 	return _deck
 
 func init_player_hand():
@@ -164,7 +164,7 @@ func ai_move():
 	var _card: Card = enemy_deck.cards.pop_back()
 	if not _card:
 		return
-	if _card.play(Globals.current_player, Globals.acting_enemy):
+	if _card.play(Globals.current_player, Globals.current_enemy):
 		_card.position = Vector2(1600, 500)
 		$EnemyCard.add_child(_card)
 		var t = create_tween()
@@ -178,14 +178,14 @@ func ai_move():
 func next_turn():
 	if Globals.current_player == player:
 		Globals.current_player = enemy
-		Globals.acting_enemy = player
+		Globals.current_enemy = player
 		if $EnemyCard.get_child_count():
 			$EnemyCard.get_child(0).queue_free()
 		ai_move()
 
 	elif Globals.current_player == enemy:
 		Globals.current_player = player
-		Globals.acting_enemy = enemy
+		Globals.current_enemy = enemy
 		turn_ended = false
 
 func update_player_hand():
@@ -208,19 +208,21 @@ func update_player_hand():
 
 func update_game() -> void:
 	interactive_cards()
-	if enemy_card_on_screen:
-		if fade_out_card:
-			if $EnemyCard.get_child_count():
-				var t = create_tween()
-				t.tween_property($EnemyCard.get_child(0), "modulate", Color(0, 0, 0, 0), 1.5)
-				enemy_card_on_screen = false
-			fade_out_card = false
+	if enemy_card_on_screen and fade_out_card:
+		if $EnemyCard.get_child_count():
+			fade_card($EnemyCard.get_child(0))
+		enemy_card_on_screen = false
+		fade_out_card = false
 			
 	if turn_ended:
 		next_turn()
 		
+func fade_card(card: Card) -> void:
+	var t = create_tween()
+	t.tween_property(card, "modulate", Color(0, 0, 0, 0), 1.5)
+		
 func interactive_cards() -> void:
-	if Globals.current_card:
+	if Globals.current_card and Globals.current_card.card_owner == player:
 		var tween = create_tween()
 		tween.set_parallel(true)
 		tween.tween_property(Globals.current_card, "scale", Vector2(1.2,1.2), 0.3)
@@ -234,11 +236,14 @@ func interactive_cards() -> void:
 			tween.set_parallel(true)
 			tween.tween_property(last_card, "scale", Vector2(1, 1), 0.3)
 			last_card = null
+			
+func can_play_card() -> bool:
+	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
 func _input(event):
 	if event.is_action_released("left_click"):
-		if Globals.current_card and Globals.current_player == player:
-			if Globals.current_card.play(Globals.current_player, Globals.acting_enemy):
+		if can_play_card():
+			if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
 				delete_card(Globals.current_card)
 				update_player_hand()
 				update_player_ui([player, enemy])

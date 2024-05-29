@@ -36,13 +36,13 @@ var card_map: Dictionary = {
 }
 
 var cards: Array[Card] = []
-var belongs_to: Node2D = null
 
-func create():
+func create(belongs_to: Player):
 	for i in range(DECK_SIZE):
 		var card = CARD_SCENE.instantiate() as Card
 		var sprite = card.get_child(0).get_child(0)
 		card.card_name = card_map.keys().pick_random()
+		card.card_owner = belongs_to
 		sprite.scale = Vector2(0.25, 0.25)
 		sprite.texture = load(card_map[card.card_name][TEXTURE])
 		card.card_description = card_map[card.card_name][DESCRIPTION]

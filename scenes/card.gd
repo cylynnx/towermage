@@ -2,6 +2,7 @@ class_name Card
 extends Node2D
 
 var card_name: String = ""
+var card_owner: Player = null
 var card_description: String = ""
 var card_order: int = 0
 
