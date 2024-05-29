@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://cb7rdg6qtckbr"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_0xwi7"]
+[ext_resource type="Texture2D" uid="uid://e62d7k6gtija" path="res://assets/test/Tower_cap.png" id="2_mxjtt"]
+[ext_resource type="Texture2D" uid="uid://d8q62v1b3u5o" path="res://assets/wall/top.png" id="3_0x0k3"]
+[ext_resource type="FontFile" uid="uid://drx584bwkcidg" path="res://assets/fonts/Magical Neverland/Magical Neverland.ttf" id="4_4g0an"]
+[ext_resource type="FontFile" uid="uid://c5pdj675uo2bm" path="res://assets/fonts/Bulletin Gothic/BulletinGothic.otf" id="6_2et44"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wgxtx"]
+font = ExtResource("4_4g0an")
+font_size = 24
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.917647)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fb84u"]
+font = ExtResource("4_4g0an")
+font_size = 24
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.886275)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0lgpw"]
+font = ExtResource("6_2et44")
+font_size = 20
+font_color = Color(0.811765, 0.545098, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.905882)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wlp8c"]
+font = ExtResource("6_2et44")
+font_size = 20
+font_color = Color(0.286275, 0.509804, 1, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.929412)
+
+[sub_resource type="LabelSettings" id="LabelSettings_okgfx"]
+font = ExtResource("6_2et44")
+font_size = 20
+font_color = Color(0.211765, 0.603922, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.921569)
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_0xwi7")
+
+[node name="TowerTop" type="Sprite2D" parent="."]
+position = Vector2(6.10352e-05, 0)
+scale = Vector2(0.15, 0.25)
+texture = ExtResource("2_mxjtt")
+
+[node name="WallTop" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.25)
+texture = ExtResource("3_0x0k3")
+
+[node name="Tower" type="Node2D" parent="."]
+modulate = Color(0.82695, 0.903905, 0.999999, 0.984314)
+
+[node name="Wall" type="Node2D" parent="."]
+
+[node name="Stats" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Tower" type="Label" parent="Stats"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_wgxtx")
+
+[node name="Wall" type="Label" parent="Stats"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_fb84u")
+
+[node name="Mine" type="Label" parent="Stats"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_0lgpw")
+
+[node name="Magic" type="Label" parent="Stats"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_wlp8c")
+
+[node name="Food" type="Label" parent="Stats"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okgfx")

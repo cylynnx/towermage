@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://chrgdy2h0oakt"]
+
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_g3e3j"]
+[ext_resource type="AudioStream" uid="uid://ce60xp5ts1umv" path="res://assets/sounds/explode1.mp3" id="2_eno2x"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3v2bi"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 84.57
+initial_velocity_max = 5.0
+gravity = Vector3(0, 300, 0)
+scale_min = 10.0
+scale_max = 20.0
+color = Color(0.229295, 0.217154, 0.245542, 1)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_g3e3j")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1597.0
+offset_bottom = 900.0
+
+[node name="PlayerCards" type="Node2D" parent="."]
+
+[node name="EnemyCard" type="Node2D" parent="."]
+
+[node name="BuildingCrumbles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 42
+process_material = SubResource("ParticleProcessMaterial_3v2bi")
+lifetime = 3.0
+one_shot = true
+preprocess = 0.2
+speed_scale = 2.94
+explosiveness = 0.65
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Boom" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_eno2x")
+volume_db = -7.495
+pitch_scale = 0.71
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="CleanUpTimer" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="FadeOutCardTimer" type="Timer" parent="Timers"]
+wait_time = 3.436
+one_shot = true
+
+[connection signal="timeout" from="Timers/CleanUpTimer" to="." method="_on_clean_up_timer_timeout"]
+[connection signal="timeout" from="Timers/FadeOutCardTimer" to="." method="_on_fade_out_card_timer_timeout"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb1x0mpjrfktd"]
+
+[ext_resource type="Script" path="res://scenes/card.gd" id="1_afvth"]
+[ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="2_6ip5h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6xa26"]
+size = Vector2(134, 175)
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_afvth")
+
+[node name="Area2D" type="Area2D" parent="."]
+priority = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+scale = Vector2(0.205, 0.205)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_6xa26")
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="CardSelected" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("2_6ip5h")
+volume_db = -18.739
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
