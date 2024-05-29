@@ -1,8 +1,9 @@
 extends Node2D
 
-const CARD_OFFSET_X: int = 225
-const CARD_Y_CONST: int = 730
-const PLAYER_CARD_NUM: int = 4
+const MAX_BUILDING_HEIGHT = 50
+const CARD_OFFSET_X  = 225
+const CARD_Y_CONST = 730
+const PLAYER_CARD_NUM = 4
 const TOWER_TOP = 0
 const WALL_TOP = 1
 const TOWER = 2
@@ -104,7 +105,7 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 			new_slice = scene.instantiate() as Node2D
 			new_slice.position = Vector2(offset.x, 700)
 			# Visually cap the tower or wall at 50 nodes tall
-			if total > 50:
+			if total > MAX_BUILDING_HEIGHT:
 				# Unnecessary tween just to shut up the debugger
 				_t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.03)
 				break
@@ -163,6 +164,7 @@ func delete_card(card: Card) -> void:
 func delete_enemy_card() -> void:
 	if $EnemyCard.get_child_count():
 		$EnemyCard.get_child(0).queue_free()
+		
 func move_card_to_mid_screen(card: Card) -> void:
 		var t = create_tween()
 		t.tween_property(card, "position", Vector2(800, 400), 0.5)
