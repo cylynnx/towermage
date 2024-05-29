@@ -138,13 +138,7 @@ func debug_get_card_info(card: Card) -> void:
 		$UI/RichTextLabel.text = debug_text
 	else:
 		$UI/RichTextLabel.text = ""
-	
-func delete_card(card: Card) -> void:
-	card.queue_free()
-	Globals.current_card = null
-	Globals.cards_on_screen -= 1
-	shift_cards = true
-	
+		
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
 		_player.resources += player.mine
@@ -158,8 +152,18 @@ func update_player_ui(players: Array[Player]) -> void:
 		_player.get_child(4).get_child(2).text = "Mine: " + str(_player.mine) + " Resources: " + str(_player.resources)
 		_player.get_child(4).get_child(3).text = "Magic: " + str(_player.magic) + " Mana: " + str(_player.mana)
 		_player.get_child(4).get_child(4).text = "Food: " + str(_player.food) + " Creatures: " + str(_player.creatures)
-		
-func ai_move():
+
+func delete_card(card: Card) -> void:
+	card.queue_free()
+	Globals.current_card = null
+	Globals.cards_on_screen -= 1
+	shift_cards = true
+
+func delete_enemy_card() -> void:
+	if $EnemyCard.get_child_count():
+		$EnemyCard.get_child(0).queue_free()
+			
+func ai_move() -> void:
 	var _card: Card = enemy_deck.cards.pop_back()
 	if not _card:
 		return
@@ -174,12 +178,19 @@ func ai_move():
 	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
 	
+func player_move() -> void:
+	if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
+		delete_card(Globals.current_card)
+		update_player_hand()
+		update_buildings([player, enemy])
+		update_player_ui([player, enemy])
+		Globals.turn_ended = true
+		
 func next_turn():
 	if Globals.current_player == player:
 		Globals.current_player = enemy
 		Globals.current_enemy = player
-		if $EnemyCard.get_child_count():
-			$EnemyCard.get_child(0).queue_free()
+		delete_enemy_card()
 		ai_move()
 
 	elif Globals.current_player == enemy:
@@ -260,11 +271,7 @@ func _input(event):
 			return
 			
 		if can_play_card():
-			if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
-				delete_card(Globals.current_card)
-				update_player_hand()
-				update_player_ui([player, enemy])
-				Globals.turn_ended = true
+			player_move()
 
 	if event.is_action_released("right_click"):
 		if Globals.current_card:
@@ -277,3 +284,6 @@ func _process(_delta):
 
 func _on_fade_out_card_timer_timeout():
 	fade_out_card = true
+
+func _on_turn_pause_timer_timeout():
+	pass # Replace with function body.
