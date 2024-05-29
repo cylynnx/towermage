@@ -193,11 +193,11 @@ func player_move() -> void:
 		Globals.turn_ended = true
 		if Globals.turn_ended:
 			hand_over_turn()
-			$Timers/TurnPauseTimer.start()
 		
 func next_turn():
-	if Globals.current_player == player:
+	if Globals.current_player == player and turn_pause_timer_ended:
 		Globals.turn_ended = false
+		turn_pause_timer_ended = false
 		
 	elif Globals.current_player == enemy and turn_pause_timer_ended:
 		delete_enemy_card()
@@ -228,7 +228,7 @@ func update_player_hand():
 func update_game() -> void:
 	if enemy_card_on_screen and fade_out_card:
 		if $EnemyCard.get_child_count():
-			fade_card($EnemyCard.get_child(0))
+			fade_card($EnemyCard.get_child(0), 1.5)
 		enemy_card_on_screen = false
 		fade_out_card = false
 		
@@ -244,9 +244,9 @@ func message() -> void:
 	elif Globals.current_player == enemy:
 		$UI/Msg.text ="ENEMY'S TURN!"
 		
-func fade_card(card: Card) -> void:
+func fade_card(card: Card, rate: float) -> void:
 	var t = create_tween()
-	t.tween_property(card, "modulate", Color(0, 0, 0, 0), 1.5)
+	t.tween_property(card, "modulate", Color(1, 1, 1, 0), rate)
 		
 func interactive_cards() -> void:
 	if Globals.current_card and Globals.current_card.card_owner == player:
@@ -272,7 +272,6 @@ func discard_card(card: Card) -> void:
 		delete_card(card)
 		update_player_hand()
 		hand_over_turn()
-		$Timers/TurnPauseTimer.start()
 	
 func _input(event):
 	if event.is_action_released("left_click"):
@@ -295,6 +294,7 @@ func hand_over_turn() -> void:
 	else:
 		Globals.current_player = player
 		Globals.current_enemy = enemy
+	$Timers/TurnPauseTimer.start()
 
 func _process(_delta):
 	debug_get_card_info(Globals.current_card)
