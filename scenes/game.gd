@@ -27,6 +27,7 @@ var shift_cards: bool = false
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
+var turn_pause_timer_ended: bool = false
 
 func _ready():
 	init_players()
@@ -127,7 +128,7 @@ func draw_card(order: int) -> Card:
 	return new_card
 		
 func debug_get_card_info(card: Card) -> void:
-	#$UI/Debug.text = "Wall hp: " + str(Globals.wall_health)
+	$UI/Debug.text = "turn_pause_timer_ended: " + str(turn_pause_timer_ended)
 	#$UI/Debug.text += " dif: " + str(dif)
 	#$UI/Debug.text += " Offset: " + str(tower_offset)
 	$UI/MousePos.text = str(get_global_mouse_position())
@@ -177,6 +178,9 @@ func ai_move() -> void:
 	update_resources([player, enemy])
 	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
+	Globals.turn_ended = true
+	if Globals.turn_ended:
+		hand_over_turn()
 	
 func player_move() -> void:
 	if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
@@ -185,19 +189,22 @@ func player_move() -> void:
 		update_buildings([player, enemy])
 		update_player_ui([player, enemy])
 		Globals.turn_ended = true
+		if Globals.turn_ended:
+			hand_over_turn()
+			$Timers/TurnPauseTimer.start()
 		
 func next_turn():
 	if Globals.current_player == player:
-		Globals.current_player = enemy
-		Globals.current_enemy = player
-		delete_enemy_card()
-		ai_move()
-
-	elif Globals.current_player == enemy:
-		Globals.current_player = player
-		Globals.current_enemy = enemy
 		Globals.turn_ended = false
-
+		
+	elif Globals.current_player == enemy and turn_pause_timer_ended:
+		delete_enemy_card()
+		Globals.turn_ended = false
+		turn_pause_timer_ended = false
+		ai_move()
+	else:
+		return
+		
 func update_player_hand():
 	if shift_cards:
 		var i = 1
@@ -225,8 +232,7 @@ func update_game() -> void:
 		enemy_card_on_screen = false
 		fade_out_card = false
 			
-	if Globals.turn_ended:
-		next_turn()
+	next_turn()
 
 func message() -> void:
 	if Globals.current_player == player and Globals.discard_flag:
@@ -260,8 +266,11 @@ func can_play_card() -> bool:
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
 func discard_card(card: Card) -> void:
-	delete_card(card)
-	update_player_hand()
+	if can_play_card():
+		delete_card(card)
+		update_player_hand()
+		hand_over_turn()
+		$Timers/TurnPauseTimer.start()
 	
 func _input(event):
 	if event.is_action_released("left_click"):
@@ -276,7 +285,14 @@ func _input(event):
 	if event.is_action_released("right_click"):
 		if Globals.current_card:
 			discard_card(Globals.current_card)
-			Globals.turn_ended = true
+			
+func hand_over_turn() -> void:
+	if Globals.current_player == player:
+		Globals.current_player = enemy
+		Globals.current_enemy = player
+	else:
+		Globals.current_player = player
+		Globals.current_enemy = enemy
 
 func _process(_delta):
 	debug_get_card_info(Globals.current_card)
@@ -286,4 +302,4 @@ func _on_fade_out_card_timer_timeout():
 	fade_out_card = true
 
 func _on_turn_pause_timer_timeout():
-	pass # Replace with function body.
+	turn_pause_timer_ended = true
