@@ -163,7 +163,12 @@ func delete_card(card: Card) -> void:
 func delete_enemy_card() -> void:
 	if $EnemyCard.get_child_count():
 		$EnemyCard.get_child(0).queue_free()
-			
+func move_card_to_mid_screen(card: Card) -> void:
+		var t = create_tween()
+		t.tween_property(card, "position", Vector2(800, 400), 0.5)
+		enemy_card_on_screen = true
+		$Timers/FadeOutCardTimer.start()
+		
 func ai_move() -> void:
 	var _card: Card = enemy_deck.cards.pop_back()
 	if not _card:
@@ -171,10 +176,7 @@ func ai_move() -> void:
 	if _card.play(Globals.current_player, Globals.current_enemy):
 		_card.position = Vector2(1600, 500)
 		$EnemyCard.add_child(_card)
-		var t = create_tween()
-		t.tween_property(_card, "position", Vector2(800, 400), 0.5)
-		enemy_card_on_screen = true
-		$Timers/FadeOutCardTimer.start()
+		move_card_to_mid_screen(_card)
 	update_resources([player, enemy])
 	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
@@ -224,14 +226,14 @@ func update_player_hand():
 		Globals.cards_on_screen += 1
 
 func update_game() -> void:
-	message()
-	interactive_cards()
 	if enemy_card_on_screen and fade_out_card:
 		if $EnemyCard.get_child_count():
 			fade_card($EnemyCard.get_child(0))
 		enemy_card_on_screen = false
 		fade_out_card = false
-			
+		
+	message()
+	interactive_cards()
 	next_turn()
 
 func message() -> void:
