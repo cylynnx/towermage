@@ -24,7 +24,7 @@ To install and run Towermage on your local machine, follow these steps:
 
 2. **Clone the repository**:
    ```sh
-   git clone https://github.com/yourusername/towermage.git
+   git clone https://github.com/cylynnx/towermage.git
    cd towermage
 
     Import the project into Godot:
