@@ -54,4 +54,6 @@ pitch_scale = 0.71
 wait_time = 3.436
 one_shot = true
 
+[node name="TurnPauseTimer" type="Timer" parent="Timers"]
+
 [connection signal="timeout" from="Timers/FadeOutCardTimer" to="." method="_on_fade_out_card_timer_timeout"]
