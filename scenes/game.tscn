@@ -22,6 +22,11 @@ anchors_preset = 0
 offset_right = 1597.0
 offset_bottom = 900.0
 
+[node name="Msg" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="PlayerCards" type="Node2D" parent="."]
 
 [node name="EnemyCard" type="Node2D" parent="."]

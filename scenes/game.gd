@@ -24,7 +24,6 @@ var enemy_deck: Deck = null
 var new_slice: Node2D = null
 var card_base_x: int = 200
 var shift_cards: bool = false
-var turn_ended: bool = false
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
@@ -186,7 +185,7 @@ func next_turn():
 	elif Globals.current_player == enemy:
 		Globals.current_player = player
 		Globals.current_enemy = enemy
-		turn_ended = false
+		Globals.turn_ended = false
 
 func update_player_hand():
 	if shift_cards:
@@ -207,6 +206,7 @@ func update_player_hand():
 		Globals.cards_on_screen += 1
 
 func update_game() -> void:
+	message()
 	interactive_cards()
 	if enemy_card_on_screen and fade_out_card:
 		if $EnemyCard.get_child_count():
@@ -214,8 +214,16 @@ func update_game() -> void:
 		enemy_card_on_screen = false
 		fade_out_card = false
 			
-	if turn_ended:
+	if Globals.turn_ended:
 		next_turn()
+
+func message() -> void:
+	if Globals.current_player == player and Globals.discard_flag:
+		$UI/Msg.text = "DISCARD CARD!"
+	elif Globals.current_player == player:
+		$UI/Msg.text = "YOUR TURN!"
+	elif Globals.current_player == enemy:
+		$UI/Msg.text ="ENEMY'S TURN!"
 		
 func fade_card(card: Card) -> void:
 	var t = create_tween()
@@ -240,20 +248,28 @@ func interactive_cards() -> void:
 func can_play_card() -> bool:
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
+func discard_card(card: Card) -> void:
+	delete_card(card)
+	update_player_hand()
+	
 func _input(event):
 	if event.is_action_released("left_click"):
+		if Globals.discard_flag:
+			discard_card(Globals.current_card)
+			Globals.discard_flag = false
+			return
+			
 		if can_play_card():
 			if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
 				delete_card(Globals.current_card)
 				update_player_hand()
 				update_player_ui([player, enemy])
-				turn_ended = true
+				Globals.turn_ended = true
 
 	if event.is_action_released("right_click"):
 		if Globals.current_card:
-			delete_card(Globals.current_card)
-			update_player_hand()
-			turn_ended = true
+			discard_card(Globals.current_card)
+			Globals.turn_ended = true
 
 func _process(_delta):
 	debug_get_card_info(Globals.current_card)
