@@ -8,6 +8,8 @@ const TOWER_TOP = 0
 const WALL_TOP = 1
 const TOWER = 2
 const WALL = 3
+const HALF_DARK = Color(0.5, 0.5, 0.5, 0.9)
+const FULL_BRIGHT = Color(1, 1, 1, 1)
 # Game Settings
 @export var settings_particles: bool = false
 # ----------------------------------
@@ -249,18 +251,25 @@ func message() -> void:
 func fade_card(card: Card, rate: float) -> void:
 	var t = create_tween()
 	t.tween_property(card, "modulate", Color(1, 1, 1, 0), rate)
-		
+
+func modify_hand_color(clr: Color) -> void:
+	var t = create_tween()
+	t.set_parallel()
+	for _card in $PlayerCards.get_children():
+		if not _card.is_queued_for_deletion():
+			t.tween_property(_card, "modulate", clr, 0.2)
+
 func interactive_cards() -> void:
-	if Globals.current_card and Globals.current_card.card_owner == player:
+	if can_play_card():
 		var tween = create_tween()
 		tween.set_parallel(true)
 		tween.tween_property(Globals.current_card, "scale", Vector2(1.2,1.2), 0.3)
 		last_card = Globals.current_card
-		
-	if not Globals.current_card and last_card:
+	else:
 		if str(last_card) == "<Freed Object>":
 			last_card = null
-		else:
+			return
+		elif last_card:
 			var tween = create_tween()
 			tween.set_parallel(true)
 			tween.tween_property(last_card, "scale", Vector2(1, 1), 0.3)
@@ -293,9 +302,11 @@ func hand_over_turn() -> void:
 	if Globals.current_player == player:
 		Globals.current_player = enemy
 		Globals.current_enemy = player
+		modify_hand_color(HALF_DARK)
 	else:
 		Globals.current_player = player
 		Globals.current_enemy = enemy
+		modify_hand_color(FULL_BRIGHT)
 	$Timers/TurnPauseTimer.start()
 
 func _process(_delta):
