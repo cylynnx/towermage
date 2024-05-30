@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="2_6ip5h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6xa26"]
-size = Vector2(134, 175)
+size = Vector2(129.406, 178.469)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_afvth")
@@ -12,11 +12,12 @@ script = ExtResource("1_afvth")
 [node name="Area2D" type="Area2D" parent="."]
 priority = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
-scale = Vector2(0.205, 0.205)
+[node name="Picture" type="Sprite2D" parent="Area2D"]
+
+[node name="Border" type="Sprite2D" parent="Area2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(2, 0.5)
+position = Vector2(-2, -1)
 shape = SubResource("RectangleShape2D_6xa26")
 
 [node name="Sound" type="Node" parent="."]

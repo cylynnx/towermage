@@ -5,34 +5,24 @@ const CARD_SCENE: PackedScene = preload("res://scenes/card.tscn")
 
 const DECK_SIZE: int = 64
 
-const TEXTURE = 0
-const DESCRIPTION = 1
+enum {TEXTURE, BOARDER, DESCRIPTION, RESOURCE_COST, MANA_COST, CREATURE_COST, CAN_DISCARD}
 	
 var card_map: Dictionary = {
-	"Sorceress" : [
-		"res://assets/cut/SorceressCard001_cut.png",
-		"Adds 10 to Mana"
-		],
-	"Dwarf" : [
-		"res://assets/cut/DwarfCard001_cut.png",
-		"4 Damage +3 Wall Cost: 5 creatures"
-		],
-	"Dragon" : [
-		"res://assets/cut/DragonCard001_cut.png",
-		"20 Damage. Enemy loses 10 mana, -1 enemy Zoo. Cost: 25 creatures"
-		],
-	"Admiral" : [
-		"res://assets/cut/AdmiralCard002_cut.png",
-		"10 to Beasts and Resources"
-		],
-	"BattleMage" : [
-		"res://assets/cut/BattleMageCard001_cut.png",
-		"25 Damage to enemy"
-		],
-	"DragonKnight" : [
-		"res://assets/cut/DragonKnightCard001_cut.png",
-		"30 Damage to Enemy"
-		],
+	#"Fairy" : [
+		#"res://assets/Cards/Fairy/art_fairy.jpg",
+		#"res://assets/Borders/Creature_Boarder.png",
+		#"2 Damage. Play Again!",
+		#0, 0, 1,
+		#true
+		#],
+		
+	"Ogre" : [
+		"res://assets/Cards/Ogre/art_Ogre.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"7 Damage",
+		0, 0, 6,
+		true
+	]
 }
 
 var cards: Array[Card] = []
@@ -40,10 +30,17 @@ var cards: Array[Card] = []
 func create(belongs_to: Player):
 	for i in range(DECK_SIZE):
 		var card = CARD_SCENE.instantiate() as Card
-		var sprite = card.get_child(0).get_child(0)
+		var pic = card.get_child(0).get_child(0)
+		var boarder = card.get_child(0).get_child(1)
 		card.card_name = card_map.keys().pick_random()
 		card.card_owner = belongs_to
-		sprite.scale = Vector2(0.25, 0.25)
-		sprite.texture = load(card_map[card.card_name][TEXTURE])
+		pic.scale = Vector2(0.25, 0.25)
+		pic.texture = load(card_map[card.card_name][TEXTURE])
+		boarder.scale = Vector2(0.28, 0.28)
+		boarder.texture = load(card_map[card.card_name][BOARDER])
 		card.card_description = card_map[card.card_name][DESCRIPTION]
+		card.resource_cost = card_map[card.card_name][RESOURCE_COST]
+		card.mana_cost = card_map[card.card_name][MANA_COST]
+		card.creature_cost = card_map[card.card_name][CREATURE_COST]
+		card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
 		cards.append(card)

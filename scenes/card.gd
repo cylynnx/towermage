@@ -4,6 +4,10 @@ extends Node2D
 var card_name: String = ""
 var card_owner: Player = null
 var card_description: String = ""
+var resource_cost: int = 0
+var mana_cost: int = 0
+var creature_cost: int = 0
+var can_be_discarded: bool = true
 var card_order: int = 0
 
 func damage(enemy: Player, dmg: int):
