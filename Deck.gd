@@ -40,11 +40,27 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Sturdy Wall" : [
+		"res://assets/Cards/Sturdy Wall/art_SturdyWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+4 Wall",
+		3, 0, 0,
+		true
+	],
+	
 	"Big Wall" : [
 		"res://assets/Cards/Big Wall/art_BigWall.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
 		"+6 Wall",
 		5, 0, 0,
+		true
+	],
+	
+	"Reinforced Wall" : [
+		"res://assets/Cards/Reinforced Wall/art_ReinforcedWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+8 Wall",
+		7, 0, 0,
 		true
 	],
 	
@@ -54,7 +70,72 @@ var card_map: Dictionary = {
 		"+12 Wall",
 		12, 0, 0,
 		true
-	]
+	],
+	
+	"Great Wall" : [
+		"res://assets/Cards/Great Wall/art_GreatWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+15 Wall",
+		16, 0, 0,
+		true
+	],
+	
+	"Innovations" : [
+		"res://assets/Cards/Innovations/art_Inovations.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+1 To All player's Mines you gain 4 gems.",
+		2, 0, 0,
+		true
+	],
+	
+	"Fire Ruby" : [
+		"res://assets/Cards/Fire Ruby/art_FireRuby.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+6 Tower. 4 Damage to enemy tower.",
+		0, 15, 0,
+		true
+	],
+	
+	"Gem Spear" : [
+		"res://assets/Cards/Gem Spear/art_GemSpear2.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"5 Damage to enemy tower",
+		0, 6, 0,
+		true
+	],
+	
+	"Pearl of Wisdom" : [
+		"res://assets/Cards/Pearl of Wisdom/art_PearlOfWisdom.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+5 Tower, +1 Magic.",
+		0, 9, 0,
+		true
+	],
+	
+	"Diamond" : [
+		"res://assets/Cards/Diamond/art_Diamond.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+15 Tower",
+		0, 16, 0,
+		true
+	],
+	
+	"Emerald" : [
+		"res://assets/Cards/Emerald/art_Emerald.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+8 Tower",
+		0, 6, 0,
+		true
+	],
+	
+	"Ruby" : [
+		"res://assets/Cards/Ruby/art_Ruby.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+5 Tower",
+		0, 3, 0,
+		true 
+	],
+	
 }
 
 var cards: Array[Card] = []
