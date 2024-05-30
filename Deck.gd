@@ -22,6 +22,38 @@ var card_map: Dictionary = {
 		"7 Damage",
 		0, 0, 6,
 		true
+	],
+	
+	"Orc" : [
+		"res://assets/Cards/Orc/art_Orc.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"5 Damage",
+		0, 0, 4,
+		true
+	],
+	
+	"Basic Wall" : [
+		"res://assets/Cards/Basic Wall/art_BasicWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+3 Wall",
+		2, 0, 0,
+		true
+	],
+	
+	"Big Wall" : [
+		"res://assets/Cards/Big Wall/art_BigWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+6 Wall",
+		5, 0, 0,
+		true
+	],
+	
+	"Castle Wall" : [
+		"res://assets/Cards/Castle Wall/art_CastleWall.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+12 Wall",
+		12, 0, 0,
+		true
 	]
 }
 
