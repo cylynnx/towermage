@@ -136,6 +136,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Prism" : [
+		"res://assets/Cards/Prism/art_Prism.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"Draw 1 card, Discard 1 card. Play Again!",
+		0, 2, 0,
+		true
+	],
+	
 	"Diamond" : [
 		"res://assets/Cards/Diamond/art_Diamond.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
