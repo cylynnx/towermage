@@ -8,14 +8,22 @@ const DECK_SIZE: int = 64
 enum {TEXTURE, BOARDER, DESCRIPTION, RESOURCE_COST, MANA_COST, CREATURE_COST, CAN_DISCARD}
 	
 var card_map: Dictionary = {
-	#"Fairy" : [
-		#"res://assets/Cards/Fairy/art_fairy.jpg",
-		#"res://assets/Borders/Creature_Boarder.png",
-		#"2 Damage. Play Again!",
-		#0, 0, 1,
-		#true
-		#],
+	"Fairy" : [
+		"res://assets/Cards/Fairy/art_fairy_resized.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"2 Damage. Play Again!",
+		0, 0, 1,
+		true
+		],
 		
+	"Elven Scout" : [
+		"res://assets/Cards/Elven Scout/art_ElvenScout_resized.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"Draw 1 Card, Discard 1 card.",
+		0, 0, 2,
+		true
+	],
+	
 	"Ogre" : [
 		"res://assets/Cards/Ogre/art_Ogre.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
@@ -29,6 +37,14 @@ var card_map: Dictionary = {
 		"res://assets/Borders/Creature_Boarder.png",
 		"5 Damage",
 		0, 0, 4,
+		true
+	],
+	
+	"Spitter Spider" : [
+		"res://assets/Cards/Spitter Spider/art_SpitterSpider.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"If enemy wall = 0, 10 damage. Else 6 damage.",
+		0, 0, 8,
 		true
 	],
 	
@@ -96,6 +112,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Smoky Quartz" : [
+		"res://assets/Cards/Smoky Quartz/art_SmokyQuartz.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"1 Damage to enemy tower. Player again!",
+		0, 2, 0,
+		true
+	],
+	
 	"Gem Spear" : [
 		"res://assets/Cards/Gem Spear/art_GemSpear2.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
@@ -136,6 +160,29 @@ var card_map: Dictionary = {
 		true 
 	],
 	
+	"Quartz" : [
+		"res://assets/Cards/Quartz/art_Quartz.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+1 Tower. Play Again!",
+		0, 1, 0,
+		true
+	],
+	
+	"Mad Cow Disease" : [
+		"res://assets/Cards/Mad Cow Disease/art_MadCow.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"All players lose 8 creatures",
+		0, 0, 0,
+		true
+	],
+	
+	"Tremors" : [
+		"res://assets/Cards/Tremors/art_Tremors.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"All Walls take 5 damage. Play Again!",
+		7, 0, 0,
+		true
+	],
 }
 
 var cards: Array[Card] = []
