@@ -166,7 +166,7 @@ func play(player: Player, enemy: Player) -> bool:
 			if can_afford_card(player):
 				pay_for_card(player)
 				player.tower += 1
-				end_turn()
+				continue_turn(player)
 				return true
 		"Mad Cow Disease":
 			if can_afford_card(player):
