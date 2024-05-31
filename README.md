@@ -1,4 +1,4 @@
-![image](towermage/art_ElvenScout.jpg)
+![image](/art_ElvenScout.jpg)
 
 # Towermage
 
