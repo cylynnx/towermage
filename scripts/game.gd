@@ -30,7 +30,7 @@ var shift_cards: bool = false
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
-var turn_pause_timer_ended: bool = false
+var turn_pause_timer_ended: bool = true
 
 func _ready():
 	init_players()
@@ -184,7 +184,7 @@ func ai_move() -> void:
 	update_resources([player, enemy])
 	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
-	#Globals.turn_ended = true
+	Globals.turn_ended = true
 	if Globals.turn_ended:
 		hand_over_turn()
 	
@@ -200,12 +200,10 @@ func player_move() -> void:
 		
 func next_turn():
 	if Globals.current_player == player and turn_pause_timer_ended:
-		Globals.turn_ended = false
 		turn_pause_timer_ended = false
 		
 	elif Globals.current_player == enemy and turn_pause_timer_ended:
 		delete_enemy_card()
-		Globals.turn_ended = false
 		turn_pause_timer_ended = false
 		ai_move()
 	else:
@@ -282,7 +280,6 @@ func discard_card(card: Card) -> void:
 	if can_play_card():
 		delete_card(card)
 		update_player_hand()
-		hand_over_turn()
 	
 func _input(event):
 	if event.is_action_released("left_click"):
@@ -297,16 +294,19 @@ func _input(event):
 	if event.is_action_released("right_click"):
 		if Globals.current_card:
 			discard_card(Globals.current_card)
+			hand_over_turn()
 			
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
 		Globals.current_player = enemy
 		Globals.current_enemy = player
 		modify_hand_color(HALF_DARK)
+		Globals.turn_ended = false
 	else:
 		Globals.current_player = player
 		Globals.current_enemy = enemy
 		modify_hand_color(FULL_BRIGHT)
+		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
 
 func _process(_delta):

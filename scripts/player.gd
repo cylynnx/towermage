@@ -35,6 +35,8 @@ var food: int = 2
 var resources: int = 5
 var mana: int = 5
 var creatures: int = 5
+
+var discard_flag: bool = false
 		
 func _ready():
 	if player_id:

@@ -18,9 +18,29 @@ func damage(enemy: Player, dmg: int):
 		enemy.tower -= max(0, dmg_buffer)
 	else:
 		enemy.tower -= dmg
-	
+		
+func can_afford_card(player: Player) -> bool:
+		return player.resources >= resource_cost and player.mana >= mana_cost and player.creatures >= creature_cost
+
+func pay_for_card(player: Player) -> void:
+	player.resources -= resource_cost
+	player.mana -= mana_cost
+	player.creatures -= creature_cost
+		
 func play(player: Player, enemy: Player) -> bool:
 	match card_name:
+		"Fairy":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 2)
+				#Play Again Card
+				return true
+		"Elven Scout":
+			if can_afford_card(player):
+				pay_for_card(player)
+				Globals.discard_flag = true
+				#Play Again Card
+				return true
 		"Dwarf":
 			if player.creatures >= 5:
 				player.creatures -= 5

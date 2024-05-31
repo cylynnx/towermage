@@ -19,7 +19,7 @@ var card_map: Dictionary = {
 	"Elven Scout" : [
 		"res://assets/Cards/Elven Scout/art_ElvenScout_resized.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
-		"Draw 1 Card, Discard 1 card.",
+		"Discard 1 card, Draw 1 card",
 		0, 0, 2,
 		true
 	],
