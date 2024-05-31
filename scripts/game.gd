@@ -39,7 +39,7 @@ func _ready():
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
-	#debug_card("")
+	#debug_card("Ruby")
 
 func init_players():
 	player = create_player(0)
@@ -142,14 +142,12 @@ func debug_card(card_name: String):
 	draw_custom_card(card_name)
 	
 func debug_get_card_info(card: Card) -> void:
-	$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
-	#$UI/Debug.text += " dif: " + str(dif)
-	#$UI/Debug.text += " Offset: " + str(tower_offset)
-	$UI/MousePos.text = str(get_global_mouse_position())
+	#$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
+	#$UI/MousePos.text = str(get_global_mouse_position())
 	if card:
 		var debug_text: String = card.card_name
 		#debug_text += " Order: " + str(card.card_order)
-		debug_text += card.card_description
+		debug_text += ": " + card.card_description
 		$UI/RichTextLabel.text = debug_text
 	else:
 		$UI/RichTextLabel.text = ""

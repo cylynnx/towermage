@@ -156,6 +156,32 @@ func play(player: Player, enemy: Player) -> bool:
 				player.tower += 8
 				end_turn()
 				return true
+		"Ruby":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 5
+				end_turn()
+				return true
+		"Quartz":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 1
+				end_turn()
+				return true
+		"Mad Cow Disease":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.creatures -= 8
+				enemy.creatures -= 8
+				end_turn()
+				return true
+		"Tremors":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall -= 5
+				enemy.wall -= 5
+				continue_turn(player)
+				return true
 		_:
 			return false
 	return false
