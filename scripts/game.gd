@@ -329,7 +329,7 @@ func hand_over_turn() -> void:
 		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
 
-func _process(_delta):
+func _physics_process(delta):
 	debug_get_card_info(Globals.current_card)
 	update_game()
 
