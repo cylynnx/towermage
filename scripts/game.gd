@@ -84,6 +84,8 @@ func update_buildings(players: Array[Player]) -> void:
 		update_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
 	
 func update_building(building: Node2D, scene: PackedScene, offset, top_piece: Node2D, top_offset: float, hp: int):
+	# TODO: refactor this by creating two functions.
+	# One for creating a slice and the other for deleting it.
 	if offset.y < 0:
 		offset.y = 0
 		
