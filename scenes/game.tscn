@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://chrgdy2h0oakt"]
 
-[ext_resource type="Script" path="res://scenes/game.gd" id="1_g3e3j"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_g3e3j"]
 [ext_resource type="AudioStream" uid="uid://ce60xp5ts1umv" path="res://assets/sounds/explode1.mp3" id="2_eno2x"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3v2bi"]

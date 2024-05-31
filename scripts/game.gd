@@ -1,7 +1,7 @@
 extends Node2D
 
 const MAX_BUILDING_HEIGHT = 50
-const CARD_OFFSET_X  = 225
+const CARD_OFFSET_X  = 235
 const CARD_Y_CONST = 730
 const PLAYER_CARD_NUM = 4
 const TOWER_TOP = 0
@@ -184,7 +184,7 @@ func ai_move() -> void:
 	update_resources([player, enemy])
 	update_buildings([player, enemy])
 	update_player_ui([player, enemy])
-	Globals.turn_ended = true
+	#Globals.turn_ended = true
 	if Globals.turn_ended:
 		hand_over_turn()
 	
@@ -194,7 +194,7 @@ func player_move() -> void:
 		update_player_hand()
 		update_buildings([player, enemy])
 		update_player_ui([player, enemy])
-		Globals.turn_ended = true
+		#Globals.turn_ended = true
 		if Globals.turn_ended:
 			hand_over_turn()
 		
@@ -263,7 +263,7 @@ func interactive_cards() -> void:
 	if can_play_card():
 		var tween = create_tween()
 		tween.set_parallel(true)
-		tween.tween_property(Globals.current_card, "scale", Vector2(1.2,1.2), 0.3)
+		tween.tween_property(Globals.current_card, "scale", Vector2(1.1,1.1), 0.3)
 		last_card = Globals.current_card
 	else:
 		if str(last_card) == "<Freed Object>":

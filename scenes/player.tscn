@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cb7rdg6qtckbr"]
 
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_0xwi7"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_t861j"]
 [ext_resource type="Texture2D" uid="uid://e62d7k6gtija" path="res://assets/test/Tower_cap.png" id="2_mxjtt"]
 [ext_resource type="Texture2D" uid="uid://d8q62v1b3u5o" path="res://assets/wall/top.png" id="3_0x0k3"]
 [ext_resource type="FontFile" uid="uid://drx584bwkcidg" path="res://assets/fonts/Magical Neverland/Magical Neverland.ttf" id="4_4g0an"]
@@ -40,7 +40,7 @@ shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.921569)
 
 [node name="Player" type="Node2D"]
-script = ExtResource("1_0xwi7")
+script = ExtResource("1_t861j")
 
 [node name="TowerTop" type="Sprite2D" parent="."]
 position = Vector2(6.10352e-05, 0)
