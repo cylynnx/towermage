@@ -1,4 +1,4 @@
-![image](/art_ElvenScout.jpg)
+![image]()
 
 # Towermage
 
