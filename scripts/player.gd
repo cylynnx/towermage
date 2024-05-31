@@ -35,13 +35,16 @@ var food: int = 2
 var resources: int = 5
 var mana: int = 5
 var creatures: int = 5
-		
+
+var discard_flag: bool = false
+var playing_a_discard: bool = false
+
 func _ready():
 	if player_id:
-		tower_offset = BuildingOffset.new(1450, 0)
-		wall_offset = BuildingOffset.new(1300, 0)
-		$Stats/Tower.position = Vector2(1400, 750)
-		$Stats/Wall.position = Vector2(1260, 750)
+		tower_offset = BuildingOffset.new(1500, 0)
+		wall_offset = BuildingOffset.new(1350, 0)
+		$Stats/Tower.position = Vector2(1450, 750)
+		$Stats/Wall.position = Vector2(1310, 750)
 		$Stats/Mine.position = Vector2(1450, 100)
 		$Stats/Magic.position = Vector2(1450, 120)
 		$Stats/Food.position = Vector2(1450, 140)

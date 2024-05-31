@@ -1,7 +1,7 @@
 extends Node2D
 
 const MAX_BUILDING_HEIGHT = 50
-const CARD_OFFSET_X  = 225
+const CARD_OFFSET_X  = 235
 const CARD_Y_CONST = 730
 const PLAYER_CARD_NUM = 4
 const TOWER_TOP = 0
@@ -30,7 +30,7 @@ var shift_cards: bool = false
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
-var turn_pause_timer_ended: bool = false
+var turn_pause_timer_ended: bool = true
 
 func _ready():
 	init_players()
@@ -39,6 +39,7 @@ func _ready():
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
+	#debug_card("Ruby")
 
 func init_players():
 	player = create_player(0)
@@ -83,6 +84,8 @@ func update_buildings(players: Array[Player]) -> void:
 		update_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
 	
 func update_building(building: Node2D, scene: PackedScene, offset, top_piece: Node2D, top_offset: float, hp: int):
+	# TODO: refactor this by creating two functions.
+	# One for creating a slice and the other for deleting it.
 	if offset.y < 0:
 		offset.y = 0
 		
@@ -129,16 +132,22 @@ func draw_card(order: int) -> Card:
 	# Move the card into position
 	tween.tween_property(new_card, "position", Vector2(card_base_x + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 	return new_card
-		
+
+func draw_custom_card(card_name: String):
+	var custom_card: Card = deck.create_single_card(card_name, player)
+	custom_card.global_position = Vector2(900, 400)
+	add_child(custom_card)
+	
+func debug_card(card_name: String):
+	draw_custom_card(card_name)
+	
 func debug_get_card_info(card: Card) -> void:
-	$UI/Debug.text = "turn_pause_timer_ended: " + str(turn_pause_timer_ended)
-	#$UI/Debug.text += " dif: " + str(dif)
-	#$UI/Debug.text += " Offset: " + str(tower_offset)
-	$UI/MousePos.text = str(get_global_mouse_position())
+	#$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
+	#$UI/MousePos.text = str(get_global_mouse_position())
 	if card:
 		var debug_text: String = card.card_name
 		#debug_text += " Order: " + str(card.card_order)
-		debug_text += card.card_description
+		debug_text += ": " + card.card_description
 		$UI/RichTextLabel.text = debug_text
 	else:
 		$UI/RichTextLabel.text = ""
@@ -194,18 +203,16 @@ func player_move() -> void:
 		update_player_hand()
 		update_buildings([player, enemy])
 		update_player_ui([player, enemy])
-		Globals.turn_ended = true
+		#Globals.turn_ended = true
 		if Globals.turn_ended:
 			hand_over_turn()
 		
 func next_turn():
 	if Globals.current_player == player and turn_pause_timer_ended:
-		Globals.turn_ended = false
 		turn_pause_timer_ended = false
 		
 	elif Globals.current_player == enemy and turn_pause_timer_ended:
 		delete_enemy_card()
-		Globals.turn_ended = false
 		turn_pause_timer_ended = false
 		ai_move()
 	else:
@@ -241,7 +248,7 @@ func update_game() -> void:
 	next_turn()
 
 func message() -> void:
-	if Globals.current_player == player and Globals.discard_flag:
+	if Globals.current_player == player and player.discard_flag:
 		$UI/Msg.text = "DISCARD CARD!"
 	elif Globals.current_player == player:
 		$UI/Msg.text = "YOUR TURN!"
@@ -263,7 +270,7 @@ func interactive_cards() -> void:
 	if can_play_card():
 		var tween = create_tween()
 		tween.set_parallel(true)
-		tween.tween_property(Globals.current_card, "scale", Vector2(1.2,1.2), 0.3)
+		tween.tween_property(Globals.current_card, "scale", Vector2(1.1,1.1), 0.3)
 		last_card = Globals.current_card
 	else:
 		if str(last_card) == "<Freed Object>":
@@ -282,14 +289,24 @@ func discard_card(card: Card) -> void:
 	if can_play_card():
 		delete_card(card)
 		update_player_hand()
-		hand_over_turn()
 	
 func _input(event):
 	if event.is_action_released("left_click"):
-		if Globals.discard_flag:
-			discard_card(Globals.current_card)
-			Globals.discard_flag = false
-			return
+		if player.discard_flag:
+			# Some cards will ask to discard one card and then the turn ends
+			# while other cards will allow to play again after discarding.
+			# I'm using player.playing_a_discard bool flag to differentiate
+			# between these two scenarios.
+			if player.playing_a_discard:
+				discard_card(Globals.current_card)
+				player.discard_flag = false
+				player.playing_a_discard = false
+				hand_over_turn()
+				return
+			else:
+				discard_card(Globals.current_card)
+				player.discard_flag = false
+				return
 			
 		if can_play_card():
 			player_move()
@@ -297,16 +314,19 @@ func _input(event):
 	if event.is_action_released("right_click"):
 		if Globals.current_card:
 			discard_card(Globals.current_card)
+			hand_over_turn()
 			
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
 		Globals.current_player = enemy
 		Globals.current_enemy = player
 		modify_hand_color(HALF_DARK)
+		Globals.turn_ended = false
 	else:
 		Globals.current_player = player
 		Globals.current_enemy = enemy
 		modify_hand_color(FULL_BRIGHT)
+		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
 
 func _process(_delta):
