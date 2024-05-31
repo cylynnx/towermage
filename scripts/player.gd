@@ -37,7 +37,8 @@ var mana: int = 5
 var creatures: int = 5
 
 var discard_flag: bool = false
-		
+var playing_a_discard: bool = false
+
 func _ready():
 	if player_id:
 		tower_offset = BuildingOffset.new(1500, 0)

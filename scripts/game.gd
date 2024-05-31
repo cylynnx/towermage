@@ -39,6 +39,7 @@ func _ready():
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
+	#debug_card("")
 
 func init_players():
 	player = create_player(0)
@@ -129,9 +130,17 @@ func draw_card(order: int) -> Card:
 	# Move the card into position
 	tween.tween_property(new_card, "position", Vector2(card_base_x + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 	return new_card
-		
+
+func draw_custom_card(card_name: String):
+	var custom_card: Card = deck.create_single_card(card_name, player)
+	custom_card.global_position = Vector2(900, 400)
+	add_child(custom_card)
+	
+func debug_card(card_name: String):
+	draw_custom_card(card_name)
+	
 func debug_get_card_info(card: Card) -> void:
-	$UI/Debug.text = "turn_pause_timer_ended: " + str(turn_pause_timer_ended)
+	$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
 	#$UI/Debug.text += " dif: " + str(dif)
 	#$UI/Debug.text += " Offset: " + str(tower_offset)
 	$UI/MousePos.text = str(get_global_mouse_position())
@@ -239,7 +248,7 @@ func update_game() -> void:
 	next_turn()
 
 func message() -> void:
-	if Globals.current_player == player and Globals.discard_flag:
+	if Globals.current_player == player and player.discard_flag:
 		$UI/Msg.text = "DISCARD CARD!"
 	elif Globals.current_player == player:
 		$UI/Msg.text = "YOUR TURN!"
@@ -283,10 +292,21 @@ func discard_card(card: Card) -> void:
 	
 func _input(event):
 	if event.is_action_released("left_click"):
-		if Globals.discard_flag:
-			discard_card(Globals.current_card)
-			Globals.discard_flag = false
-			return
+		if player.discard_flag:
+			# Some cards will ask to discard one card and then the turn ends
+			# while other cards will allow to play again after discarding.
+			# I'm using player.playing_a_discard bool flag to differentiate
+			# between these two scenarios.
+			if player.playing_a_discard:
+				discard_card(Globals.current_card)
+				player.discard_flag = false
+				player.playing_a_discard = false
+				hand_over_turn()
+				return
+			else:
+				discard_card(Globals.current_card)
+				player.discard_flag = false
+				return
 			
 		if can_play_card():
 			player_move()

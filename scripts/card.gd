@@ -26,33 +26,135 @@ func pay_for_card(player: Player) -> void:
 	player.resources -= resource_cost
 	player.mana -= mana_cost
 	player.creatures -= creature_cost
-		
+	
+func end_turn() -> void:
+	Globals.turn_ended = true
+
+func continue_turn(player: Player, playing_discard: bool = false) -> void:
+	player.playing_a_discard = playing_discard
+	
 func play(player: Player, enemy: Player) -> bool:
 	match card_name:
 		"Fairy":
 			if can_afford_card(player):
 				pay_for_card(player)
 				damage(enemy, 2)
-				#Play Again Card
+				continue_turn(player) # Play again card.
 				return true
 		"Elven Scout":
 			if can_afford_card(player):
 				pay_for_card(player)
-				Globals.discard_flag = true
-				#Play Again Card
+				player.discard_flag = true # Discard 1 card
+				continue_turn(player, true) # End turn after discard
 				return true
-		"Dwarf":
-			if player.creatures >= 5:
-				player.creatures -= 5
-				damage(enemy, 4)
+		"Orc":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 5)
+				end_turn()
+				return true
+		"Ogre" :
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 7)
+				end_turn()
+				return true
+		"Spitter Spider":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if enemy.wall > 0:
+					damage(enemy, 6)
+				else:
+					damage(enemy, 10)
+				end_turn()
+				return true
+		"Basic Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
 				player.wall += 3
+				end_turn()
 				return true
-		"Dragon":
-			if player.creatures >= 25:
-				player.creatures -= 25
-				damage(enemy, 20)
-				enemy.food -= 1
-				enemy.mana -= 10
+		"Sturdy Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 4
+				end_turn()
+				return true
+		"Big Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 6
+				end_turn()
+				return true
+		"Reinforced Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 8
+				end_turn()
+				return true
+		"Castle Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 12
+				end_turn()
+				return true
+		"Great Wall":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 15
+				end_turn()
+				return true
+		"Innovations":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine += 1
+				player.mana += 4
+				enemy.mine += 1
+				end_turn()
+				return true
+		"Fire Ruby":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 6
+				enemy.tower -= 4
+				end_turn()
+				return true
+		"Smoky Quartz":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 1
+				continue_turn(player)
+				return true
+		"Gem Spear":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 4
+				end_turn()
+				return true
+		"Pearl of Wisdom":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 4
+				player.magic += 1
+				end_turn()
+				return true
+		"Prism":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.discard_flag = true
+				continue_turn(player)
+				return true
+		"Diamond":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 15
+				end_turn()
+				return true
+		"Emerald":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 8
+				end_turn()
 				return true
 		_:
 			return false

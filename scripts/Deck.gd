@@ -99,7 +99,7 @@ var card_map: Dictionary = {
 	"Innovations" : [
 		"res://assets/Cards/Innovations/art_Inovations.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
-		"+1 To All player's Mines you gain 4 gems.",
+		"+1 To All player's Mines you gain 4 mana.",
 		2, 0, 0,
 		true
 	],
@@ -212,3 +212,20 @@ func create(belongs_to: Player):
 		card.creature_cost = card_map[card.card_name][CREATURE_COST]
 		card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
 		cards.append(card)
+		
+func create_single_card(_name: String, _belongs_to: Player) -> Card:
+	var card = CARD_SCENE.instantiate() as Card
+	var pic = card.get_child(0).get_child(0)
+	var boarder = card.get_child(0).get_child(1)
+	card.card_name = _name
+	card.card_owner = _belongs_to
+	pic.scale = Vector2(0.25, 0.25)
+	pic.texture = load(card_map[card.card_name][TEXTURE])
+	boarder.scale = Vector2(0.28, 0.28)
+	boarder.texture = load(card_map[card.card_name][BOARDER])
+	card.card_description = card_map[card.card_name][DESCRIPTION]
+	card.resource_cost = card_map[card.card_name][RESOURCE_COST]
+	card.mana_cost = card_map[card.card_name][MANA_COST]
+	card.creature_cost = card_map[card.card_name][CREATURE_COST]
+	card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
+	return card
