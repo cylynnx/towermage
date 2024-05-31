@@ -5,7 +5,7 @@
 Towermage is a clone of the game Arcomage, a mini-game featured in the Might and Magic series. This project aims to recreate the nostalgic tavern card game experience where players build towers, gather resources, and engage in strategic battles.
 
 ## Table of Contents
-- [AI Disclaimer](#AI-Assisted_Development_Disclaimer)
+- [AI Disclaimer](#AI_Disclaimer)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,8 +13,8 @@ Towermage is a clone of the game Arcomage, a mini-game featured in the Might and
 - [License](#license)
 - [Contact](#contact)
 
-## AI-Assisted Development Disclaimer
-- This game utilizes AI technology in the creation of a significant portion of its artwork and game documents.
+## AI Disclaimer
+- This game **heavily** utilizes uses AI in the creation of a significant portion of its artwork and game documents.
 
 ## Features
 - **Classic Gameplay**: Faithful recreation of the Arcomage game mechanics.
