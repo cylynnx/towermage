@@ -90,4 +90,4 @@ For any questions or inquiries regarding the license, please contact [winstonese
 
 If you have any questions, suggestions, or feedback, feel free to contact us at winstoneser@gmail.com
 
-Enjoy playing Towermage!
+***Enjoy playing Towermage!***
