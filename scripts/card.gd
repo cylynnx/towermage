@@ -29,7 +29,7 @@ func pay_for_card(player: Player) -> void:
 	
 func end_turn() -> void:
 	Globals.turn_ended = true
-
+	
 func continue_turn(player: Player, playing_discard: bool = false) -> void:
 	player.playing_a_discard = playing_discard
 	

@@ -144,6 +144,9 @@ func debug_card(card_name: String):
 func debug_get_card_info(card) -> void:
 	#$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
 	#$UI/MousePos.text = str(get_global_mouse_position())
+	if not is_instance_valid(card):
+		return
+				
 	if card:
 		var debug_text: String = card.card_name
 		#debug_text += " Order: " + str(card.card_order)
@@ -177,6 +180,7 @@ func delete_enemy_card() -> void:
 		$EnemyCard.get_child(0).queue_free()
 		
 func move_card_to_mid_screen(card: Card) -> void:
+	if card:
 		var t = create_tween()
 		t.tween_property(card, "position", Vector2(800, 400), 0.5)
 		enemy_card_on_screen = true
@@ -245,6 +249,8 @@ func update_game() -> void:
 		fade_out_card = false
 		
 	message()
+	#if is_instance_valid(Globals.current_card):
+		#interactive_cards()
 	interactive_cards()
 	next_turn()
 
@@ -257,8 +263,8 @@ func message() -> void:
 		$UI/Msg.text ="ENEMY'S TURN!"
 		
 func fade_card(card: Card, rate: float) -> void:
-	var t = create_tween()
-	t.tween_property(card, "modulate", Color(1, 1, 1, 0), rate)
+		var t = create_tween()
+		t.tween_property(card, "modulate", Color(1, 1, 1, 0), rate)
 
 func modify_hand_color(clr: Color) -> void:
 	var t = create_tween()
