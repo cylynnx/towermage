@@ -224,6 +224,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Crystalize" : [
+		"res://assets/Cards/Crystalize/art_Crystalize.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+11 Tower -6 Wall.",
+		0, 8, 0,
+		true
+	],
+	
 	"Vampire" : [
 		"res://assets/Cards/Vampire/art_Vampire.jpg",
 		"res://assets/Borders/Creature_Boarder2.png",

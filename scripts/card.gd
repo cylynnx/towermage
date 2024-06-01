@@ -226,6 +226,13 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.creatures -= 8
 				end_turn()
 				return true
+		"Crystalize":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 11
+				player.wall -= 8
+				end_turn()
+				return true
 		_:
 			return false
 	return false
