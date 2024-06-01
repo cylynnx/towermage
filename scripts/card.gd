@@ -182,6 +182,50 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.wall -= 5
 				continue_turn(player)
 				return true
+		"Dragon's Heart":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 20
+				player.tower += 8
+				end_turn()
+				return true
+		"Earthquake":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine -= 1
+				enemy.mine -= 1
+				end_turn()
+				return true
+		"Lodestone":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 3
+				end_turn()
+				return true
+		"Mother Lode":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if player.mine < enemy.mine:
+					player.mine += 2
+				else:
+					player.mine += 1
+				end_turn()
+				return true
+		"Vampire":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 10)
+				enemy.creatures -= 5
+				enemy.food -= 1
+				end_turn()
+				return true
+		"Succubus":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 5
+				enemy.creatures -= 8
+				end_turn()
+				return true
 		_:
 			return false
 	return false

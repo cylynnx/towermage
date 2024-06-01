@@ -141,7 +141,7 @@ func draw_custom_card(card_name: String):
 func debug_card(card_name: String):
 	draw_custom_card(card_name)
 	
-func debug_get_card_info(card: Card) -> void:
+func debug_get_card_info(card) -> void:
 	#$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
 	#$UI/MousePos.text = str(get_global_mouse_position())
 	if card:
@@ -183,6 +183,7 @@ func move_card_to_mid_screen(card: Card) -> void:
 		$Timers/FadeOutCardTimer.start()
 		
 func ai_move() -> void:
+	# TODO: Make an actual AI opponent
 	var _card: Card = enemy_deck.cards.pop_back()
 	if not _card:
 		return
@@ -329,7 +330,7 @@ func hand_over_turn() -> void:
 		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	debug_get_card_info(Globals.current_card)
 	update_game()
 

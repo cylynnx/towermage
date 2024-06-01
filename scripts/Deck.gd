@@ -191,6 +191,55 @@ var card_map: Dictionary = {
 		7, 0, 0,
 		true
 	],
+	
+	"Dragon's Heart" : [
+		"res://assets/Cards/Dragon's Heart/art_Dragon'sHeart.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"+20 Wall +8 Tower.",
+		0, 0, 24,
+		true
+	],
+	
+	"Earthquake" : [
+		"res://assets/Cards/Earthquake/art_Earthquake.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"-1 To All player's Mines.",
+		0, 0, 0,
+		true
+	],
+	
+	"Lodestone" : [
+		"res://assets/Cards/Lodestone/art_Lodestone.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+3 Tower. This card cannot be discarded without playing it.",
+		0, 5, 0,
+		false
+	],
+	
+	"Mother Lode" : [
+		"res://assets/Cards/Mother Lode/art_MotherLode.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"If Mine < enemy Mine +2 Mine, else +1 Mine.",
+		4, 0, 0,
+		true
+	],
+	
+	"Vampire" : [
+		"res://assets/Cards/Vampire/art_Vampire.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"10 Damage, Enemy loses 5 creatures, -1 enemy Food.",
+		0, 0, 17,
+		true
+	],
+	
+	"Succubus" : [
+		"res://assets/Cards/Succubus/art_Succubus.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"5 Damage to Enemy Tower, Enemy loses 8 creatures.",
+		0, 0, 14,
+		true
+	]
+	
 }
 
 var cards: Array[Card] = []

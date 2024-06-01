@@ -32,9 +32,17 @@ var mine: int = 2
 var magic: int = 2
 var food: int = 2
 
-var resources: int = 5
-var mana: int = 5
-var creatures: int = 5
+var resources: int = 5:
+	set(n):
+		resources = clamp(n, 0, 999)
+		
+var mana: int = 5:
+	set(n):
+		mana = clamp(n, 0, 999)
+		
+var creatures: int = 5:
+	set(n):
+		creatures = clamp(n, 0, 999)
 
 var discard_flag: bool = false
 var playing_a_discard: bool = false
