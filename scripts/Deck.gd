@@ -96,6 +96,22 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Focused Designs" : [
+		"res://assets/Cards/Focused Designs/art_FocusedDesigns.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+8 Wall +5 Tower.",
+		15, 0, 0,
+		true
+	],
+	
+	"Strip Mine" : [
+		"res://assets/Cards/Strip Mine/art_StripMine.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"-1 Mine, +10 Wall. You gain 5 mana.",
+		0, 0, 0,
+		true
+	],
+	
 	"Innovations" : [
 		"res://assets/Cards/Innovations/art_Inovations.jpg",
 		"res://assets/Borders/Mana_Boarder.png",

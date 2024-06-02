@@ -104,6 +104,21 @@ func play(player: Player, enemy: Player) -> bool:
 				player.wall += 15
 				end_turn()
 				return true
+		"Focused Designs":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 8
+				player.tower += 5
+				end_turn()
+				return true
+		"Strip Mine":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine -= 1
+				player.wall += 10
+				player.mana  += 5
+				end_turn()
+				return true
 		"Innovations":
 			if can_afford_card(player):
 				pay_for_card(player)
