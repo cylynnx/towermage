@@ -47,6 +47,13 @@ func play(player: Player, enemy: Player) -> bool:
 				player.discard_flag = true # Discard 1 card
 				continue_turn(player, true) # End turn after discard
 				return true
+		"Goblin Archers":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 3
+				damage(player, 1)
+				end_turn()
+				return true
 		"Orc":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -127,6 +134,12 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.mine += 1
 				end_turn()
 				return true
+		"Little Snakes":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 4
+				end_turn()
+				return true
 		"Fire Ruby":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -190,6 +203,15 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.creatures -= 8
 				end_turn()
 				return true
+		"Discord":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower -= 7
+				player.magic -= 1
+				enemy.tower -= 7
+				enemy.magic -= 1
+				end_turn()
+				return true
 		"Tremors":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -224,6 +246,15 @@ func play(player: Player, enemy: Player) -> bool:
 					player.mine += 2
 				else:
 					player.mine += 1
+				end_turn()
+				return true
+		"Unicorn":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if player.magic > enemy.magic:
+					damage(enemy, 12)
+				else:
+					damage(enemy, 8)
 				end_turn()
 				return true
 		"Vampire":

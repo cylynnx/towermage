@@ -24,6 +24,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Goblin Archers" : [
+		"res://assets/Cards/Goblin Archers/art_GoblinArcher.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"3 Damage to Enemy Tower you take 1 damage.",
+		0, 0, 5,
+		true
+	],
+	
 	"Ogre" : [
 		"res://assets/Cards/Ogre/art_Ogre.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
@@ -128,6 +136,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Little Snakes" : [
+		"res://assets/Cards/Little Snakes/art_LittleSnakes.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"4 Damage to enemy tower",
+		0, 6, 0,
+		true
+	],
+	
 	"Smoky Quartz" : [
 		"res://assets/Cards/Smoky Quartz/art_SmokyQuartz.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
@@ -200,6 +216,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Discord" : [
+		"res://assets/Cards/Discord/art_Discord.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"7 Damage to all Towers, All player's magic -1.",
+		0, 4, 0,
+		true
+	],
+	
 	"Tremors" : [
 		"res://assets/Cards/Tremors/art_Tremors.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
@@ -245,6 +269,14 @@ var card_map: Dictionary = {
 		"res://assets/Borders/Mana_Boarder2.png",
 		"+11 Tower -6 Wall.",
 		0, 8, 0,
+		true
+	],
+	
+	"Unicorn" : [
+		"res://assets/Cards/Unicorn/art_Unicorn.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"If magic > enemy magic, 12 damage, else 8 damage.",
+		0, 0, 9,
 		true
 	],
 	
