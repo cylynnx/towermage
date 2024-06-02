@@ -63,4 +63,5 @@ wait_time = 2.612
 wait_time = 1.5
 one_shot = true
 
+[connection signal="GameOver" from="." to="." method="_on_game_over"]
 [connection signal="timeout" from="Timers/TurnPauseTimer" to="." method="_on_turn_pause_timer_timeout"]

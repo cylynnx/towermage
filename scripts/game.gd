@@ -17,6 +17,10 @@ var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
 var tower_scene: PackedScene = preload("res://scenes/tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
 var player_scene: PackedScene = preload("res://scenes/player.tscn")
+var gameover_scene: PackedScene = preload("res://scenes/game_over.tscn")
+
+signal GameOver(winner)
+var gameover: GameOver
 
 var player: Player = null
 var enemy: Player = null
@@ -31,21 +35,33 @@ var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
 var turn_pause_timer_ended: bool = true
+var force_game_over: bool = false
 
 func _ready():
+	fade_in_scene()	
 	init_players()
+	init_game_over()
 	deck = create_deck(player)
 	enemy_deck = create_deck(enemy)
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
 	#debug_card("Ruby")
+	
+func fade_in_scene():
+	modulate = Color(0.4, 0.3, 0.2, 1)
+	var init_tween = create_tween()
+	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1.8)
 
 func init_players():
 	player = create_player(0)
 	enemy = create_player(1)
 	Globals.current_player = player
 	Globals.current_enemy = enemy
+
+func init_game_over():
+	gameover = gameover_scene.instantiate() as GameOver
+	connect("GameOver", gameover.set_winner)
 	
 func create_player(player_id: int) -> Player:
 	var _player = player_scene.instantiate() as Player
@@ -253,6 +269,7 @@ func update_game() -> void:
 		#interactive_cards()
 	interactive_cards()
 	next_turn()
+	check_game_state()
 
 func message() -> void:
 	if Globals.current_player == player and player.discard_flag:
@@ -322,6 +339,12 @@ func _input(event):
 		if Globals.current_card:
 			discard_card(Globals.current_card)
 			hand_over_turn()
+	
+	if event.is_action_released("menu"):
+		if visible:
+			visible = false
+		else:
+			visible = true
 			
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
@@ -335,7 +358,21 @@ func hand_over_turn() -> void:
 		modify_hand_color(FULL_BRIGHT)
 		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
-
+	
+func check_game_state():
+	if force_game_over:
+		emit_signal("GameOver", player)
+		return
+		
+	if player.tower <= 0:
+		emit_signal("GameOver", enemy)
+	elif enemy.tower <= 0:
+		emit_signal("GameOver", player)
+	elif player.tower >= 50:
+		emit_signal("GameOver", player)
+	elif enemy.tower >= 50:
+		emit_signal("GameOver", enemy)
+		
 func _physics_process(_delta):
 	debug_get_card_info(Globals.current_card)
 	update_game()
@@ -345,3 +382,7 @@ func _on_fade_out_card_timer_timeout():
 
 func _on_turn_pause_timer_timeout():
 	turn_pause_timer_ended = true
+
+func _on_game_over(winner):
+	get_tree().root.add_child(gameover)
+	queue_free()

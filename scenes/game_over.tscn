@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://jnfu2btxkqcp"]
+
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_ewxrb"]
+[ext_resource type="Texture2D" uid="uid://c3befy77fssae" path="res://assets/Fantasy-Background-Pictures.png" id="2_u1pqh"]
+[ext_resource type="FontFile" uid="uid://bt6pr6w5cnbn1" path="res://assets/fonts/Fotales(Wild West)/Fotales-Regular.otf" id="3_ui2f5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8sd2c"]
+font = ExtResource("3_ui2f5")
+font_size = 125
+font_color = Color(0.568787, 0, 0.104918, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Node2D"]
+script = ExtResource("1_ewxrb")
+
+[node name="Fantasy-background-pictures" type="Sprite2D" parent="."]
+position = Vector2(849, 530)
+texture = ExtResource("2_u1pqh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1601.0
+offset_bottom = 903.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -85.5
+offset_right = 276.0
+offset_bottom = 85.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "GAME OVER
+"
+label_settings = SubResource("LabelSettings_8sd2c")
+
+[node name="Winner" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_8sd2c")

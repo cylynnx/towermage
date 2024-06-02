@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbwuoovwd6ugu"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5kmvk"]
+[ext_resource type="Texture2D" uid="uid://cqpfcpfxg7j0" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_0.jpg" id="2_syha5"]
+[ext_resource type="FontFile" uid="uid://c5pdj675uo2bm" path="res://assets/fonts/Bulletin Gothic/BulletinGothic.otf" id="3_ni3j2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bbibf"]
+line_spacing = 3.33
+font = ExtResource("3_ni3j2")
+font_size = 100
+font_color = Color(0.930834, 0.836347, 0.955322, 1)
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 0.913725)
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_5kmvk")
+
+[node name="DefaultFantasyNatureBackgroundPaintingForestMountainsAl1(2)" type="Sprite2D" parent="."]
+position = Vector2(803, 452)
+scale = Vector2(1.06, 1.06)
+texture = ExtResource("2_syha5")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1603.0
+offset_bottom = 899.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -169.0
+offset_top = 31.15
+offset_right = 169.0
+offset_bottom = 121.15
+grow_horizontal = 2
+text = "T o w e r m a g e"
+label_settings = SubResource("LabelSettings_bbibf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 243.0
+offset_right = 1366.0
+offset_bottom = 777.0
+alignment = 1
+
+[node name="NewGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "NEW GAME"
+
+[node name="QuitGame" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "EXIT GAME"
+
+[connection signal="button_down" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_button_down"]
+[connection signal="button_down" from="Control/VBoxContainer/QuitGame" to="." method="_on_button_2_button_down"]
