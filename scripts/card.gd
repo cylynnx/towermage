@@ -405,8 +405,12 @@ func play(player: Player, enemy: Player) -> bool:
 
 func _on_area_2d_mouse_entered():
 	Globals.current_card = self
+	var tween = create_tween()
+	tween.tween_property(Globals.current_card, "scale", Vector2(1.1,1.1), 0.3)
 	$Sound/CardSelected.playing = true
 	
 func _on_area_2d_mouse_exited():
+	var tween = create_tween()
+	tween.tween_property(Globals.current_card, "scale", Vector2(1, 1), 0.3)
 	$Sound/CardSelected.stop()
 	Globals.current_card = null

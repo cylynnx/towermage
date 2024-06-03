@@ -265,9 +265,6 @@ func update_game() -> void:
 		fade_out_card = false
 		
 	message()
-	#if is_instance_valid(Globals.current_card):
-		#interactive_cards()
-	interactive_cards()
 	next_turn()
 	check_game_state()
 
@@ -289,22 +286,6 @@ func modify_hand_color(clr: Color) -> void:
 	for _card in $PlayerCards.get_children():
 		if not _card.is_queued_for_deletion():
 			t.tween_property(_card, "modulate", clr, 0.2)
-
-func interactive_cards() -> void:
-	if can_play_card():
-		var tween = create_tween()
-		tween.set_parallel(true)
-		tween.tween_property(Globals.current_card, "scale", Vector2(1.1,1.1), 0.3)
-		last_card = Globals.current_card
-	else:
-		if str(last_card) == "<Freed Object>":
-			last_card = null
-			return
-		elif last_card:
-			var tween = create_tween()
-			tween.set_parallel(true)
-			tween.tween_property(last_card, "scale", Vector2(1, 1), 0.3)
-			last_card = null
 			
 func can_play_card() -> bool:
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
