@@ -48,11 +48,43 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Werewolf": [
+		"res://assets/Cards/Werewolf/art_Werewolf.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"9 Damage.",
+		0, 0, 9,
+		true
+	],
+	
+	"Imp" : [
+		"res://assets/Cards/Imp/art_Imp.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"6 Damage, All players lose 5 resources, 5 mana, 5 creatures.",
+		0, 0, 5,
+		true
+	],
+	
 	"Spitter Spider" : [
 		"res://assets/Cards/Spitter Spider/art_SpitterSpider.jpg",
 		"res://assets/Borders/Creature_Boarder2.png",
 		"If enemy wall = 0, 10 damage. Else 6 damage.",
 		0, 0, 8,
+		true
+	],
+	
+	"Elven Archer" : [
+		"res://assets/Cards/Elven Archer/art_ElvenArcher.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"If wall > enemy wall, 7 damage to enemy tower, else 7 damage.",
+		0, 0, 10,
+		true
+	],
+	
+	"Dwarf": [
+		"res://assets/Cards/Dwarf/art_Dwarf.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"4 Damage +3 Wall.",
+		0, 0, 5,
 		true
 	],
 	
@@ -104,11 +136,35 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Stone Giant" : [
+		"res://assets/Cards/Strone Giant/art_StoneGiant.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"10 Damage +4 Wall.",
+		14, 0, 0,
+		true
+	],
+	
+	"Dwarven Miners" : [
+		"res://assets/Cards/Dwarven Miners/art_DwarfMiners.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+4 Wall +1 Mine.",
+		7, 0, 0,
+		true
+	],
+	
 	"Focused Designs" : [
 		"res://assets/Cards/Focused Designs/art_FocusedDesigns.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
 		"+8 Wall +5 Tower.",
-		15, 0, 0,
+		14, 0, 0,
+		true
+	],
+	
+	"Crystal Shield" : [
+		"res://assets/Cards/Crystal Shield/art_CrystalShield.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+8 Tower +3 Wall.",
+		0, 12, 0,
 		true
 	],
 	
@@ -120,11 +176,35 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Tower Gremlin" : [
+		"res://assets/Cards/Tower Gremlin/art_TowerGremlin.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"2 Damage, +4 Wall, +2 Tower.",
+		0, 0, 8,
+		true
+	],
+	
+	"Miner" : [
+		"res://assets/Cards/Miner/art_Miner.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+1 Mine",
+		4, 0, 0,
+		true
+	],
+	
 	"Innovations" : [
 		"res://assets/Cards/Innovations/art_Inovations.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
 		"+1 To All player's Mines you gain 4 mana.",
 		2, 0, 0,
+		true
+	],
+	
+	"Spell Thief" : [
+		"res://assets/Cards/Spell Thief/art_SpellThief.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"-1 Enemy Tower, Enemy loses 10 mana, 5 resources, you gain half the amount.",
+		0, 0, 12,
 		true
 	],
 	
@@ -184,6 +264,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Sapphire" : [
+		"res://assets/Cards/Saphire/art_Saphire.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+10 Tower",
+		0, 10, 0,
+		true
+	],
+	
 	"Emerald" : [
 		"res://assets/Cards/Emerald/art_Emerald.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
@@ -200,11 +288,27 @@ var card_map: Dictionary = {
 		true 
 	],
 	
+	"Amethyst": [
+		"res://assets/Cards/Amethyst/art_Amethyst.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+3 Tower.",
+		0, 2, 0,
+		true
+	],
+	
 	"Quartz" : [
 		"res://assets/Cards/Quartz/art_Quartz.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
 		"+1 Tower. Play Again!",
 		0, 1, 0,
+		true
+	],
+	
+	"Gemstone Flaw" : [
+		"res://assets/Cards/Gemstone Flaw/art_GemstoneFlaw.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"3 damage to enemy tower.",
+		0, 2, 0,
 		true
 	],
 	
@@ -232,11 +336,35 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Harmonic Vibe" : [
+		"res://assets/Cards/Harmonic Vibe/art_HarmonicVibe.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+1 Magic, +3 Tower, +3 Wall.",
+		0, 7, 0,
+		true
+	],
+	
+	"Crystal Matrix" : [
+		"res://assets/Cards/Crystal Matrix/art_CrystalMatrix.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+1 Magic, +1 Tower, +1 Enemy Tower.",
+		0, 5, 0,
+		true
+	],
+	
 	"Dragon's Heart" : [
 		"res://assets/Cards/Dragon's Heart/art_Dragon'sHeart.jpg",
 		"res://assets/Borders/Creature_Boarder2.png",
 		"+20 Wall +8 Tower.",
 		0, 0, 24,
+		true
+	],
+	
+	"Lava Jewel" : [
+		"res://assets/Cards/Lava Jewel/art_LavaJewel.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"+12 Tower, 6 Damage.",
+		0, 17, 0,
 		true
 	],
 	

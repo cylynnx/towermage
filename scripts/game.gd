@@ -383,6 +383,6 @@ func _on_fade_out_card_timer_timeout():
 func _on_turn_pause_timer_timeout():
 	turn_pause_timer_ended = true
 
-func _on_game_over(winner):
+func _on_game_over(_winner):
 	get_tree().root.add_child(gameover)
 	queue_free()

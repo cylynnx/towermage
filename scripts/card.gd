@@ -66,6 +66,40 @@ func play(player: Player, enemy: Player) -> bool:
 				damage(enemy, 7)
 				end_turn()
 				return true
+		"Werewolf":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 9)
+				end_turn()
+				return true
+		"Elven Archer":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if player.wall > enemy.wall:
+					enemy.tower -= 7
+				else:
+					damage(enemy, 7)
+				end_turn()
+				return true
+		"Imp":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 6)
+				player.resources -= 5
+				player.mana -= 5
+				player.creatures -= 5
+				enemy.resources -= 5
+				enemy.mana -= 5
+				enemy.creatures -= 5
+				end_turn()
+				return true
+		"Dwarf":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 4)
+				player.wall += 3
+				end_turn()
+				return true
 		"Spitter Spider":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -111,6 +145,33 @@ func play(player: Player, enemy: Player) -> bool:
 				player.wall += 15
 				end_turn()
 				return true
+		"Stone Giant":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 10)
+				player.wall += 4
+				end_turn()
+				return true
+		"Dwarven Miners":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine += 1
+				player.wall += 4
+				end_turn()
+				return true
+		"Miner":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine += 1
+				end_turn()
+				return true
+		"Crystal Shield":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 8
+				player.wall += 3
+				end_turn()
+				return true
 		"Focused Designs":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -132,6 +193,24 @@ func play(player: Player, enemy: Player) -> bool:
 				player.mine += 1
 				player.mana += 4
 				enemy.mine += 1
+				end_turn()
+				return true
+		"Spell Thief":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 1
+				enemy.mana -= 10
+				enemy.resources -= 5
+				player.mana += 5
+				player.resources += 3
+				end_turn()
+				return true
+		"Tower Gremlin":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 2)
+				player.wall += 4
+				player.tower += 2
 				end_turn()
 				return true
 		"Little Snakes":
@@ -166,6 +245,22 @@ func play(player: Player, enemy: Player) -> bool:
 				player.magic += 1
 				end_turn()
 				return true
+		"Harmonic Vibe":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.magic += 1
+				player.tower += 3
+				player.wall += 3
+				end_turn()
+				return true
+		"Crystal Matrix":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.magic += 1
+				player.tower += 1
+				enemy.tower += 1
+				end_turn()
+				return true
 		"Prism":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -176,6 +271,12 @@ func play(player: Player, enemy: Player) -> bool:
 			if can_afford_card(player):
 				pay_for_card(player)
 				player.tower += 15
+				end_turn()
+				return true
+		"Sapphire":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 10
 				end_turn()
 				return true
 		"Emerald":
@@ -190,11 +291,23 @@ func play(player: Player, enemy: Player) -> bool:
 				player.tower += 5
 				end_turn()
 				return true
+		"Amethyst":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 3
+				end_turn()
+				return true
 		"Quartz":
 			if can_afford_card(player):
 				pay_for_card(player)
 				player.tower += 1
 				continue_turn(player)
+				return true
+		"Gemstone Flaw":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 3
+				end_turn()
 				return true
 		"Mad Cow Disease":
 			if can_afford_card(player):
@@ -218,6 +331,13 @@ func play(player: Player, enemy: Player) -> bool:
 				player.wall -= 5
 				enemy.wall -= 5
 				continue_turn(player)
+				return true
+		"Lava Jewel":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 12
+				damage(enemy, 6)
+				end_turn()
 				return true
 		"Dragon's Heart":
 			if can_afford_card(player):

@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://jnfu2btxkqcp"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_ewxrb"]
-[ext_resource type="Texture2D" uid="uid://c3befy77fssae" path="res://assets/Fantasy-Background-Pictures.png" id="2_u1pqh"]
+[ext_resource type="Texture2D" uid="uid://dup2dsneyrmnm" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_0 (1).jpg" id="2_h6rej"]
 [ext_resource type="FontFile" uid="uid://bt6pr6w5cnbn1" path="res://assets/fonts/Fotales(Wild West)/Fotales-Regular.otf" id="3_ui2f5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8sd2c"]
 font = ExtResource("3_ui2f5")
 font_size = 125
-font_color = Color(0.568787, 0, 0.104918, 1)
+font_color = Color(0.713726, 0.266667, 0.768627, 0.937255)
 shadow_size = 15
 shadow_color = Color(0, 0, 0, 1)
 
@@ -15,8 +15,9 @@ shadow_color = Color(0, 0, 0, 1)
 script = ExtResource("1_ewxrb")
 
 [node name="Fantasy-background-pictures" type="Sprite2D" parent="."]
-position = Vector2(849, 530)
-texture = ExtResource("2_u1pqh")
+position = Vector2(802, 483)
+scale = Vector2(1.04688, 1.08482)
+texture = ExtResource("2_h6rej")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
