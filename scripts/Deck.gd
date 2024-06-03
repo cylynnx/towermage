@@ -464,7 +464,7 @@ func create(belongs_to: Player):
 		card.creature_cost = card_map[card.card_name][CREATURE_COST]
 		card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
 		txt.text = get_cost(card)
-		if int(txt.text) > 10:
+		if int(txt.text) >= 10:
 			txt.position -= Vector2(10, 0)
 		txt.modulate = get_color(card)
 		cards.append(card)
