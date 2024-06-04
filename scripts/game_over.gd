@@ -11,3 +11,7 @@ func set_winner(winner):
 		$Control/VBoxContainer/Winner.text = "You lost!"
 	else:
 		$Control/VBoxContainer/Winner.text = "You won!"
+
+func _input(event):
+	if event.is_action_pressed("menu"):
+		queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://jnfu2btxkqcp"]
+[gd_scene load_steps=6 format=3 uid="uid://jnfu2btxkqcp"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_ewxrb"]
 [ext_resource type="Texture2D" uid="uid://dup2dsneyrmnm" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_0 (1).jpg" id="2_h6rej"]
@@ -10,6 +10,9 @@ font_size = 125
 font_color = Color(0.713726, 0.266667, 0.768627, 0.937255)
 shadow_size = 15
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_shi5k"]
+font_size = 60
 
 [node name="GameOver" type="Node2D"]
 script = ExtResource("1_ewxrb")
@@ -48,3 +51,10 @@ label_settings = SubResource("LabelSettings_8sd2c")
 [node name="Winner" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_8sd2c")
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Press ESC
+ to go back to 
+main menu."
+label_settings = SubResource("LabelSettings_shi5k")
