@@ -8,6 +8,22 @@ const DECK_SIZE: int = 64
 enum {TEXTURE, BOARDER, DESCRIPTION, RESOURCE_COST, MANA_COST, CREATURE_COST, CAN_DISCARD}
 	
 var card_map: Dictionary = {
+	"Agriculture" : [
+		"res://assets/Cards/Agriculture/art_Agriculture.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+2 Food.",
+		0, 0, 7,
+		true
+	],
+	
+	"Brick Shortage" : [
+		"res://assets/Cards/Brick Shortage/art_BrickShortage.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"All players lose 8 resources",
+		0, 0, 0,
+		true
+	],
+	
 	"Fairy" : [
 		"res://assets/Cards/Fairy/art_fairy_resized.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
@@ -15,6 +31,14 @@ var card_map: Dictionary = {
 		0, 0, 1,
 		true
 		],
+	
+	"Shadow Fairy" : [
+		"res://assets/Cards/Shadow Fairy/art_ShadowFairy.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"2 Damage to enemy tower. Player again!",
+		0, 0, 5,
+		true
+	],
 		
 	"Elven Scout" : [
 		"res://assets/Cards/Elven Scout/art_ElvenScout_resized.jpg",
@@ -29,6 +53,22 @@ var card_map: Dictionary = {
 		"res://assets/Borders/Creature_Boarder.png",
 		"3 Damage to Enemy Tower you take 1 damage.",
 		0, 0, 5,
+		true
+	],
+	
+	"Moody Goblins" : [
+		"res://assets/Cards/Moody Goblins/art_MoodyGoblins.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"4 Damage, You lose 3 mana.",
+		0, 0, 1,
+		true
+	],
+	
+	"Goblin Mob" : [
+		"res://assets/Cards/Goblin Mob/art_GoblinMob.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"6 Damage, You take 3 Damage.",
+		0, 0, 3,
 		true
 	],
 	
@@ -80,11 +120,43 @@ var card_map: Dictionary = {
 		true
 	],
 	
-	"Dwarf": [
+	"Dwarf" : [
 		"res://assets/Cards/Dwarf/art_Dwarf.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
 		"4 Damage +3 Wall.",
 		0, 0, 5,
+		true
+	],
+	
+	"Work Overtime" : [
+		"res://assets/Cards/Work Overtime/art_WorkingOvertime.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+5 Wall. You lose 6 mana.",
+		2, 0, 0,
+		true
+	],
+	
+	"Crystal Rocks" : [
+		"res://assets/Cards/Crystal Rocks/art_CrystalRocks.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+7 Wall. Gain 7 mana.",
+		9, 0, 0,
+		true
+	],
+	
+	"Harmonic Ore" : [
+		"res://assets/Cards/Harmonic Ore/art_HarmonicOre.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+6 Wall +3 Tower.",
+		11, 0, 0,
+		true
+	],
+	
+	"Foundation" : [
+		"res://assets/Cards/Foundation/art_Foundation.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"If player wall is 0, +6 Wall, +3 if otherwise.",
+		3, 0, 0,
 		true
 	],
 	
@@ -192,6 +264,22 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Coppin' the Tech" : [
+		"res://assets/Cards/Coppin' The Tech/art_CoppinTheTech.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"If your mine is less than the enemy's, then your mine becomes equal to the enemy's.",
+		5, 0, 0,
+		true
+	],
+	
+	"Quarry's Help" : [
+		"res://assets/Cards/Quarry's Help/art_QuarrysHelp.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+7 Tower Lose 10 resources.",
+		0, 4, 0,
+		true
+	],
+	
 	"Innovations" : [
 		"res://assets/Cards/Innovations/art_Inovations.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
@@ -200,11 +288,35 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Parity" : [
+		"res://assets/Cards/Parity/art_Parity.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"All players magic equals to the highest player's magic.",
+		0, 7, 0,
+		true
+	],
+	
 	"Spell Thief" : [
 		"res://assets/Cards/Spell Thief/art_SpellThief.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
 		"-1 Enemy Tower, Enemy loses 10 mana, 5 resources, you gain half the amount.",
 		0, 0, 12,
+		true
+	],
+	
+	"Rock Thrower" : [
+		"res://assets/Cards/Rock Thrower/art_RockThrower.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+6 Wall, 10 Damage to enemy.",
+		16, 0, 0,
+		true
+	],
+	
+	"Rock Stomper" : [
+		"res://assets/Cards/Rock Stomper/art_RockStomper.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"8 Damage -1 Enemy mine.",
+		0, 0, 11,
 		true
 	],
 	
@@ -256,6 +368,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Empathy Gem" : [
+		"res://assets/Cards/Empathy Gem/art_EmpathyGem.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+8 Tower, +1 Food.",
+		0, 14, 0,
+		true
+	],
+	
 	"Diamond" : [
 		"res://assets/Cards/Diamond/art_Diamond.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
@@ -301,6 +421,14 @@ var card_map: Dictionary = {
 		"res://assets/Borders/Mana_Boarder2.png",
 		"+1 Tower. Play Again!",
 		0, 1, 0,
+		true
+	],
+	
+	"Secret Room" : [
+		"res://assets/Cards/Secret Room/art_SecretRoom.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+1 Magic, Play Again!",
+		9, 0, 0,
 		true
 	],
 	
@@ -397,6 +525,14 @@ var card_map: Dictionary = {
 		"res://assets/Borders/Mana_Boarder2.png",
 		"+11 Tower -6 Wall.",
 		0, 8, 0,
+		true
+	],
+	
+	"Spell Weavers" : [
+		"res://assets/Cards/Spell Weavers/art_SpellWeavers.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+1 Magic.",
+		0, 3, 0,
 		true
 	],
 	

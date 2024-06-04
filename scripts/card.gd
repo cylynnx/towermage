@@ -31,15 +31,35 @@ func end_turn() -> void:
 	Globals.turn_ended = true
 	
 func continue_turn(player: Player, playing_discard: bool = false) -> void:
+	# TODO: change this
 	player.playing_a_discard = playing_discard
 	
 func play(player: Player, enemy: Player) -> bool:
 	match card_name:
+		"Agriculture":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.food += 2
+				end_turn()
+				return true
+		"Brick Shortage":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.resources -= 8
+				enemy.resources -= 8
+				end_turn()
+				return true
 		"Fairy":
 			if can_afford_card(player):
 				pay_for_card(player)
 				damage(enemy, 2)
 				continue_turn(player) # Play again card.
+				return true
+		"Shadow Fairy":
+			if can_afford_card(player):
+				pay_for_card(player)
+				enemy.tower -= 2
+				continue_turn(player)
 				return true
 		"Elven Scout":
 			if can_afford_card(player):
@@ -52,6 +72,20 @@ func play(player: Player, enemy: Player) -> bool:
 				pay_for_card(player)
 				enemy.tower -= 3
 				damage(player, 1)
+				end_turn()
+				return true
+		"Moody Goblins":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 4)
+				player.mana -= 3
+				end_turn()
+				return true
+		"Goblin Mob":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 6)
+				damage(player, 3)
 				end_turn()
 				return true
 		"Orc":
@@ -107,6 +141,36 @@ func play(player: Player, enemy: Player) -> bool:
 					damage(enemy, 6)
 				else:
 					damage(enemy, 10)
+				end_turn()
+				return true
+		"Work Overtime":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 5
+				player.mana -= 6
+				end_turn()
+				return true
+		"Crystal Rocks":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 7
+				player.mana += 7
+				end_turn()
+				return true
+		"Harmonic Ore":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 6
+				player.tower += 3
+				end_turn()
+				return true
+		"Foundation":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if player.wall <= 0:
+					player.wall += 6
+				else:
+					player.wall += 3
 				end_turn()
 				return true
 		"Basic Wall":
@@ -187,12 +251,35 @@ func play(player: Player, enemy: Player) -> bool:
 				player.mana  += 5
 				end_turn()
 				return true
+		"Coppin' the Tech":
+			if can_afford_card(player):
+				pay_for_card(player)
+				var max_mine = max(player.mine, enemy.mine)
+				player.mine = max_mine
+				enemy.mine = max_mine
+				end_turn()
+				return true
+		"Quarry's Help":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 7
+				player.resources -= 10
+				end_turn()
+				return true
 		"Innovations":
 			if can_afford_card(player):
 				pay_for_card(player)
 				player.mine += 1
 				player.mana += 4
 				enemy.mine += 1
+				end_turn()
+				return true
+		"Parity":
+			if can_afford_card(player):
+				pay_for_card(player)
+				var max_magic = max(player.magic, enemy.magic)
+				player.magic = max_magic
+				enemy.magic = max_magic
 				end_turn()
 				return true
 		"Spell Thief":
@@ -203,6 +290,20 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.resources -= 5
 				player.mana += 5
 				player.resources += 3
+				end_turn()
+				return true
+		"Rock Thrower":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 6
+				damage(enemy, 10)
+				end_turn()
+				return true
+		"Rock Stomper":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 8)
+				enemy.mine -= 1
 				end_turn()
 				return true
 		"Tower Gremlin":
@@ -267,6 +368,13 @@ func play(player: Player, enemy: Player) -> bool:
 				player.discard_flag = true
 				continue_turn(player)
 				return true
+		"Empathy Gem":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 8
+				player.food += 1
+				end_turn()
+				return true
 		"Diamond":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -301,6 +409,12 @@ func play(player: Player, enemy: Player) -> bool:
 			if can_afford_card(player):
 				pay_for_card(player)
 				player.tower += 1
+				continue_turn(player)
+				return true
+		"Secret Room":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.magic += 1
 				continue_turn(player)
 				return true
 		"Gemstone Flaw":
@@ -366,6 +480,12 @@ func play(player: Player, enemy: Player) -> bool:
 					player.mine += 2
 				else:
 					player.mine += 1
+				end_turn()
+				return true
+		"Spell Weavers":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.magic += 1
 				end_turn()
 				return true
 		"Unicorn":
