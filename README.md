@@ -46,7 +46,9 @@ To install and run Towermage on your local machine, follow these steps:
 After launching the game in Godot, you can start playing by following the in-game instructions.
 Game Controls
 
-    Mouse: Click on cards to play them.
+    Mouse: Left click on cards to play them.
+    Right click discards a card and ends turn.
+    
 
 ## Basic Rules
 
