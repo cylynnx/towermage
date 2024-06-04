@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkgkbhgiro8c3"]
+
+[ext_resource type="Script" path="res://scripts/red_tower.gd" id="1_04qye"]
+
+[node name="Tower" type="Node2D"]
+position = Vector2(170, 162)
+script = ExtResource("1_04qye")
+
+[node name="Texture" type="Sprite2D" parent="."]

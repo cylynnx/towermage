@@ -49,20 +49,30 @@ var playing_a_discard: bool = false
 
 func _ready():
 	if player_id:
+		$TowerTop.texture = load("res://assets/WallTower/RedSlices/Top.png")
 		tower_offset = BuildingOffset.new(1500, 0)
 		wall_offset = BuildingOffset.new(1350, 0)
+		$Wall.modulate = Color(0.991, 0.513, 0.544)
+		$WallTop.modulate = Color(0.991, 0.513, 0.544)
 		$Stats/Tower.position = Vector2(1450, 750)
 		$Stats/Wall.position = Vector2(1310, 750)
 		$Stats/Mine.position = Vector2(1450, 100)
 		$Stats/Magic.position = Vector2(1450, 120)
 		$Stats/Food.position = Vector2(1450, 140)
+		$Bottom.texture = load("res://assets/WallTower/RedSlices/bottom.png")
+		$Bottom.scale = Vector2(0.3, 0.3)
+		$Bottom.position = Vector2(1500, 715)
 	else:
+		$TowerTop.texture = load("res://assets/WallTower/BlueSlices/Top.png")
 		tower_offset = BuildingOffset.new(100, 0)
 		wall_offset = BuildingOffset.new(250, 0)
+		$Wall.modulate = Color(0.578, 0.667, 1)
+		$WallTop.modulate = Color(0.578, 0.667, 1)
 		$Stats/Tower.position = Vector2(50, 750)
 		$Stats/Wall.position = Vector2(210, 750)
 		$Stats/Mine.position = Vector2(10, 100)
 		$Stats/Magic.position = Vector2(10, 120)
 		$Stats/Food.position = Vector2(10, 140)
-		
-		
+		$Bottom.texture = load("res://assets/WallTower/BlueSlices/Bottom.png")
+		$Bottom.scale = Vector2(0.3, 0.3)
+		$Bottom.position = Vector2(100, 714)

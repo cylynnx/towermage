@@ -14,7 +14,8 @@ const FULL_BRIGHT = Color(1, 1, 1, 1)
 @export var settings_particles: bool = false
 # ----------------------------------
 var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
-var tower_scene: PackedScene = preload("res://scenes/tower.tscn")
+var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
+var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
 var player_scene: PackedScene = preload("res://scenes/player.tscn")
 var gameover_scene: PackedScene = preload("res://scenes/game_over.tscn")
@@ -80,9 +81,14 @@ func init_player_hand():
 	Globals.cards_on_screen = PLAYER_CARD_NUM
 
 func init_buildings(players: Array[Player]) -> void:
+	var _tower_scene = null
 	for _player in players:
-		init_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
-		init_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 14, _player.wall)
+		if _player.player_id:
+			_tower_scene = red_tower_scene
+		else:
+			_tower_scene = blue_tower_scene
+		init_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
+		init_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 7, _player.wall)
 
 func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, top_offset: float, init_hp: int):
 	for i in range(init_hp):
@@ -95,9 +101,14 @@ func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, to
 		top.position = Vector2(offset.x, 700 - offset.y - top_offset)
 		
 func update_buildings(players: Array[Player]) -> void:
+	var _tower_scene = null
 	for _player in players:
-		update_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 14, _player.wall)
-		update_building(_player.get_child(TOWER), tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
+		if _player.player_id:
+			_tower_scene = red_tower_scene
+		else:
+			_tower_scene = blue_tower_scene
+		update_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 7, _player.wall)
+		update_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
 	
 func update_building(building: Node2D, scene: PackedScene, offset, top_piece: Node2D, top_offset: float, hp: int):
 	# TODO: refactor this by creating two functions.
