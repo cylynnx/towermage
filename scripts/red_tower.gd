@@ -19,5 +19,5 @@ var tower_textures: Array[String] = [
 	]
 	
 func _ready():
-	$Texture.scale = Vector2(0.30, 0.35)
+	$Texture.scale = Vector2(0.20, 0.25)
 	$Texture.texture = load(tower_textures.pick_random())

@@ -24,6 +24,30 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Full Moon" : [
+		"res://assets/Cards/Full Moon/art_FullMoon.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"+1 To all player's Food. You gain 3 creatures.",
+		0, 0, 0,
+		true
+	],
+	
+	"Portcullis" : [
+		"res://assets/Cards/Portcullis/art_Portcullis.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+5 Wall +1 Food.",
+		9, 0, 0,
+		true
+	],
+	
+	"New Equipment" : [
+		"res://assets/Cards/New Equipment/art_NewEquipment.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+2 Mine.",
+		6, 0, 0,
+		true
+	],
+	
 	"Fairy" : [
 		"res://assets/Cards/Fairy/art_fairy_resized.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
@@ -72,6 +96,14 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Rabbid Sheep" : [
+		"res://assets/Cards/Rabbid Sheep/art_RabbidSheep.jpg",
+		"res://assets/Borders/Creature_Boarder2.png",
+		"6 Damage Enemy losses 3 creatures.",
+		0, 0, 5,
+		true
+	],
+	
 	"Ogre" : [
 		"res://assets/Cards/Ogre/art_Ogre.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
@@ -115,7 +147,7 @@ var card_map: Dictionary = {
 	"Elven Archer" : [
 		"res://assets/Cards/Elven Archer/art_ElvenArcher.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
-		"If wall > enemy wall, 7 damage to enemy tower, else 7 damage.",
+		"If wall bigger than enemy wall, 7 damage to enemy tower, else 7 damage.",
 		0, 0, 10,
 		true
 	],
@@ -152,11 +184,27 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Friendly Terrain" : [
+		"res://assets/Cards/Friendly Terrain/art_FriendlyTerrain.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+1 Wall, Play again!",
+		5, 0, 0,
+		true
+	],
+	
 	"Foundation" : [
 		"res://assets/Cards/Foundation/art_Foundation.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
 		"If player wall is 0, +6 Wall, +3 if otherwise.",
 		3, 0, 0,
+		true
+	],
+	
+	"Forced Labor" : [
+		"res://assets/Cards/Forced Labor/art_ForcedLabor.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+9 Wall, Lose 5 creatures.",
+		6, 0, 0,
 		true
 	],
 	
@@ -368,11 +416,43 @@ var card_map: Dictionary = {
 		true
 	],
 	
+	"Power Burn" : [
+		"res://assets/Cards/Power Burn/art_PowerBurn.jpg",
+		"res://assets/Borders/Mana_Boarder.png",
+		"10 Damage to your Tower, +2 Magic.",
+		0, 3, 0,
+		true
+	],
+	
+	"Solar Flare" : [
+		"res://assets/Cards/Solar Flare/art_SolarFlare.jpg",
+		"res://assets/Borders/Creature_Boarder.png",
+		"+2 Tower. 2 Damage to enemy tower.",
+		0, 4, 0,
+		true
+	],
+	
+	"Sanctuary" : [
+		"res://assets/Cards/Sanctuary/art_Sanctuary.jpg",
+		"res://assets/Borders/Resource_Boarder.png",
+		"+10 Tower, +5 Wall gain 5 creatures.",
+		0, 15, 0,
+		true
+	],
+	
 	"Empathy Gem" : [
 		"res://assets/Cards/Empathy Gem/art_EmpathyGem.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
 		"+8 Tower, +1 Food.",
 		0, 14, 0,
+		true
+	],
+	
+	"Dragon's Eye" : [
+		"res://assets/Cards/Dragon's Eye/art_DragonsEye.jpg",
+		"res://assets/Borders/Mana_Boarder2.png",
+		"+20 Tower.",
+		0, 21, 0,
 		true
 	],
 	
@@ -515,7 +595,7 @@ var card_map: Dictionary = {
 	"Mother Lode" : [
 		"res://assets/Cards/Mother Lode/art_MotherLode.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
-		"If Mine < enemy Mine +2 Mine, else +1 Mine.",
+		"If Mine less than enemy Mine +2 Mine, else +1 Mine.",
 		4, 0, 0,
 		true
 	],
@@ -539,7 +619,7 @@ var card_map: Dictionary = {
 	"Unicorn" : [
 		"res://assets/Cards/Unicorn/art_Unicorn.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
-		"If magic > enemy magic, 12 damage, else 8 damage.",
+		"If magic bigger than enemy magic, 12 damage, else 8 damage.",
 		0, 0, 9,
 		true
 	],

@@ -7,13 +7,13 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_wgxtx"]
 font = ExtResource("4_4g0an")
-font_size = 24
+font_size = 20
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.917647)
 
 [sub_resource type="LabelSettings" id="LabelSettings_fb84u"]
 font = ExtResource("4_4g0an")
-font_size = 24
+font_size = 20
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.886275)
 
@@ -44,10 +44,10 @@ script = ExtResource("1_t861j")
 [node name="TowerTop" type="Sprite2D" parent="."]
 modulate = Color(0.785201, 0.819578, 1, 1)
 position = Vector2(6.10352e-05, 0)
-scale = Vector2(0.3, 0.31)
+scale = Vector2(0.2, 0.207)
 
 [node name="WallTop" type="Sprite2D" parent="."]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_0x0k3")
 
 [node name="Tower" type="Node2D" parent="."]
@@ -92,3 +92,4 @@ offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_okgfx")
 
 [node name="Bottom" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)

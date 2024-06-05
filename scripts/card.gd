@@ -49,6 +49,26 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.resources -= 8
 				end_turn()
 				return true
+		"Full Moon":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.food += 1
+				player.creatures += 3
+				end_turn()
+				return true
+		"Portcullis":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 5
+				player.food += 1
+				end_turn()
+				return true
+		"New Equipment":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mine += 2
+				end_turn()
+				return true
 		"Fairy":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -86,6 +106,13 @@ func play(player: Player, enemy: Player) -> bool:
 				pay_for_card(player)
 				damage(enemy, 6)
 				damage(player, 3)
+				end_turn()
+				return true
+		"Rabbid Sheep":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 6)
+				enemy.creatures -= 3
 				end_turn()
 				return true
 		"Orc":
@@ -164,6 +191,12 @@ func play(player: Player, enemy: Player) -> bool:
 				player.tower += 3
 				end_turn()
 				return true
+		"Friendly Terrain":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 1
+				continue_turn(player)
+				return true
 		"Foundation":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -171,6 +204,13 @@ func play(player: Player, enemy: Player) -> bool:
 					player.wall += 6
 				else:
 					player.wall += 3
+				end_turn()
+				return true
+		"Forced Labor":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.wall += 9
+				player.creatures -= 5
 				end_turn()
 				return true
 		"Basic Wall":
@@ -362,6 +402,28 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.tower += 1
 				end_turn()
 				return true
+		"Power Burn":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower -= 10
+				player.magic += 2
+				end_turn()
+				return true
+		"Solar Flare":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 2
+				enemy.tower -= 2
+				end_turn()
+				return true
+		"Sanctuary":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 10
+				player.wall += 5
+				player.creatures += 5
+				end_turn()
+				return true
 		"Prism":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -373,6 +435,12 @@ func play(player: Player, enemy: Player) -> bool:
 				pay_for_card(player)
 				player.tower += 8
 				player.food += 1
+				end_turn()
+				return true
+		"Dragon's Eye":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 20
 				end_turn()
 				return true
 		"Diamond":

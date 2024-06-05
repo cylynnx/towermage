@@ -2,8 +2,11 @@ extends Node2D
 
 const MAX_BUILDING_HEIGHT = 50
 const CARD_OFFSET_X  = 235
+const CARD_X_CONST = 100
 const CARD_Y_CONST = 730
-const PLAYER_CARD_NUM = 4
+const TOWER_Y_CONST = 800
+const OFFSET_Y = 6
+const PLAYER_CARD_NUM = 5
 const TOWER_TOP = 0
 const WALL_TOP = 1
 const TOWER = 2
@@ -30,7 +33,6 @@ var last_card: Node2D = null
 var deck: Deck = null
 var enemy_deck: Deck = null
 var new_slice: Node2D = null
-var card_base_x: int = 200
 var shift_cards: bool = false
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
@@ -87,8 +89,8 @@ func init_buildings(players: Array[Player]) -> void:
 			_tower_scene = red_tower_scene
 		else:
 			_tower_scene = blue_tower_scene
-		init_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
-		init_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 7, _player.wall)
+		init_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 32, _player.tower)
+		init_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 5, _player.wall)
 
 func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, top_offset: float, init_hp: int):
 	for i in range(init_hp):
@@ -96,9 +98,9 @@ func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, to
 		new_slice.position = Vector2(offset.x, 900)
 		building.add_child(new_slice)
 		var t = create_tween()
-		t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.5)
-		offset.y += 8
-		top.position = Vector2(offset.x, 700 - offset.y - top_offset)
+		t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.5)
+		offset.y += OFFSET_Y
+		top.position = Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset)
 		
 func update_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
@@ -107,8 +109,8 @@ func update_buildings(players: Array[Player]) -> void:
 			_tower_scene = red_tower_scene
 		else:
 			_tower_scene = blue_tower_scene
-		update_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 7, _player.wall)
-		update_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 48, _player.tower)
+		update_building(_player.get_child(WALL), wall_scene, _player.wall_offset, _player.get_child(WALL_TOP), 5, _player.wall)
+		update_building(_player.get_child(TOWER), _tower_scene, _player.tower_offset, _player.get_child(TOWER_TOP), 32, _player.tower)
 	
 func update_building(building: Node2D, scene: PackedScene, offset, top_piece: Node2D, top_offset: float, hp: int):
 	# TODO: refactor this by creating two functions.
@@ -128,7 +130,7 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 					$BuildingCrumbles.position = slice.position
 					$BuildingCrumbles.emitting = true
 				slice.queue_free()
-			offset.y -= 8
+			offset.y -= OFFSET_Y
 		total = building.get_child_count()
 		
 	if dif < 0:
@@ -139,14 +141,14 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 			# Visually cap the tower or wall at 50 nodes tall
 			if total > MAX_BUILDING_HEIGHT:
 				# Unnecessary tween just to shut up the debugger
-				_t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.03)
+				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
 				break
 			building.add_child(new_slice)
-			_t.tween_property(new_slice, "position", Vector2(offset.x, 700 - offset.y), 0.2)
-			offset.y += 8
+			_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.2)
+			offset.y += OFFSET_Y
 			total += 1
 	var t = create_tween()
-	t.tween_property(top_piece, "position", Vector2(offset.x, 700 - offset.y - top_offset), 0.2) # change 48 to variable
+	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(order: int) -> Card:
 	var new_card: Card = deck.cards.pop_back()
@@ -157,7 +159,7 @@ func draw_card(order: int) -> Card:
 	var tween = create_tween() 
 	$PlayerCards.add_child(new_card)
 	# Move the card into position
-	tween.tween_property(new_card, "position", Vector2(card_base_x + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
+	tween.tween_property(new_card, "position", Vector2(CARD_X_CONST + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 	return new_card
 
 func draw_custom_card(card_name: String):
@@ -175,12 +177,12 @@ func debug_get_card_info(card) -> void:
 		return
 				
 	if card:
-		var debug_text: String = card.card_name
+		var info_string: String = card.card_name
 		#debug_text += " Order: " + str(card.card_order)
-		debug_text += ": " + card.card_description
-		$UI/RichTextLabel.text = debug_text
+		info_string += ": " + card.card_description
+		$UI/CardInfo.text = info_string
 	else:
-		$UI/RichTextLabel.text = ""
+		$UI/CardInfo.text = ""
 		
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
@@ -261,11 +263,11 @@ func update_player_hand():
 			if not card.is_queued_for_deletion():
 				var tween = create_tween()
 				tween.set_parallel(true)
-				tween.tween_property(card, "position", Vector2(card_base_x + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
+				tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 		shift_cards = false
 		
 	if Globals.cards_on_screen < PLAYER_CARD_NUM:
-		draw_card(4)
+		draw_card(5)
 		Globals.cards_on_screen += 1
 
 func update_game() -> void:
@@ -299,6 +301,8 @@ func modify_hand_color(clr: Color) -> void:
 			t.tween_property(_card, "modulate", clr, 0.2)
 			
 func can_play_card() -> bool:
+	if not is_instance_valid(Globals.current_card):
+		return false
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
 func discard_card(card: Card) -> void:

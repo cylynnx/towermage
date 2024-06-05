@@ -16,5 +16,5 @@ var wall_textures: Array[String] = [
 ]
 
 func _ready():
-	$Texture.scale = Vector2(0.15, 0.25)
+	$Texture.scale = Vector2(0.10, 0.20)
 	$Texture.texture = load(wall_textures.pick_random())
