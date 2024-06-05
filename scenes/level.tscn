@@ -15,8 +15,8 @@ shadow_color = Color(0, 0, 0, 0.956863)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3asse"]
 font = ExtResource("3_3co5g")
-font_size = 18
-font_color = Color(0.94931, 0.604664, 6.16074e-06, 1)
+font_size = 20
+font_color = Color(0.41132, 0.80579, 1.54018e-06, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.858824)
 
