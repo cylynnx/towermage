@@ -15,16 +15,15 @@ const HALF_DARK = Color(0.5, 0.5, 0.5, 0.9)
 const FULL_BRIGHT = Color(1, 1, 1, 1)
 # Game Settings
 @export var settings_particles: bool = false
+@export var tower_win_condition: int = 50
 # ----------------------------------
 var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
 var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
 var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
 var player_scene: PackedScene = preload("res://scenes/player.tscn")
-var gameover_scene: PackedScene = preload("res://scenes/game_over.tscn")
 
 signal GameOver(winner)
-var gameover: GameOver
 
 var player: Player = null
 var enemy: Player = null
@@ -38,12 +37,11 @@ var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
 var turn_pause_timer_ended: bool = true
-var force_game_over: bool = false
+var game_over: bool = false
 
 func _ready():
 	fade_in_scene()	
 	init_players()
-	init_game_over()
 	deck = create_deck(player)
 	enemy_deck = create_deck(enemy)
 	init_player_hand()
@@ -52,19 +50,15 @@ func _ready():
 	#debug_card("Ruby")
 	
 func fade_in_scene():
-	modulate = Color(0.4, 0.3, 0.2, 1)
+	modulate = Color(0.3, 0.3, 0.2, 1)
 	var init_tween = create_tween()
-	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1.8)
+	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1)
 
 func init_players():
 	player = create_player(0)
 	enemy = create_player(1)
 	Globals.current_player = player
 	Globals.current_enemy = enemy
-
-func init_game_over():
-	gameover = gameover_scene.instantiate() as GameOver
-	connect("GameOver", gameover.set_winner)
 	
 func create_player(player_id: int) -> Player:
 	var _player = player_scene.instantiate() as Player
@@ -278,10 +272,17 @@ func update_game() -> void:
 		fade_out_card = false
 		
 	message()
+	if game_over:
+		return
+		
 	next_turn()
 	check_game_state()
 
 func message() -> void:
+	if game_over:
+		$UI/Msg.text = "GAME OVER"
+		return
+		
 	if Globals.current_player == player and player.discard_flag:
 		$UI/Msg.text = "DISCARD CARD!"
 	elif Globals.current_player == player:
@@ -301,12 +302,16 @@ func modify_hand_color(clr: Color) -> void:
 			t.tween_property(_card, "modulate", clr, 0.2)
 			
 func can_play_card() -> bool:
+	if game_over:
+		return false
+		
 	if not is_instance_valid(Globals.current_card):
 		return false
+		
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
 func discard_card(card: Card) -> void:
-	if can_play_card():
+	if can_play_card() and not game_over:
 		delete_card(card)
 		update_player_hand()
 	
@@ -356,17 +361,13 @@ func hand_over_turn() -> void:
 	$Timers/TurnPauseTimer.start()
 	
 func check_game_state():
-	if force_game_over:
-		emit_signal("GameOver", player)
-		return
-		
 	if player.tower <= 0:
 		emit_signal("GameOver", enemy)
 	elif enemy.tower <= 0:
 		emit_signal("GameOver", player)
-	elif player.tower >= 50:
+	elif player.tower >= tower_win_condition:
 		emit_signal("GameOver", player)
-	elif enemy.tower >= 50:
+	elif enemy.tower >= tower_win_condition:
 		emit_signal("GameOver", enemy)
 		
 func _physics_process(_delta):
@@ -380,5 +381,5 @@ func _on_turn_pause_timer_timeout():
 	turn_pause_timer_ended = true
 
 func _on_game_over(_winner):
-	get_tree().root.add_child(gameover)
-	queue_free()
+	game_over = true
+	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
