@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
 [ext_resource type="Texture2D" uid="uid://b7q2f8gjgnj3r" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_1.jpg" id="2_x4bcc"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
-[ext_resource type="AudioStream" uid="uid://dtdw3ovcc1n7u" path="res://assets/sounds/you-lose-good-day-sir_j16FzT6.mp3" id="4_8f2pw"]
-[ext_resource type="AudioStream" uid="uid://pgc5gcx04vyd" path="res://assets/sounds/you-win-tekken.mp3" id="5_mdpd3"]
+[ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
+[ext_resource type="AudioStream" uid="uid://cmkn8fgqakuju" path="res://assets/sounds/victory_6.mp3" id="5_bij0n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_go3km"]
 font = ExtResource("3_3co5g")
@@ -114,12 +114,12 @@ grow_vertical = 2
 label_settings = SubResource("LabelSettings_0x5cg")
 
 [node name="YouLose" type="AudioStreamPlayer" parent="Audio" index="0"]
-stream = ExtResource("4_8f2pw")
-volume_db = -19.676
+stream = ExtResource("4_im8th")
+volume_db = -2.811
 pitch_scale = 0.95
 
 [node name="YouWin" type="AudioStreamPlayer" parent="Audio" index="1"]
-stream = ExtResource("5_mdpd3")
+stream = ExtResource("5_bij0n")
 volume_db = -10.306
 pitch_scale = 1.07
 

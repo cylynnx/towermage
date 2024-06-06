@@ -291,6 +291,7 @@ func message() -> void:
 		$UI/Msg.text ="ENEMY'S TURN!"
 		
 func fade_card(card: Card, rate: float) -> void:
+	if is_instance_valid(card):
 		var t = create_tween()
 		t.tween_property(card, "modulate", Color(1, 1, 1, 0), rate)
 
@@ -298,7 +299,7 @@ func modify_hand_color(clr: Color) -> void:
 	var t = create_tween()
 	t.set_parallel()
 	for _card in $PlayerCards.get_children():
-		if not _card.is_queued_for_deletion():
+		if not _card.is_queued_for_deletion() and is_instance_valid(_card):
 			t.tween_property(_card, "modulate", clr, 0.2)
 			
 func can_play_card() -> bool:
@@ -392,3 +393,6 @@ func _on_game_over(_winner):
 		$UI/Winner.text = "It's a draw!"
 		
 	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
+	
+	for c in $EnemyCard.get_children():
+		c.queue_free()
