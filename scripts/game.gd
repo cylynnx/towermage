@@ -382,4 +382,13 @@ func _on_turn_pause_timer_timeout():
 
 func _on_game_over(_winner):
 	game_over = true
+	if _winner == player:
+		$UI/Winner.text = "You win!"
+		$Audio/YouWin.play()
+	elif _winner == enemy:
+		$UI/Winner.text = "You lose."
+		$Audio/YouLose.play()
+	else:
+		$UI/Winner.text = "It's a draw!"
+		
 	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
