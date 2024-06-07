@@ -345,8 +345,10 @@ func _input(event):
 	if event.is_action_released("menu"):
 		if visible:
 			visible = false
+			get_tree().root.get_child(1).visible = true
 		else:
 			visible = true
+			get_tree().root.get_child(1).visible = false
 			
 func hand_over_turn() -> void:
 	if Globals.current_player == player:

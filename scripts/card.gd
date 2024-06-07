@@ -42,6 +42,14 @@ func play(player: Player, enemy: Player) -> bool:
 				player.food += 2
 				end_turn()
 				return true
+				
+		"Husbandry":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.food += 1
+				end_turn()
+				return true
+				
 		"Brick Shortage":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -121,6 +129,12 @@ func play(player: Player, enemy: Player) -> bool:
 				damage(enemy, 5)
 				end_turn()
 				return true
+		"Slasher":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 6)
+				end_turn()
+				return true
 		"Ogre" :
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -168,6 +182,15 @@ func play(player: Player, enemy: Player) -> bool:
 					damage(enemy, 6)
 				else:
 					damage(enemy, 10)
+				end_turn()
+				return true
+		"Corrosive Cloud":
+			if can_afford_card(player):
+				pay_for_card(player)
+				if enemy.wall > 0:
+					damage(enemy, 10)
+				else:
+					damage(enemy, 7)
 				end_turn()
 				return true
 		"Work Overtime":
@@ -373,11 +396,25 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.tower -= 1
 				continue_turn(player)
 				return true
+		"Crumblestone":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.tower += 5
+				enemy.resources -= 6
+				end_turn()
+				return true
 		"Gem Spear":
 			if can_afford_card(player):
 				pay_for_card(player)
 				enemy.tower -= 4
 				end_turn()
+				return true
+		"Lucky Cache":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.mana += 2
+				player.resources += 2
+				continue_turn(player)
 				return true
 		"Pearl of Wisdom":
 			if can_afford_card(player):
@@ -491,6 +528,13 @@ func play(player: Player, enemy: Player) -> bool:
 				enemy.tower -= 3
 				end_turn()
 				return true
+		"Shatterer":
+			if can_afford_card(player):
+				pay_for_card(player)
+				player.magic -= 1
+				enemy.tower -= 9
+				end_turn()
+				return true
 		"Mad Cow Disease":
 			if can_afford_card(player):
 				pay_for_card(player)
@@ -585,6 +629,14 @@ func play(player: Player, enemy: Player) -> bool:
 				pay_for_card(player)
 				player.tower += 11
 				player.wall -= 8
+				end_turn()
+				return true
+		"Dragon":
+			if can_afford_card(player):
+				pay_for_card(player)
+				damage(enemy, 20)
+				enemy.mana -= 10
+				enemy.food -= 1
 				end_turn()
 				return true
 		_:

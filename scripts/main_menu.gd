@@ -15,4 +15,5 @@ func _on_new_game_button_down():
 		
 	level = level_scene.instantiate()
 	get_tree().root.add_child(level)
+	visible = false
 	
