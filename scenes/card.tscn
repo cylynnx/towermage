@@ -45,7 +45,7 @@ offset_right = -43.0
 offset_bottom = 245.0
 label_settings = SubResource("LabelSettings_dacr7")
 
-[node name="DiscardedLabed" type="Label" parent="."]
+[node name="DiscardedLabel" type="Label" parent="."]
 visible = false
 offset_left = -51.0
 offset_top = -100.0
@@ -53,6 +53,17 @@ offset_right = 169.0
 offset_bottom = -45.0
 rotation = 0.785398
 text = "DISCARDED"
+label_settings = SubResource("LabelSettings_251pc")
+
+[node name="DiscardThisCardLabel" type="Label" parent="."]
+visible = false
+offset_left = -85.0
+offset_top = -100.0
+offset_right = 135.0
+offset_bottom = 71.0
+text = "DISCARD
+    THIS
+   CARD"
 label_settings = SubResource("LabelSettings_251pc")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

@@ -44,7 +44,6 @@ var creatures: int = 5:
 	set(n):
 		creatures = clamp(n, 0, 999)
 
-var discard_flag: bool = false
 var playing_a_discard: bool = false
 
 func _ready():

@@ -10,11 +10,14 @@ var creature_cost: int = 0
 var can_be_discarded: bool = true
 var card_order: int = 0
 
-func show_discard_label() -> void:
-	$DiscardedLabed.visible = true
+func show_discarded_label() -> void:
+	$DiscardedLabel.visible = true
+	
+func show_discard_this_card_label() -> void:
+	$DiscardThisCardLabel.visible = true
 
-func hide_discard_label() -> void:
-	pass
+func hide_discard_this_card_label() -> void:
+	$DiscardThisCardLabel.visible = false
 
 func damage(enemy: Player, dmg: int):
 	var dmg_buffer: int = dmg
@@ -98,7 +101,7 @@ func play(player: Player, enemy: Player) -> bool:
 		"Elven Scout":
 			if can_afford_card(player):
 				pay_for_card(player)
-				player.discard_flag = true # Discard 1 card
+				Globals.discard_flag = true # Discard 1 card
 				continue_turn(player, true) # End turn after discard
 				return true
 		"Goblin Archers":
@@ -470,7 +473,7 @@ func play(player: Player, enemy: Player) -> bool:
 		"Prism":
 			if can_afford_card(player):
 				pay_for_card(player)
-				player.discard_flag = true
+				Globals.discard_flag = true
 				continue_turn(player)
 				return true
 		"Empathy Gem":
@@ -650,12 +653,17 @@ func play(player: Player, enemy: Player) -> bool:
 	return false
 
 func _on_area_2d_mouse_entered():
+	if Globals.discard_flag:
+		show_discard_this_card_label()
+		
 	Globals.current_card = self
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.1,1.1), 0.3)
 	$Sound/CardSelected.playing = true
 	
 func _on_area_2d_mouse_exited():
+	if Globals.discard_flag:
+		hide_discard_this_card_label()
 	var tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1, 1), 0.3)
 	$Sound/CardSelected.stop()

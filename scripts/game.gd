@@ -47,12 +47,12 @@ func _ready():
 	init_player_hand()
 	init_buildings([player, enemy])
 	update_player_ui([player, enemy])
-	#debug_card("Ruby")
+	#debug_card("Elven Scout")
 	
 func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
 	var init_tween = create_tween()
-	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 1)
+	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
 
 func init_players():
 	player = create_player(0)
@@ -283,7 +283,7 @@ func message() -> void:
 		$UI/Msg.text = "GAME OVER"
 		return
 		
-	if Globals.current_player == player and player.discard_flag:
+	if Globals.current_player == player and Globals.discard_flag:
 		$UI/Msg.text = "DISCARD CARD!"
 	elif Globals.current_player == player:
 		$UI/Msg.text = "YOUR TURN!"
@@ -313,7 +313,8 @@ func can_play_card() -> bool:
 	
 func discard_card(card: Card) -> void:
 	if can_play_card() and not game_over:
-		card.show_discard_label()
+		card.hide_discard_this_card_label()
+		card.show_discarded_label()
 		card.scale = Vector2(1,1)
 		var tween = create_tween()
 		await tween.tween_property(card, "position", card.position + Vector2(0, 400), 1).finished
@@ -322,20 +323,20 @@ func discard_card(card: Card) -> void:
 	
 func _input(event):
 	if event.is_action_released("left_click"):
-		if player.discard_flag:
+		if Globals.discard_flag:
 			# Some cards will ask to discard one card and then the turn ends
 			# while other cards will allow to play again after discarding.
 			# I'm using player.playing_a_discard bool flag to differentiate
 			# between these two scenarios.
 			if player.playing_a_discard:
 				discard_card(Globals.current_card)
-				player.discard_flag = false
+				Globals.discard_flag = false
 				player.playing_a_discard = false
 				hand_over_turn()
 				return
 			else:
 				discard_card(Globals.current_card)
-				player.discard_flag = false
+				Globals.discard_flag = false
 				return
 			
 		if can_play_card():
