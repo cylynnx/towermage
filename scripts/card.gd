@@ -10,6 +10,12 @@ var creature_cost: int = 0
 var can_be_discarded: bool = true
 var card_order: int = 0
 
+func show_discard_label() -> void:
+	$DiscardedLabed.visible = true
+
+func hide_discard_label() -> void:
+	pass
+
 func damage(enemy: Player, dmg: int):
 	var dmg_buffer: int = dmg
 	if enemy.wall > 0:

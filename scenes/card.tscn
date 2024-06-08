@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bb1x0mpjrfktd"]
+[gd_scene load_steps=6 format=3 uid="uid://bb1x0mpjrfktd"]
 
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_hoqmk"]
 [ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="2_6ip5h"]
@@ -9,6 +9,12 @@ size = Vector2(129.406, 178.469)
 [sub_resource type="LabelSettings" id="LabelSettings_dacr7"]
 font_size = 25
 shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_251pc"]
+font_size = 40
+font_color = Color(0.999745, 0.116385, 0.151919, 0.8)
+shadow_size = 10
 shadow_color = Color(0, 0, 0, 1)
 
 [node name="Card" type="Node2D"]
@@ -38,6 +44,16 @@ offset_top = 108.0
 offset_right = -43.0
 offset_bottom = 245.0
 label_settings = SubResource("LabelSettings_dacr7")
+
+[node name="DiscardedLabed" type="Label" parent="."]
+visible = false
+offset_left = -51.0
+offset_top = -100.0
+offset_right = 169.0
+offset_bottom = -45.0
+rotation = 0.785398
+text = "DISCARDED"
+label_settings = SubResource("LabelSettings_251pc")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

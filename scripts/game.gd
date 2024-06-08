@@ -313,6 +313,10 @@ func can_play_card() -> bool:
 	
 func discard_card(card: Card) -> void:
 	if can_play_card() and not game_over:
+		card.show_discard_label()
+		card.scale = Vector2(1,1)
+		var tween = create_tween()
+		await tween.tween_property(card, "position", card.position + Vector2(0, 400), 1).finished
 		delete_card(card)
 		update_player_hand()
 	
