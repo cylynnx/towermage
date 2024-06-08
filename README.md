@@ -92,4 +92,8 @@ For any questions or inquiries regarding the license, please contact [winstonese
 
 If you have any questions, suggestions, or feedback, feel free to contact us at winstoneser@gmail.com
 
+## Links
+
+Support the project on [ko-fi](https://ko-fi.com/cylynnx)
+
 ***Enjoy playing Towermage!***
