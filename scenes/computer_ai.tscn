@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw6hu3uhrsqyn"]
+
+[ext_resource type="Script" path="res://scripts/computer_ai.gd" id="1_f6o3c"]
+
+[node name="ComputerAI" type="Node2D"]
+script = ExtResource("1_f6o3c")

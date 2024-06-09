@@ -203,7 +203,7 @@ func delete_enemy_card() -> void:
 		$EnemyCard.get_child(0).queue_free()
 		
 func move_card_to_mid_screen(card: Card) -> void:
-	if card:
+	if is_instance_valid(card):
 		var t = create_tween()
 		t.tween_property(card, "position", Vector2(800, 400), 0.5)
 		enemy_card_on_screen = true
@@ -314,7 +314,7 @@ func can_play_card() -> bool:
 	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
 	
 func discard_card(card: Card) -> void:
-	if can_play_card() and not game_over:
+	if can_play_card():
 		card.hide_discard_this_card_label()
 		card.show_discarded_label()
 		card.scale = Vector2(1,1)
