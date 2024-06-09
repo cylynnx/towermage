@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bb1x0mpjrfktd"]
+[gd_scene load_steps=9 format=3 uid="uid://bb1x0mpjrfktd"]
 
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_hoqmk"]
 [ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="2_6ip5h"]
+[ext_resource type="AudioStream" uid="uid://b5q482u3weujp" path="res://assets/sounds/warnings/no_mana.mp3" id="3_h471e"]
+[ext_resource type="AudioStream" uid="uid://vwrb5jsi7xw8" path="res://assets/sounds/warnings/no_resources.mp3" id="4_ac5su"]
+[ext_resource type="AudioStream" uid="uid://dj36xlr2in2ll" path="res://assets/sounds/warnings/no_creatures.mp3" id="5_fc2hl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6xa26"]
 size = Vector2(129.406, 178.469)
@@ -37,6 +40,15 @@ shape = SubResource("RectangleShape2D_6xa26")
 [node name="CardSelected" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("2_6ip5h")
 volume_db = -18.739
+
+[node name="NoMana" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("3_h471e")
+
+[node name="NoResources" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("4_ac5su")
+
+[node name="NoCreatures" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("5_fc2hl")
 
 [node name="Resource_Cost" type="Label" parent="."]
 offset_left = -100.0

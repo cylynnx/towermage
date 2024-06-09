@@ -699,24 +699,6 @@ var card_map: Dictionary = {
 }
 
 var cards: Array[Card] = []
-
-func get_cost(card: Card) -> String:
-	if card.resource_cost:
-		return str(card.resource_cost)
-	elif card.mana_cost:
-		return str(card.mana_cost)
-	elif card.creature_cost:
-		return str(card.creature_cost)
-	return "F"
-	
-func get_color(card: Card) -> Color:
-	if card.resource_cost:
-		return Color(0.853, 0.344, 0)
-	elif card.mana_cost:
-		return Color(0.137, 0.447, 0.78)
-	elif card.creature_cost:
-		return Color(0.89, 0.58, 0.878)
-	return Color(0,0,0,0)
 	
 func create(belongs_to: Player):
 	for i in range(DECK_SIZE):
@@ -735,10 +717,10 @@ func create(belongs_to: Player):
 		card.mana_cost = card_map[card.card_name][MANA_COST]
 		card.creature_cost = card_map[card.card_name][CREATURE_COST]
 		card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
-		txt.text = get_cost(card)
+		txt.text = card.get_cost_string()
 		if int(txt.text) >= 10:
 			txt.position -= Vector2(10, 0)
-		txt.modulate = get_color(card)
+		txt.modulate = card.get_resource_type_color()
 		cards.append(card)
 		
 func create_single_card(_name: String, _belongs_to: Player) -> Card:
@@ -757,8 +739,8 @@ func create_single_card(_name: String, _belongs_to: Player) -> Card:
 	card.mana_cost = card_map[card.card_name][MANA_COST]
 	card.creature_cost = card_map[card.card_name][CREATURE_COST]
 	card.can_be_discarded = card_map[card.card_name][CAN_DISCARD]
-	txt.text = get_cost(card)
+	txt.text = card.get_cost_string()
 	if int(txt.text) >= 10:
 		txt.position -= Vector2(10, 0)
-	txt.modulate = get_color(card)
+	txt.modulate = card.get_resource_type_color()
 	return card

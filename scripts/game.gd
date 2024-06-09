@@ -234,6 +234,8 @@ func player_move() -> void:
 		#Globals.turn_ended = true
 		if Globals.turn_ended:
 			hand_over_turn()
+	else:
+		Globals.current_card.play_resource_warning_sound()
 		
 func next_turn():
 	if Globals.current_player == player and turn_pause_timer_ended:

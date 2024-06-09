@@ -31,6 +31,42 @@ func damage(enemy: Player, dmg: int):
 func can_afford_card(player: Player) -> bool:
 		return player.resources >= resource_cost and player.mana >= mana_cost and player.creatures >= creature_cost
 
+func get_cost_string() -> String:
+	if resource_cost:
+		return str(resource_cost)
+	elif mana_cost:
+		return str(mana_cost)
+	elif creature_cost:
+		return str(creature_cost)
+	return "Free"
+	
+func get_resource_type_string() -> String:
+	if resource_cost:
+		return "resources"
+	elif mana_cost:
+		return "mana"
+	elif creature_cost:
+		return "creatures"
+	return "Free"
+	
+func play_resource_warning_sound() -> void:
+	match get_resource_type_string():
+		"resources":
+			$Sound/NoResources.play()
+		"mana":
+			$Sound/NoMana.play()
+		"creatures":
+			$Sound/NoCreatures.play()
+	
+func get_resource_type_color() -> Color:
+	if resource_cost:
+		return Color(0.853, 0.344, 0)
+	elif mana_cost:
+		return Color(0.137, 0.447, 0.78)
+	elif creature_cost:
+		return Color(0.89, 0.58, 0.878)
+	return Color(0,0,0,0)
+
 func pay_for_card(player: Player) -> void:
 	player.resources -= resource_cost
 	player.mana -= mana_cost
@@ -51,7 +87,6 @@ func play(player: Player, enemy: Player) -> bool:
 				player.food += 2
 				end_turn()
 				return true
-				
 		"Husbandry":
 			if can_afford_card(player):
 				pay_for_card(player)
