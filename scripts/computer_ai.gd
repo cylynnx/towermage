@@ -8,8 +8,8 @@ var card_deck: Array[String]
 func pull_card():
 	pass
 	
-func _ready():
-	pass
-
+func initAI(enemy_type: String):
+	ai_type = enemy_type
+	
 func play_turn():
 	pass

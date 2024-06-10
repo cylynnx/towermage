@@ -21,16 +21,17 @@ var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
 var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
 var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
-var player_scene: PackedScene = preload("res://scenes/player.tscn")
+var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
+var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 
 signal GameOver(winner)
 
 var player: Player = null
-var enemy: Player = null
+var computer: Player = null
 
 var last_card: Node2D = null
 var deck: Deck = null
-var enemy_deck: Deck = null
+var computer_deck: Deck = null
 var new_slice: Node2D = null
 var shift_cards: bool = false
 var enemy_card_on_screen: bool = false
@@ -43,10 +44,10 @@ func _ready():
 	fade_in_scene()	
 	init_players()
 	deck = create_deck(player)
-	enemy_deck = create_deck(enemy)
+	computer_deck = create_deck(computer)
 	init_player_hand()
-	init_buildings([player, enemy])
-	update_player_ui([player, enemy])
+	init_buildings([player, computer])
+	update_player_ui([player, computer])
 	#debug_card("Elven Scout")
 	
 func fade_in_scene():
@@ -55,16 +56,16 @@ func fade_in_scene():
 	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
 
 func init_players():
-	player = create_player(0)
-	enemy = create_player(1)
-	Globals.current_player = player
-	Globals.current_enemy = enemy
+	var human_player = human_player_scene.instantiate() as Player
+	player = human_player
+	add_child(player)
 	
-func create_player(player_id: int) -> Player:
-	var _player = player_scene.instantiate() as Player
-	_player.player_id = player_id
-	add_child(_player)
-	return _player
+	var computer_player = computer_player_scene.instantiate() as Player
+	computer = computer_player
+	add_child(computer_player)
+	
+	Globals.current_player = player
+	Globals.current_enemy = computer
 	
 func create_deck(belongs_to: Player) -> Deck:
 	var _deck = deck_scene.instantiate() as Deck
@@ -79,7 +80,7 @@ func init_player_hand():
 func init_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
 	for _player in players:
-		if _player.player_id:
+		if _player is ComputerPlayer:
 			_tower_scene = red_tower_scene
 		else:
 			_tower_scene = blue_tower_scene
@@ -99,7 +100,7 @@ func init_building(building: Node2D, scene: PackedScene, offset, top: Node2D, to
 func update_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
 	for _player in players:
-		if _player.player_id:
+		if _player is ComputerPlayer:
 			_tower_scene = red_tower_scene
 		else:
 			_tower_scene = blue_tower_scene
@@ -211,16 +212,16 @@ func move_card_to_mid_screen(card: Card) -> void:
 		
 func ai_move() -> void:
 	# TODO: Make an actual AI opponent
-	var _card: Card = enemy_deck.cards.pop_back()
+	var _card: Card = computer_deck.cards.pop_back()
 	if not _card:
 		return
 	if _card.play(Globals.current_player, Globals.current_enemy):
 		_card.position = Vector2(1600, 500)
 		$EnemyCard.add_child(_card)
 		move_card_to_mid_screen(_card)
-	update_resources([player, enemy])
-	update_buildings([player, enemy])
-	update_player_ui([player, enemy])
+	update_resources([player, computer])
+	update_buildings([player, computer])
+	update_player_ui([player, computer])
 	Globals.turn_ended = true
 	if Globals.turn_ended:
 		hand_over_turn()
@@ -229,8 +230,8 @@ func player_move() -> void:
 	if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
 		delete_card(Globals.current_card)
 		update_player_hand()
-		update_buildings([player, enemy])
-		update_player_ui([player, enemy])
+		update_buildings([player, computer])
+		update_player_ui([player, computer])
 		#Globals.turn_ended = true
 		if Globals.turn_ended:
 			hand_over_turn()
@@ -241,7 +242,7 @@ func next_turn():
 	if Globals.current_player == player and turn_pause_timer_ended:
 		turn_pause_timer_ended = false
 		
-	elif Globals.current_player == enemy and turn_pause_timer_ended:
+	elif Globals.current_player == computer and turn_pause_timer_ended:
 		delete_enemy_card()
 		turn_pause_timer_ended = false
 		ai_move()
@@ -289,7 +290,7 @@ func message() -> void:
 		$UI/Msg.text = "DISCARD CARD!"
 	elif Globals.current_player == player:
 		$UI/Msg.text = "YOUR TURN!"
-	elif Globals.current_player == enemy:
+	elif Globals.current_player == computer:
 		$UI/Msg.text ="ENEMY'S TURN!"
 		
 func fade_card(card: Card, rate: float) -> void:
@@ -359,26 +360,26 @@ func _input(event):
 			
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
-		Globals.current_player = enemy
+		Globals.current_player = computer
 		Globals.current_enemy = player
 		modify_hand_color(HALF_DARK)
 		Globals.turn_ended = false
 	else:
 		Globals.current_player = player
-		Globals.current_enemy = enemy
+		Globals.current_enemy = computer
 		modify_hand_color(FULL_BRIGHT)
 		Globals.turn_ended = false
 	$Timers/TurnPauseTimer.start()
 	
 func check_game_state():
 	if player.tower <= 0:
-		emit_signal("GameOver", enemy)
-	elif enemy.tower <= 0:
+		emit_signal("GameOver", computer)
+	elif computer.tower <= 0:
 		emit_signal("GameOver", player)
 	elif player.tower >= tower_win_condition:
 		emit_signal("GameOver", player)
-	elif enemy.tower >= tower_win_condition:
-		emit_signal("GameOver", enemy)
+	elif computer.tower >= tower_win_condition:
+		emit_signal("GameOver", computer)
 		
 func _physics_process(_delta):
 	debug_get_card_info(Globals.current_card)
@@ -395,7 +396,7 @@ func _on_game_over(_winner):
 	if _winner == player:
 		$UI/Winner.text = "You win!"
 		$Audio/YouWin.play()
-	elif _winner == enemy:
+	elif _winner == computer:
 		$UI/Winner.text = "You lose."
 		$Audio/YouLose.play()
 	else:
