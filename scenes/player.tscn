@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cb7rdg6qtckbr"]
+[gd_scene load_steps=9 format=3 uid="uid://cb7rdg6qtckbr"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_t861j"]
 [ext_resource type="Texture2D" uid="uid://d8q62v1b3u5o" path="res://assets/wall/top.png" id="3_0x0k3"]
 [ext_resource type="FontFile" uid="uid://drx584bwkcidg" path="res://assets/fonts/Magical Neverland/Magical Neverland.ttf" id="4_4g0an"]
-[ext_resource type="FontFile" uid="uid://c5pdj675uo2bm" path="res://assets/fonts/Bulletin Gothic/BulletinGothic.otf" id="6_2et44"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wgxtx"]
 font = ExtResource("4_4g0an")
@@ -18,22 +17,19 @@ shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.886275)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0lgpw"]
-font = ExtResource("6_2et44")
-font_size = 20
+font_size = 24
 font_color = Color(0.811765, 0.545098, 0, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.905882)
 
 [sub_resource type="LabelSettings" id="LabelSettings_wlp8c"]
-font = ExtResource("6_2et44")
-font_size = 20
+font_size = 24
 font_color = Color(0.286275, 0.509804, 1, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.929412)
 
 [sub_resource type="LabelSettings" id="LabelSettings_okgfx"]
-font = ExtResource("6_2et44")
-font_size = 20
+font_size = 24
 font_color = Color(0.882977, 0.450809, 0.863086, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.921569)
