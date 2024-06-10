@@ -22,7 +22,7 @@ class BuildingOffset:
 
 var tower: int = 20:
 	set(n):
-		tower = clamp(n, 0, 100)
+		tower = clamp(n, 0, 50)
 
 var wall: int = 5:
 	set(n):

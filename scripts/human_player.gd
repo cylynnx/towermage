@@ -2,6 +2,8 @@ extends Player
 class_name HumanPlayer
 
 func _ready():
+	tower = 10
+	
 	$TowerTop.texture = load("res://assets/WallTower/BlueSlices/Top.png")
 	tower_offset = BuildingOffset.new(70, 0)
 	wall_offset = BuildingOffset.new(170, 0)
