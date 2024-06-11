@@ -33,6 +33,7 @@ func create(belongs_to: Player):
 			txt.position -= Vector2(10, 0)
 		txt.modulate = card.get_resource_type_color()
 		cards.append(card)
+	return cards
 		
 func create_single_card(_name: String, _belongs_to: Player) -> Card:
 	var card = card_scene.instantiate() as Card

@@ -43,7 +43,6 @@ var game_over: bool = false
 func _ready():
 	fade_in_scene()	
 	init_players()
-	deck = create_deck(player)
 	computer_deck = create_deck(computer)
 	init_player_hand()
 	init_buildings([player, computer])
@@ -56,13 +55,12 @@ func fade_in_scene():
 	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
 
 func init_players():
-	var human_player = human_player_scene.instantiate() as Player
-	player = human_player
+	player = human_player_scene.instantiate() as Player
+	player.init_deck()
 	add_child(player)
 	
-	var computer_player = computer_player_scene.instantiate() as Player
-	computer = computer_player
-	add_child(computer_player)
+	computer = computer_player_scene.instantiate() as Player
+	add_child(computer)
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
@@ -146,7 +144,7 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(order: int) -> Card:
-	var new_card: Card = deck.cards.pop_back()
+	var new_card: Card = player.deck.pick_random()
 	if not new_card:
 		return null
 	new_card.card_order = order
