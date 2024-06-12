@@ -1,10 +1,14 @@
 extends Player
 class_name ComputerPlayer
 
+var packed_ai: PackedScene = preload("res://scenes/computer_ai.tscn")
+var ai: AI = null
 func play_card() -> Card:
 	return deck.create_random_card()
 	
 func _ready():
+	ai = packed_ai.instantiate() as AI
+	
 	$TowerTop.texture = load("res://assets/WallTower/RedSlices/Top.png")
 	tower_offset = BuildingOffset.new(1540, 0)
 	wall_offset = BuildingOffset.new(1440, 0)
