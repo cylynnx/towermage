@@ -2,7 +2,7 @@ class_name Player
 extends Node2D
 
 var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
-var deck: Array[Card] = []
+var deck: Deck = null
 
 # This class helps draw wall and tower in slices. May change later.
 class BuildingOffset:
@@ -42,3 +42,6 @@ var creatures: int = 5:
 #-------------------------------------------------------------------------------
 
 var playing_a_discard: bool = false
+
+func init_deck():
+	deck = deck_scene.instantiate() as Deck

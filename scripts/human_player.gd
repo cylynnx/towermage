@@ -1,9 +1,6 @@
 extends Player
 class_name HumanPlayer
 
-func init_deck():
-	deck = deck_scene.instantiate().create(self)
-	
 func _ready():
 	tower = 10
 	

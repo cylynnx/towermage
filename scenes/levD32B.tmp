@@ -1,0 +1,135 @@
+[gd_scene load_steps=10 format=3 uid="uid://dkk6mhwl7d20c"]
+
+[ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
+[ext_resource type="Texture2D" uid="uid://b7q2f8gjgnj3r" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_1.jpg" id="2_x4bcc"]
+[ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
+[ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
+[ext_resource type="AudioStream" uid="uid://cmkn8fgqakuju" path="res://assets/sounds/victory_6.mp3" id="5_bij0n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_go3km"]
+font = ExtResource("3_3co5g")
+font_size = 40
+font_color = Color(0.937255, 0.156863, 0.219608, 1)
+outline_size = 2
+outline_color = Color(0.176419, 0.176419, 0.176419, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.956863)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3asse"]
+font = ExtResource("3_3co5g")
+font_size = 20
+font_color = Color(0.41132, 0.80579, 1.54018e-06, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.858824)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0lrgo"]
+font_size = 20
+font_color = Color(0.345098, 0.984314, 1, 1)
+shadow_color = Color(0, 0, 0, 0.952941)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0x5cg"]
+font_size = 20
+font_color = Color(1, 0.258351, 0.21558, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Game" instance=ExtResource("1_t22q8")]
+settings_particles = null
+tower_win_condition = null
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+position = Vector2(799.392, 446.457)
+scale = Vector2(1.03855, 1.01699)
+texture = ExtResource("2_x4bcc")
+
+[node name="UI" parent="." index="1"]
+offset_left = -2.0
+offset_right = 1595.0
+mouse_filter = 2
+
+[node name="MousePos" type="Label" parent="UI" index="0"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -131.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="Debug" type="Label" parent="UI" index="1"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Msg" parent="UI" index="2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 200.0
+offset_right = 20.0
+offset_bottom = 241.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_go3km")
+
+[node name="CardInfo" type="Label" parent="UI" index="3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 15.0
+offset_right = 20.0
+offset_bottom = 38.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_3asse")
+
+[node name="GameOverMsg" parent="UI" index="4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -111.5
+offset_right = 0.5
+offset_bottom = -88.5
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_0lrgo")
+
+[node name="Winner" parent="UI" index="5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -200.0
+offset_right = 20.0
+offset_bottom = -177.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_0x5cg")
+
+[node name="YouLose" type="AudioStreamPlayer" parent="Audio" index="0"]
+stream = ExtResource("4_im8th")
+volume_db = -2.811
+pitch_scale = 0.95
+
+[node name="YouWin" type="AudioStreamPlayer" parent="Audio" index="1"]
+stream = ExtResource("5_bij0n")
+volume_db = -10.306
+pitch_scale = 1.07
+
+[node name="FadeOutCardTimer" parent="Timers" index="0"]
+wait_time = 2.612
+
+[node name="TurnPauseTimer" parent="Timers" index="1"]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Timers/TurnPauseTimer" to="." method="_on_turn_pause_timer_timeout"]

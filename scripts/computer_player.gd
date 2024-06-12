@@ -1,6 +1,9 @@
 extends Player
 class_name ComputerPlayer
 
+func play_card() -> Card:
+	return deck.create_random_card()
+	
 func _ready():
 	$TowerTop.texture = load("res://assets/WallTower/RedSlices/Top.png")
 	tower_offset = BuildingOffset.new(1540, 0)

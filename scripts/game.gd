@@ -43,7 +43,6 @@ var game_over: bool = false
 func _ready():
 	fade_in_scene()	
 	init_players()
-	computer_deck = create_deck(computer)
 	init_player_hand()
 	init_buildings([player, computer])
 	update_player_ui([player, computer])
@@ -60,14 +59,15 @@ func init_players():
 	add_child(player)
 	
 	computer = computer_player_scene.instantiate() as Player
+	computer.init_deck()
 	add_child(computer)
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
 	
-func create_deck(belongs_to: Player) -> Deck:
+func create_deck() -> Deck:
 	var _deck = deck_scene.instantiate() as Deck
-	_deck.create(belongs_to)
+	_deck.create_random_card()
 	return _deck
 
 func init_player_hand():
@@ -144,7 +144,7 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(order: int) -> Card:
-	var new_card: Card = player.deck.pick_random()
+	var new_card: Card = player.deck.create_random_card()
 	if not new_card:
 		return null
 	new_card.card_order = order
@@ -156,7 +156,7 @@ func draw_card(order: int) -> Card:
 	return new_card
 
 func draw_custom_card(card_name: String):
-	var custom_card: Card = deck.create_single_card(card_name, player)
+	var custom_card: Card = deck.create_single_card(card_name)
 	custom_card.global_position = Vector2(900, 400)
 	add_child(custom_card)
 	
@@ -210,7 +210,7 @@ func move_card_to_mid_screen(card: Card) -> void:
 		
 func ai_move() -> void:
 	# TODO: Make an actual AI opponent
-	var _card: Card = computer_deck.cards.pop_back()
+	var _card: Card = computer.play_card()
 	if not _card:
 		return
 	if _card.play(Globals.current_player, Globals.current_enemy):
@@ -310,7 +310,7 @@ func can_play_card() -> bool:
 	if not is_instance_valid(Globals.current_card):
 		return false
 		
-	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
+	return Globals.current_card and Globals.current_player == player
 	
 func discard_card(card: Card) -> void:
 	if can_play_card():
