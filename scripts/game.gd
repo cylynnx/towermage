@@ -154,7 +154,7 @@ func draw_card(order: int):
 	$PlayerCards.add_child(new_card)
 	# Move the card into position
 	tween.tween_property(new_card, "position", Vector2(CARD_X_CONST + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-	#return new_card
+	player.update_hand()
 
 func draw_custom_card(card_name: String):
 	var custom_card: Card = deck.create_single_card(card_name)
