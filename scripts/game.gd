@@ -54,11 +54,12 @@ func fade_in_scene():
 	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
 
 func init_players():
-	player = human_player_scene.instantiate() as Player
+	player = human_player_scene.instantiate() as HumanPlayer
 	player.init_deck()
+	player.init_hand()
 	add_child(player)
 	
-	computer = computer_player_scene.instantiate() as Player
+	computer = computer_player_scene.instantiate() as ComputerPlayer
 	computer.init_deck()
 	add_child(computer)
 	
@@ -143,8 +144,8 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	var t = create_tween()
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
-func draw_card(order: int) -> Card:
-	var new_card: Card = player.deck.create_random_card()
+func draw_card(order: int):
+	var new_card: Card = player.hand.pop_back()
 	if not new_card:
 		return null
 	new_card.card_order = order
@@ -153,7 +154,7 @@ func draw_card(order: int) -> Card:
 	$PlayerCards.add_child(new_card)
 	# Move the card into position
 	tween.tween_property(new_card, "position", Vector2(CARD_X_CONST + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-	return new_card
+	#return new_card
 
 func draw_custom_card(card_name: String):
 	var custom_card: Card = deck.create_single_card(card_name)
@@ -250,17 +251,19 @@ func next_turn():
 func update_player_hand():
 	if shift_cards:
 		var i = 1
+		# Update card order
 		for card in $PlayerCards.get_children():
 			if not card.is_queued_for_deletion():
 				card.card_order = i
 				i += 1
+		# Update card position
 		for card in $PlayerCards.get_children():
 			if not card.is_queued_for_deletion():
 				var tween = create_tween()
 				tween.set_parallel(true)
 				tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 		shift_cards = false
-		
+		# Draw more cards
 	if Globals.cards_on_screen < PLAYER_CARD_NUM:
 		draw_card(5)
 		Globals.cards_on_screen += 1

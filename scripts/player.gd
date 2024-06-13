@@ -3,7 +3,7 @@ extends Node2D
 
 var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
 var deck: Deck = null
-
+var hand: Array[Card] = []
 # This class helps draw wall and tower in slices. May change later.
 class BuildingOffset:
 	var x: float = 0.0
@@ -45,3 +45,4 @@ var playing_a_discard: bool = false
 
 func init_deck():
 	deck = deck_scene.instantiate() as Deck
+	print("inside deck")

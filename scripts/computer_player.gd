@@ -3,6 +3,7 @@ class_name ComputerPlayer
 
 var packed_ai: PackedScene = preload("res://scenes/computer_ai.tscn")
 var ai: AI = null
+
 func play_card() -> Card:
 	return deck.create_random_card()
 	

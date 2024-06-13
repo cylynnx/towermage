@@ -1,6 +1,10 @@
 extends Player
 class_name HumanPlayer
 
+func init_hand(n = 5):
+	for i in n:
+		self.hand.append(deck.create_random_card())
+	
 func _ready():
 	tower = 10
 	
