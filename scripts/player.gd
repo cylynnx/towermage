@@ -15,11 +15,12 @@ var deck: Deck = deck_scene.instantiate() as Deck
 class Hand:
 	var cards_in_hand: Array[Card] = []
 	var _deck: Deck = null
-	
-	func _init(num_of_cards: int, deck: Deck):
+	var card_list: Array = []
+	func _init(num_of_cards: int, deck: Deck, cards):
 		self._deck = deck
+		self.card_list = cards
 		for i in num_of_cards:
-			var _card: Card = self._deck.create_random_card()
+			var _card: Card = self._deck.create_random_card_from_list(self.card_list)
 			_card.card_order = i
 			cards_in_hand.append(_card)
 		
@@ -30,18 +31,24 @@ class Hand:
 	func update_hand():
 		if self.cards_in_hand.size() < 5:
 			for i in range(5 - self.cards_in_hand.size()):
-				cards_in_hand.append(self._deck.create_random_card())
+				cards_in_hand.append(self._deck.create_random_card_from_list(self.card_list))
 		_reindex_hand()
 	
 	func size() -> int:
 		return cards_in_hand.size()
 		
-	func get_card(card_index: int):
+	func get_card(card_index: int) -> Card:
 		return cards_in_hand[card_index]
 		
 	func delete_from_hand(card_index: int):
 		cards_in_hand.remove_at(card_index)
 		self.update_hand()
+	
+	func get_newest_card() -> Card:
+		return cards_in_hand[cards_in_hand.size() - 1]
+		
+	func get_random_card_from_hand() -> Card:
+		return cards_in_hand.pick_random()
 
 var tower_offset: BuildingOffset
 var wall_offset: BuildingOffset

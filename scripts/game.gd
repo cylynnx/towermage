@@ -28,7 +28,6 @@ signal GameOver(winner)
 var player: Player = null
 var computer: Player = null
 
-var last_card: Node2D = null
 var deck: Deck = null
 var computer_deck: Deck = null
 var new_slice: Node2D = null
@@ -45,7 +44,6 @@ func _ready():
 	draw_player_hand_on_screen()
 	draw_buildings([player, computer])
 	update_player_ui([player, computer])
-	#debug_card("Elven Scout")
 	
 func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
@@ -54,12 +52,9 @@ func fade_in_scene():
 
 func init_players():
 	player = human_player_scene.instantiate() as HumanPlayer
-	#player.init_deck()
-	#player.init_hand()
 	add_child(player)
 	
 	computer = computer_player_scene.instantiate() as ComputerPlayer
-	#computer.init_deck()
 	add_child(computer)
 	
 	Globals.current_player = player
@@ -203,6 +198,7 @@ func move_card_to_mid_screen(card: Card) -> void:
 func ai_move() -> void:
 	# TODO: Make an actual AI opponent
 	var _card: Card = computer.play_card()
+	computer.hand.update_hand()
 	if not _card:
 		return
 	if _card.play(Globals.current_player, Globals.current_enemy):
@@ -240,14 +236,12 @@ func next_turn():
 		return
 		
 func update_player_hand():
-	#player.update_hand()
-	
 	for card in $PlayerCards.get_children():
 		if not card.is_queued_for_deletion():
 			var tween = create_tween()
 			tween.set_parallel(true)
 			tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-	draw_card(player.hand[4])
+	draw_card(player.hand.get_newest_card())
 
 func update_game() -> void:
 	if enemy_card_on_screen and fade_out_card:
@@ -255,11 +249,9 @@ func update_game() -> void:
 			fade_card($EnemyCard.get_child(0), 1.5)
 		enemy_card_on_screen = false
 		fade_out_card = false
-		
 	message()
 	if game_over:
 		return
-		
 	next_turn()
 	check_game_state()
 

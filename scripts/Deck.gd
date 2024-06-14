@@ -11,6 +11,9 @@ var card_map = cm.card_map
 		
 func create_random_card() -> Card:
 	return create_single_card(card_map.keys().pick_random())
+
+func create_random_card_from_list(cards: Array) -> Card:
+	return create_single_card(cards.pick_random())
 	
 func create_single_card(_name: String) -> Card:
 	var card = card_scene.instantiate() as Card

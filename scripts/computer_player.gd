@@ -3,13 +3,15 @@ class_name ComputerPlayer
 
 var packed_ai: PackedScene = preload("res://scenes/computer_ai.tscn")
 var ai: AI = null
+var hand: Hand
 
 func play_card() -> Card:
-	return deck.create_random_card()
+	return hand.get_random_card_from_hand()
 	
 func _ready():
 	ai = packed_ai.instantiate() as AI
-	
+	ai.init_ai("Goblin Lord")
+	hand = Hand.new(5, deck, ai.cards)
 	$TowerTop.texture = load("res://assets/WallTower/RedSlices/Top.png")
 	tower_offset = BuildingOffset.new(1540, 0)
 	wall_offset = BuildingOffset.new(1440, 0)

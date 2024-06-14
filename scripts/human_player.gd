@@ -1,7 +1,7 @@
 extends Player
 class_name HumanPlayer
 
-var hand = Hand.new(5, deck)
+var hand = Hand.new(5, deck, deck.card_map.keys())
 			
 func _ready():
 	tower = 10
