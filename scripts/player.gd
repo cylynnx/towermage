@@ -1,9 +1,6 @@
 class_name Player
 extends Node2D
 
-var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
-var deck: Deck = null
-var hand: Array[Card] = []
 # This class helps draw wall and tower in slices. May change later.
 class BuildingOffset:
 	var x: float = 0.0
@@ -11,6 +8,40 @@ class BuildingOffset:
 	func _init(_x, _o):
 		self.x = _x
 		self.y = _o
+		
+var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
+var deck: Deck = deck_scene.instantiate() as Deck
+
+class Hand:
+	var cards_in_hand: Array[Card] = []
+	var _deck: Deck = null
+	
+	func _init(num_of_cards: int, deck: Deck):
+		self._deck = deck
+		for i in num_of_cards:
+			var _card: Card = self._deck.create_random_card()
+			_card.card_order = i
+			cards_in_hand.append(_card)
+		
+	func _reindex_hand():
+		for i in self.cards_in_hand.size():
+			cards_in_hand[i].card_order = i
+		
+	func update_hand():
+		if self.cards_in_hand.size() < 5:
+			for i in range(5 - self.cards_in_hand.size()):
+				cards_in_hand.append(self._deck.create_random_card())
+		_reindex_hand()
+	
+	func size() -> int:
+		return cards_in_hand.size()
+		
+	func get_card(card_index: int):
+		return cards_in_hand[card_index]
+		
+	func delete_from_hand(card_index: int):
+		cards_in_hand.remove_at(card_index)
+		self.update_hand()
 
 var tower_offset: BuildingOffset
 var wall_offset: BuildingOffset
@@ -43,5 +74,3 @@ var creatures: int = 5:
 
 var playing_a_discard: bool = false
 
-func init_deck():
-	deck = deck_scene.instantiate() as Deck

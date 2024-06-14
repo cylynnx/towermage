@@ -54,20 +54,20 @@ func fade_in_scene():
 
 func init_players():
 	player = human_player_scene.instantiate() as HumanPlayer
-	player.init_deck()
-	player.init_hand()
+	#player.init_deck()
+	#player.init_hand()
 	add_child(player)
 	
 	computer = computer_player_scene.instantiate() as ComputerPlayer
-	computer.init_deck()
+	#computer.init_deck()
 	add_child(computer)
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
 
 func draw_player_hand_on_screen():
-	for i in len(player.hand):
-		draw_card(player.hand[i])
+	for i in player.hand.size():
+		draw_card(player.hand.get_card(i))
 
 func draw_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
@@ -185,7 +185,7 @@ func update_player_ui(players: Array[Player]) -> void:
 		_player.get_child(4).get_child(4).text = "Food: " + str(_player.food) + " Creatures: " + str(_player.creatures)
 
 func delete_card(card: Card) -> void:
-	player.hand.remove_at(card.card_order)
+	player.hand.delete_from_hand(card.card_order)
 	card.queue_free()
 	Globals.current_card = null
 
@@ -240,7 +240,7 @@ func next_turn():
 		return
 		
 func update_player_hand():
-	player.update_hand()
+	#player.update_hand()
 	
 	for card in $PlayerCards.get_children():
 		if not card.is_queued_for_deletion():
