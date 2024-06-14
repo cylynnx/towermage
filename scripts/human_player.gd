@@ -3,13 +3,20 @@ class_name HumanPlayer
 
 func init_hand(n = 5):
 	for i in n:
-		self.hand.append(deck.create_random_card())
+		var _card: Card = deck.create_random_card()
+		_card.card_order = i
+		self.hand.append(_card)
+		
+func reindex_hand():
+	for i in self.hand.size():
+		self.hand[i].card_order = i
 		
 func update_hand():
-	if len(self.hand) < 5:
-		for i in range(5 - len(self.hand)):
+	if self.hand.size() < 5:
+		for i in range(5 - self.hand.size()):
 			self.hand.append(deck.create_random_card())
-	
+	reindex_hand()
+			
 func _ready():
 	tower = 10
 	

@@ -45,4 +45,3 @@ var playing_a_discard: bool = false
 
 func init_deck():
 	deck = deck_scene.instantiate() as Deck
-	print("inside deck")

@@ -2,11 +2,10 @@ extends Node2D
 
 const MAX_BUILDING_HEIGHT = 50
 const CARD_OFFSET_X  = 235
-const CARD_X_CONST = 100
+const CARD_X_CONST = 340
 const CARD_Y_CONST = 730
 const TOWER_Y_CONST = 800
 const OFFSET_Y = 6
-const PLAYER_CARD_NUM = 5
 const TOWER_TOP = 0
 const WALL_TOP = 1
 const TOWER = 2
@@ -33,7 +32,7 @@ var last_card: Node2D = null
 var deck: Deck = null
 var computer_deck: Deck = null
 var new_slice: Node2D = null
-var shift_cards: bool = false
+
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
@@ -43,8 +42,8 @@ var game_over: bool = false
 func _ready():
 	fade_in_scene()	
 	init_players()
-	init_player_hand()
-	init_buildings([player, computer])
+	draw_player_hand_on_screen()
+	draw_buildings([player, computer])
 	update_player_ui([player, computer])
 	#debug_card("Elven Scout")
 	
@@ -65,18 +64,12 @@ func init_players():
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
-	
-func create_deck() -> Deck:
-	var _deck = deck_scene.instantiate() as Deck
-	_deck.create_random_card()
-	return _deck
 
-func init_player_hand():
-	for card_order in range(1, PLAYER_CARD_NUM + 1):
-		draw_card(card_order)
-	Globals.cards_on_screen = PLAYER_CARD_NUM
+func draw_player_hand_on_screen():
+	for i in len(player.hand):
+		draw_card(player.hand[i])
 
-func init_buildings(players: Array[Player]) -> void:
+func draw_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
 	for _player in players:
 		if _player is ComputerPlayer:
@@ -144,17 +137,16 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	var t = create_tween()
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
-func draw_card(order: int):
-	var new_card: Card = player.hand.pop_back()
-	if not new_card:
-		return null
-	new_card.card_order = order
-	new_card.global_position = Vector2(800, -300) # Place card kinda offscreen
+func draw_card(card: Card):
+	# Place the card off-screen.
+	card.global_position = Vector2(800, -300)
+	if not is_instance_valid(card) or card == null:
+		print("draw_card(card: Card) --- card instance invalid or null!")
+		return
+	$PlayerCards.add_child(card)
+	# Move the card into position.
 	var tween = create_tween() 
-	$PlayerCards.add_child(new_card)
-	# Move the card into position
-	tween.tween_property(new_card, "position", Vector2(CARD_X_CONST + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-	player.update_hand()
+	tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 
 func draw_custom_card(card_name: String):
 	var custom_card: Card = deck.create_single_card(card_name)
@@ -193,10 +185,9 @@ func update_player_ui(players: Array[Player]) -> void:
 		_player.get_child(4).get_child(4).text = "Food: " + str(_player.food) + " Creatures: " + str(_player.creatures)
 
 func delete_card(card: Card) -> void:
+	player.hand.remove_at(card.card_order)
 	card.queue_free()
 	Globals.current_card = null
-	Globals.cards_on_screen -= 1
-	shift_cards = true
 
 func delete_enemy_card() -> void:
 	if $EnemyCard.get_child_count():
@@ -249,24 +240,14 @@ func next_turn():
 		return
 		
 func update_player_hand():
-	if shift_cards:
-		var i = 1
-		# Update card order
-		for card in $PlayerCards.get_children():
-			if not card.is_queued_for_deletion():
-				card.card_order = i
-				i += 1
-		# Update card position
-		for card in $PlayerCards.get_children():
-			if not card.is_queued_for_deletion():
-				var tween = create_tween()
-				tween.set_parallel(true)
-				tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-		shift_cards = false
-		# Draw more cards
-	if Globals.cards_on_screen < PLAYER_CARD_NUM:
-		draw_card(5)
-		Globals.cards_on_screen += 1
+	player.update_hand()
+	
+	for card in $PlayerCards.get_children():
+		if not card.is_queued_for_deletion():
+			var tween = create_tween()
+			tween.set_parallel(true)
+			tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
+	draw_card(player.hand[4])
 
 func update_game() -> void:
 	if enemy_card_on_screen and fade_out_card:
