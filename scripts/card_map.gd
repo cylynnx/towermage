@@ -206,7 +206,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Friendly Terrain/art_FriendlyTerrain.jpg",
 		"res://assets/Borders/Resource_Boarder.png",
 		"+1 wall. Play again!",
-		5, 0, 0,
+		1, 0, 0,
 		true
 	],
 	

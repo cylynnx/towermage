@@ -195,13 +195,10 @@ func move_card_to_mid_screen(card: Card) -> void:
 		enemy_card_on_screen = true
 		$Timers/FadeOutCardTimer.start()
 		
-func ai_move() -> void:
+func computer_move() -> void:
 	# TODO: Make an actual AI opponent
 	var _card: Card = computer.play_card()
-	computer.hand.update_hand()
-	if not _card:
-		return
-	if _card.play(Globals.current_player, Globals.current_enemy):
+	if _card:
 		_card.position = Vector2(1600, 500)
 		$EnemyCard.add_child(_card)
 		move_card_to_mid_screen(_card)
@@ -231,7 +228,7 @@ func next_turn():
 	elif Globals.current_player == computer and turn_pause_timer_ended:
 		delete_enemy_card()
 		turn_pause_timer_ended = false
-		ai_move()
+		computer_move()
 	else:
 		return
 		

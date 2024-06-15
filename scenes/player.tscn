@@ -93,3 +93,7 @@ label_settings = SubResource("LabelSettings_okgfx")
 
 [node name="Bottom" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
+
+[node name="Portrait" type="Sprite2D" parent="."]
+position = Vector2(59, 48)
+scale = Vector2(0.1, 0.1)

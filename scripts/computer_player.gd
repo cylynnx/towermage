@@ -6,7 +6,12 @@ var ai: AI = null
 var hand: Hand
 
 func play_card() -> Card:
-	return hand.get_random_card_from_hand()
+	var _card = hand.get_random_card_from_hand()
+	if _card.play(self, Globals.current_enemy):
+		hand.delete_from_hand(_card.card_order)
+		hand.update_hand()
+		return _card
+	return null
 	
 func _ready():
 	ai = packed_ai.instantiate() as AI
@@ -24,3 +29,5 @@ func _ready():
 	$Stats/Food.position = Vector2(1440, 150)
 	$Bottom.texture = load("res://assets/WallTower/RedSlices/bottom.png")
 	$Bottom.position = Vector2(1540, 810)
+	$Portrait.texture = load("res://assets/Portraits/Goblin.png")
+	$Portrait.position = Vector2(1490, 48)
