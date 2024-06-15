@@ -1,6 +1,8 @@
 extends Player
 class_name HumanPlayer
 
+var hand = Hand.new(5, deck, deck.card_map.keys())
+			
 func _ready():
 	tower = 10
 	
@@ -16,3 +18,4 @@ func _ready():
 	$Stats/Food.position = Vector2(10, 150)
 	$Bottom.texture = load("res://assets/WallTower/BlueSlices/Bottom.png")
 	$Bottom.position = Vector2(70, 809)
+	$Portrait.texture = load("res://assets/Portraits/Sorceress.png")

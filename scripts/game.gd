@@ -2,11 +2,10 @@ extends Node2D
 
 const MAX_BUILDING_HEIGHT = 50
 const CARD_OFFSET_X  = 235
-const CARD_X_CONST = 100
+const CARD_X_CONST = 340
 const CARD_Y_CONST = 730
 const TOWER_Y_CONST = 800
 const OFFSET_Y = 6
-const PLAYER_CARD_NUM = 5
 const TOWER_TOP = 0
 const WALL_TOP = 1
 const TOWER = 2
@@ -29,11 +28,10 @@ signal GameOver(winner)
 var player: Player = null
 var computer: Player = null
 
-var last_card: Node2D = null
 var deck: Deck = null
 var computer_deck: Deck = null
 var new_slice: Node2D = null
-var shift_cards: bool = false
+
 var enemy_card_on_screen: bool = false
 var fade_out_card: bool = false
 var clean_up_card: bool = false
@@ -43,12 +41,9 @@ var game_over: bool = false
 func _ready():
 	fade_in_scene()	
 	init_players()
-	deck = create_deck(player)
-	computer_deck = create_deck(computer)
-	init_player_hand()
-	init_buildings([player, computer])
+	draw_player_hand_on_screen()
+	draw_buildings([player, computer])
 	update_player_ui([player, computer])
-	#debug_card("Elven Scout")
 	
 func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
@@ -56,28 +51,20 @@ func fade_in_scene():
 	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
 
 func init_players():
-	var human_player = human_player_scene.instantiate() as Player
-	player = human_player
+	player = human_player_scene.instantiate() as HumanPlayer
 	add_child(player)
 	
-	var computer_player = computer_player_scene.instantiate() as Player
-	computer = computer_player
-	add_child(computer_player)
+	computer = computer_player_scene.instantiate() as ComputerPlayer
+	add_child(computer)
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
-	
-func create_deck(belongs_to: Player) -> Deck:
-	var _deck = deck_scene.instantiate() as Deck
-	_deck.create(belongs_to)
-	return _deck
 
-func init_player_hand():
-	for card_order in range(1, PLAYER_CARD_NUM + 1):
-		draw_card(card_order)
-	Globals.cards_on_screen = PLAYER_CARD_NUM
+func draw_player_hand_on_screen():
+	for i in player.hand.size():
+		draw_card(player.hand.get_card(i))
 
-func init_buildings(players: Array[Player]) -> void:
+func draw_buildings(players: Array[Player]) -> void:
 	var _tower_scene = null
 	for _player in players:
 		if _player is ComputerPlayer:
@@ -145,20 +132,19 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	var t = create_tween()
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
-func draw_card(order: int) -> Card:
-	var new_card: Card = deck.cards.pop_back()
-	if not new_card:
-		return null
-	new_card.card_order = order
-	new_card.global_position = Vector2(800, -300) # Place card kinda offscreen
+func draw_card(card: Card):
+	# Place the card off-screen.
+	card.global_position = Vector2(800, -300)
+	if not is_instance_valid(card) or card == null:
+		print("draw_card(card: Card) --- card instance invalid or null!")
+		return
+	$PlayerCards.add_child(card)
+	# Move the card into position.
 	var tween = create_tween() 
-	$PlayerCards.add_child(new_card)
-	# Move the card into position
-	tween.tween_property(new_card, "position", Vector2(CARD_X_CONST + order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-	return new_card
+	tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 
 func draw_custom_card(card_name: String):
-	var custom_card: Card = deck.create_single_card(card_name, player)
+	var custom_card: Card = deck.create_single_card(card_name)
 	custom_card.global_position = Vector2(900, 400)
 	add_child(custom_card)
 	
@@ -194,10 +180,9 @@ func update_player_ui(players: Array[Player]) -> void:
 		_player.get_child(4).get_child(4).text = "Food: " + str(_player.food) + " Creatures: " + str(_player.creatures)
 
 func delete_card(card: Card) -> void:
+	player.hand.delete_from_hand(card.card_order)
 	card.queue_free()
 	Globals.current_card = null
-	Globals.cards_on_screen -= 1
-	shift_cards = true
 
 func delete_enemy_card() -> void:
 	if $EnemyCard.get_child_count():
@@ -210,12 +195,10 @@ func move_card_to_mid_screen(card: Card) -> void:
 		enemy_card_on_screen = true
 		$Timers/FadeOutCardTimer.start()
 		
-func ai_move() -> void:
+func computer_move() -> void:
 	# TODO: Make an actual AI opponent
-	var _card: Card = computer_deck.cards.pop_back()
-	if not _card:
-		return
-	if _card.play(Globals.current_player, Globals.current_enemy):
+	var _card: Card = computer.play_card()
+	if _card:
 		_card.position = Vector2(1600, 500)
 		$EnemyCard.add_child(_card)
 		move_card_to_mid_screen(_card)
@@ -245,27 +228,17 @@ func next_turn():
 	elif Globals.current_player == computer and turn_pause_timer_ended:
 		delete_enemy_card()
 		turn_pause_timer_ended = false
-		ai_move()
+		computer_move()
 	else:
 		return
 		
 func update_player_hand():
-	if shift_cards:
-		var i = 1
-		for card in $PlayerCards.get_children():
-			if not card.is_queued_for_deletion():
-				card.card_order = i
-				i += 1
-		for card in $PlayerCards.get_children():
-			if not card.is_queued_for_deletion():
-				var tween = create_tween()
-				tween.set_parallel(true)
-				tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
-		shift_cards = false
-		
-	if Globals.cards_on_screen < PLAYER_CARD_NUM:
-		draw_card(5)
-		Globals.cards_on_screen += 1
+	for card in $PlayerCards.get_children():
+		if not card.is_queued_for_deletion():
+			var tween = create_tween()
+			tween.set_parallel(true)
+			tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
+	draw_card(player.hand.get_newest_card())
 
 func update_game() -> void:
 	if enemy_card_on_screen and fade_out_card:
@@ -273,11 +246,9 @@ func update_game() -> void:
 			fade_card($EnemyCard.get_child(0), 1.5)
 		enemy_card_on_screen = false
 		fade_out_card = false
-		
 	message()
 	if game_over:
 		return
-		
 	next_turn()
 	check_game_state()
 
@@ -312,7 +283,7 @@ func can_play_card() -> bool:
 	if not is_instance_valid(Globals.current_card):
 		return false
 		
-	return Globals.current_card and Globals.current_player == player and Globals.current_card.card_owner == player
+	return Globals.current_card and Globals.current_player == player
 	
 func discard_card(card: Card) -> void:
 	if can_play_card():

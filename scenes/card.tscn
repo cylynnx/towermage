@@ -46,6 +46,7 @@ stream = ExtResource("3_h471e")
 
 [node name="NoResources" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("4_ac5su")
+volume_db = -4.0
 
 [node name="NoCreatures" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("5_fc2hl")

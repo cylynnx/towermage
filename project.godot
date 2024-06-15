@@ -10,7 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Test 03"
+config/name="Towermage"
+config/description="Towermage game"
+config/version="0.2 beta"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
