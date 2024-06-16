@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dkk6mhwl7d20c"]
 
 [ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
-[ext_resource type="Texture2D" uid="uid://b7q2f8gjgnj3r" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_1.jpg" id="2_x4bcc"]
+[ext_resource type="Texture2D" uid="uid://c2qo1ajnx6bhj" path="res://assets/backgrounds/goblin_village.png" id="2_v4xar"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
 [ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
 [ext_resource type="AudioStream" uid="uid://cmkn8fgqakuju" path="res://assets/sounds/victory_6.mp3" id="5_bij0n"]
@@ -38,7 +38,7 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 position = Vector2(799.392, 446.457)
 scale = Vector2(1.03855, 1.01699)
-texture = ExtResource("2_x4bcc")
+texture = ExtResource("2_v4xar")
 
 [node name="UI" parent="." index="1"]
 offset_left = -2.0
