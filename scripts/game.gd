@@ -152,8 +152,6 @@ func debug_card(card_name: String):
 	draw_custom_card(card_name)
 	
 func debug_get_card_info(card) -> void:
-	#$UI/Debug.text = "playing_a_discard " + str(player.playing_a_discard)
-	#$UI/MousePos.text = str(get_global_mouse_position())
 	if not is_instance_valid(card):
 		return
 				
@@ -191,7 +189,7 @@ func delete_enemy_card() -> void:
 func move_card_to_mid_screen(card: Card) -> void:
 	if is_instance_valid(card):
 		var t = create_tween()
-		t.tween_property(card, "position", Vector2(800, 400), 0.5)
+		t.tween_property(card, "position", Vector2(CARD_X_CONST + 4 * CARD_OFFSET_X, 400), 0.5)
 		enemy_card_on_screen = true
 		$Timers/FadeOutCardTimer.start()
 		
@@ -210,6 +208,10 @@ func computer_move() -> void:
 		hand_over_turn()
 	
 func player_move() -> void:
+	# Let's make sure you are playing YOUR card.
+	if not player.hand.in_hand(Globals.current_card):
+		return
+	
 	if Globals.current_card.play(Globals.current_player, Globals.current_enemy):
 		delete_card(Globals.current_card)
 		update_player_hand()
@@ -301,7 +303,7 @@ func _input(event):
 			# Some cards will ask to discard one card and then the turn ends
 			# while other cards will allow to play again after discarding.
 			# I'm using player.playing_a_discard bool flag to differentiate
-			# between these two scenarios.
+			# between these two scenarios. 
 			if player.playing_a_discard:
 				discard_card(Globals.current_card)
 				Globals.discard_flag = false
@@ -343,6 +345,10 @@ func hand_over_turn() -> void:
 	$Timers/TurnPauseTimer.start()
 	
 func check_game_state():
+	if player.tower <= 0 and computer.tower <= 0:
+		emit_signal("GameOver", null)
+		return
+		
 	if player.tower <= 0:
 		emit_signal("GameOver", computer)
 	elif computer.tower <= 0:
@@ -364,16 +370,14 @@ func _on_turn_pause_timer_timeout():
 
 func _on_game_over(_winner):
 	game_over = true
-	if _winner == player:
-		$UI/Winner.text = "You win!"
+	if _winner == null:
+		$UI/Winner.text = "It's a draw!"
 		$Audio/YouWin.play()
 	elif _winner == computer:
 		$UI/Winner.text = "You lose."
 		$Audio/YouLose.play()
 	else:
-		$UI/Winner.text = "It's a draw!"
+		$UI/Winner.text = "You Win!"
+		$Audio/YouWin.play()
 		
 	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
-	
-	for c in $EnemyCard.get_children():
-		c.queue_free()

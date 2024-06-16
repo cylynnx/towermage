@@ -30,4 +30,4 @@ func _ready():
 	$Bottom.texture = load("res://assets/WallTower/RedSlices/bottom.png")
 	$Bottom.position = Vector2(1540, 810)
 	$Portrait.texture = load("res://assets/Portraits/Goblin.png")
-	$Portrait.position = Vector2(1490, 48)
+	$Portrait.position = Vector2(1540, 48)

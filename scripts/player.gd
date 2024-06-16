@@ -34,6 +34,9 @@ class Hand:
 				cards_in_hand.append(self._deck.create_random_card_from_list(self.card_list))
 		_reindex_hand()
 	
+	func in_hand(_card: Card) -> bool:
+		return _card in cards_in_hand
+	
 	func size() -> int:
 		return cards_in_hand.size()
 		
