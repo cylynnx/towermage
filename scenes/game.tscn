@@ -36,6 +36,11 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="NextButton" type="TextureButton" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="PlayerCards" type="Node2D" parent="."]
 
 [node name="EnemyCard" type="Node2D" parent="."]
@@ -61,4 +66,5 @@ one_shot = true
 [node name="TurnPauseTimer" type="Timer" parent="Timers"]
 
 [connection signal="GameOver" from="." to="." method="_on_game_over"]
+[connection signal="pressed" from="UI/NextButton" to="." method="_on_texture_button_pressed"]
 [connection signal="timeout" from="Timers/FadeOutCardTimer" to="." method="_on_fade_out_card_timer_timeout"]

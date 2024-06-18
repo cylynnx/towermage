@@ -22,6 +22,7 @@ var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
 var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
 var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+var card_drop_scene: PackedScene = preload("res://scenes/card_drop.tscn")
 
 signal GameOver(winner)
 
@@ -143,14 +144,15 @@ func draw_card(card: Card):
 	var tween = create_tween() 
 	tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 
+#-------Stuff for debugging.TODO: Remove/Refactor later.------------------------
+func debug_card(card_name: String):
+	draw_custom_card(card_name)
+
 func draw_custom_card(card_name: String):
 	var custom_card: Card = deck.create_single_card(card_name)
 	custom_card.global_position = Vector2(900, 400)
 	add_child(custom_card)
-	
-func debug_card(card_name: String):
-	draw_custom_card(card_name)
-	
+		
 func debug_get_card_info(card) -> void:
 	if not is_instance_valid(card):
 		return
@@ -162,6 +164,7 @@ func debug_get_card_info(card) -> void:
 		$UI/CardInfo.text = info_string
 	else:
 		$UI/CardInfo.text = ""
+#-------------------------------------------------------------------------------
 		
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
@@ -380,4 +383,10 @@ func _on_game_over(_winner):
 		$UI/Winner.text = "You Win!"
 		$Audio/YouWin.play()
 		
-	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
+	#$UI/GameOverMsg.text = "Press ESC to exit to main menu."
+	$UI/NextButton.visible = true
+
+func _on_texture_button_pressed():
+	var card_drop_node = card_drop_scene.instantiate() as Node2D
+	get_tree().root.add_child(card_drop_node)
+	$UI/NextButton.visible = false
