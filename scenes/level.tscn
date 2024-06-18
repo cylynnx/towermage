@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
 [ext_resource type="Texture2D" uid="uid://c2qo1ajnx6bhj" path="res://assets/backgrounds/goblin_village.png" id="2_v4xar"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
+[ext_resource type="Texture2D" uid="uid://u5u2c0dqva0n" path="res://assets/buttons/next01.png" id="4_18m66"]
 [ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
-[ext_resource type="Texture2D" uid="uid://04orgpe2g27u" path="res://assets/buttons/button.png" id="4_oim3a"]
-[ext_resource type="Texture2D" uid="uid://dv2pakmpy83w" path="res://assets/buttons/button2.png" id="5_4k8y5"]
 [ext_resource type="AudioStream" uid="uid://cmkn8fgqakuju" path="res://assets/sounds/victory_6.mp3" id="5_bij0n"]
+[ext_resource type="Texture2D" uid="uid://bw3e57csg3q8t" path="res://assets/buttons/next02.png" id="5_rghnc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_go3km"]
 font = ExtResource("3_3co5g")
@@ -121,8 +121,8 @@ offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
 action_mode = 0
-texture_normal = ExtResource("4_oim3a")
-texture_hover = ExtResource("5_4k8y5")
+texture_normal = ExtResource("4_18m66")
+texture_hover = ExtResource("5_rghnc")
 
 [node name="YouLose" type="AudioStreamPlayer" parent="Audio" index="0"]
 stream = ExtResource("4_im8th")

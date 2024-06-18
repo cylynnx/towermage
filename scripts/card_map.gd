@@ -142,7 +142,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Imp/art_Imp.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
 		"6 damage. All players lose 5 resources, 5 mana, 5 creatures.",
-		0, 0, 3,
+		0, 0, 6,
 		true
 	],
 	

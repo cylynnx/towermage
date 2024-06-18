@@ -134,14 +134,12 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(card: Card):
-	# Place the card off-screen.
-	card.global_position = Vector2(800, -300)
 	if not is_instance_valid(card) or card == null:
 		print("draw_card(card: Card) --- card instance invalid or null!")
 		return
+	card.global_position = Vector2(800, -300) # Place the card off-screen.
 	$PlayerCards.add_child(card)
-	# Move the card into position.
-	var tween = create_tween() 
+	var tween = create_tween() # Move the card into position.
 	tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
 
 #-------Stuff for debugging.TODO: Remove/Refactor later.------------------------
@@ -373,6 +371,7 @@ func _on_turn_pause_timer_timeout():
 
 func _on_game_over(_winner):
 	game_over = true
+	modify_hand_color(HALF_DARK)
 	if _winner == null:
 		$UI/Winner.text = "It's a draw!"
 		$Audio/YouWin.play()
