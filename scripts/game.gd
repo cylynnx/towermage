@@ -57,6 +57,8 @@ func init_players():
 	
 	computer = computer_player_scene.instantiate() as ComputerPlayer
 	add_child(computer)
+	Globals.player = player
+	Globals.enemy = computer
 	
 	Globals.current_player = player
 	Globals.current_enemy = computer
@@ -121,9 +123,9 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 			var _t = create_tween()
 			new_slice = scene.instantiate() as Node2D
 			new_slice.position = Vector2(offset.x, 700)
-			# Visually cap the tower or wall at 50 nodes tall
+			# Visually cap the tower or wall at MAX_BUILDING_HEIGHT slices tall
 			if total > MAX_BUILDING_HEIGHT:
-				# Unnecessary tween just to shut up the debugger
+				# Unnecessary tween just to shut up the debugger???
 				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
 				break
 			building.add_child(new_slice)
@@ -370,7 +372,13 @@ func _on_turn_pause_timer_timeout():
 	turn_pause_timer_ended = true
 
 func _on_game_over(_winner):
+	#set_process_input(false) dunno if this needed yet
+	$UI/CardInfo.text = " "
 	game_over = true
+	#---------Disable card hover-over interaction-------------------------------
+	for _card in $PlayerCards.get_children():
+		_card.get_child(0).disconnect("mouse_entered", _card._on_area_2d_mouse_entered)
+	#---------------------------------------------------------------------------	
 	modify_hand_color(HALF_DARK)
 	if _winner == null:
 		$UI/Winner.text = "It's a draw!"
@@ -387,5 +395,7 @@ func _on_game_over(_winner):
 
 func _on_texture_button_pressed():
 	var card_drop_node = card_drop_scene.instantiate() as Node2D
+	for _card in $EnemyCard.get_children():
+		_card.queue_free()
 	get_tree().root.add_child(card_drop_node)
 	$UI/NextButton.visible = false

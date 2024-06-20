@@ -16,7 +16,7 @@ class Hand:
 	var cards_in_hand: Array[Card] = []
 	var _deck: Deck = null
 	var card_list: Array = []
-	func _init(num_of_cards: int, deck: Deck, cards):
+	func _init(num_of_cards: int, deck: Deck, cards: Array):
 		self._deck = deck
 		self.card_list = cards
 		for i in num_of_cards:
@@ -49,7 +49,13 @@ class Hand:
 	
 	func get_newest_card() -> Card:
 		return cards_in_hand[cards_in_hand.size() - 1]
-		
+	
+	func drop_cards(n: int) -> Array[Card]:
+		var _cards: Array[Card] = []
+		for i in range(n):
+			_cards.append(self._deck.create_random_card_from_list(self.card_list))
+		return _cards
+			
 	func get_random_card_from_hand() -> Card:
 		return cards_in_hand.pick_random()
 

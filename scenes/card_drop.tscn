@@ -11,7 +11,7 @@ scale = Vector2(1e-05, 1e-05)
 script = ExtResource("1_bn8k0")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="WindowImage" type="Sprite2D" parent="."]
 texture = ExtResource("2_6a012")
 
 [node name="Buttons" type="Control" parent="."]
@@ -45,5 +45,8 @@ grow_vertical = 2
 action_mode = 0
 texture_normal = ExtResource("3_ovefl")
 texture_hover = ExtResource("4_sifb0")
+
+[node name="CardsOnScreen" type="Node2D" parent="."]
+scale = Vector2(0.8, 0.8)
 
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]
