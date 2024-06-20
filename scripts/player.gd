@@ -27,7 +27,14 @@ class Hand:
 	func _reindex_hand():
 		for i in self.cards_in_hand.size():
 			cards_in_hand[i].card_order = i
-		
+			
+	func add_card_from_drop(card: Card):
+		if not is_instance_valid(card):
+			return
+			
+		if card.card_name not in card_list:
+			card_list.append(card.card_name)
+			
 	func update_hand():
 		if self.cards_in_hand.size() < 5:
 			for i in range(5 - self.cards_in_hand.size()):
