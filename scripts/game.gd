@@ -56,7 +56,7 @@ func set_players(_player: Player, _computer: Player):
 func init_players():
 	add_child(player)
 	add_child(computer)
-
+	
 	Globals.current_player = player
 	Globals.current_enemy = computer
 
