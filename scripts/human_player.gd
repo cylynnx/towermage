@@ -9,7 +9,7 @@ var starting_deck: Array[String] = [
 var hand = Hand.new(5, deck, starting_deck)
 			
 func _ready():
-	tower = 10
+	tower = 1
 	
 	$TowerTop.texture = load("res://assets/WallTower/BlueSlices/Top.png")
 	tower_offset = BuildingOffset.new(70, 0)

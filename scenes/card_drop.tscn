@@ -1,18 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2bqumxo2la2f"]
+[gd_scene load_steps=9 format=3 uid="uid://d2bqumxo2la2f"]
 
 [ext_resource type="Script" path="res://scripts/card_drop.gd" id="1_bn8k0"]
 [ext_resource type="Texture2D" uid="uid://br1yiilysnel6" path="res://assets/backgrounds/card_drop_window.png" id="2_6a012"]
+[ext_resource type="FontFile" uid="uid://c5pdj675uo2bm" path="res://assets/fonts/Bulletin Gothic/BulletinGothic.otf" id="2_m6gmn"]
 [ext_resource type="Texture2D" uid="uid://mdyeasdaijjr" path="res://assets/buttons/quit01.png" id="3_ovefl"]
 [ext_resource type="Texture2D" uid="uid://dlpbp3xiakado" path="res://assets/buttons/quit02.png" id="4_sifb0"]
+[ext_resource type="Texture2D" uid="uid://u5u2c0dqva0n" path="res://assets/buttons/next01.png" id="6_sl53o"]
+[ext_resource type="Texture2D" uid="uid://bw3e57csg3q8t" path="res://assets/buttons/next02.png" id="7_rhic5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a16wt"]
+font = ExtResource("2_m6gmn")
+font_size = 30
+font_color = Color(0.973603, 0.0815334, 1.23215e-05, 0.956863)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.862745)
 
 [node name="CardDrop" type="Node2D"]
 position = Vector2(800, 450)
 scale = Vector2(1e-05, 1e-05)
 script = ExtResource("1_bn8k0")
-metadata/_edit_lock_ = true
 
 [node name="WindowImage" type="Sprite2D" parent="."]
 texture = ExtResource("2_6a012")
+
+[node name="Text" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -392.0
+offset_top = -222.0
+offset_right = 395.0
+offset_bottom = 221.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Text"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.5
+offset_top = 21.32
+offset_right = 60.5
+offset_bottom = 121.32
+grow_horizontal = 2
+text = "Claim your reward!"
+label_settings = SubResource("LabelSettings_a16wt")
 
 [node name="Buttons" type="Control" parent="."]
 layout_mode = 3
@@ -46,7 +77,30 @@ action_mode = 0
 texture_normal = ExtResource("3_ovefl")
 texture_hover = ExtResource("4_sifb0")
 
+[node name="Next" type="TextureButton" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -226.0
+offset_top = 18.5
+offset_right = -76.0
+offset_bottom = 58.5
+grow_horizontal = 2
+grow_vertical = 2
+action_mode = 0
+texture_normal = ExtResource("6_sl53o")
+texture_hover = ExtResource("7_rhic5")
+
 [node name="CardsOnScreen" type="Node2D" parent="."]
 scale = Vector2(0.8, 0.8)
 
+[node name="SuspendCardTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Buttons/Next" to="." method="_on_next_pressed"]
+[connection signal="timeout" from="SuspendCardTimer" to="." method="_on_suspend_card_timer_timeout"]
