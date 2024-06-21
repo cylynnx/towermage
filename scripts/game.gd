@@ -16,14 +16,11 @@ const FULL_BRIGHT = Color(1, 1, 1, 1)
 @export var settings_particles: bool = false
 @export var tower_win_condition: int = 50
 # ----------------------------------
-var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
+
 var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
 var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
-var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
-var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 var card_drop_scene: PackedScene = preload("res://scenes/card_drop.tscn")
-
 
 signal GameOver(winner)
 
@@ -51,16 +48,15 @@ func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
 	var init_tween = create_tween()
 	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
-
+	
+func set_players(_player: Player, _computer: Player):
+	player = _player
+	computer = _computer
+	
 func init_players():
-	player = human_player_scene.instantiate() as HumanPlayer
 	add_child(player)
-	
-	computer = computer_player_scene.instantiate() as ComputerPlayer
 	add_child(computer)
-	Globals.player = player
-	Globals.enemy = computer
-	
+
 	Globals.current_player = player
 	Globals.current_enemy = computer
 

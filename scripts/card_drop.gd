@@ -44,13 +44,16 @@ func _send_card_off_screen(card: Card) -> void:
 	tween.tween_property(card, "position", Vector2(-1100, -700,), 0.8)
 	tween.tween_property(card, "scale", Vector2(0.1, 0.1), 0.8)
 	tween.tween_property(card, "modulate", Color(1, 1, 1, 0), 1.5)
+	$Buttons/Next.visible = true
 	
-func _on_quit_pressed():
-	get_tree().quit()
-
 func _on_suspend_card_timer_timeout():
 	send_card_off_screen = true
 
 func _on_next_pressed():
-	print("Next pressed")
+	Globals.current_card = null
+	get_tree().root.get_child(0).queue_free()
+	var level_scene: PackedScene = preload("res://scenes/level.tscn")
+	var level = level_scene.instantiate()
+	level.set_players(Globals.player, Globals.enemy)
+	get_tree().root.add_child(level)
 	queue_free()
