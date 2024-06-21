@@ -24,6 +24,7 @@ var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
 var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 var card_drop_scene: PackedScene = preload("res://scenes/card_drop.tscn")
 
+
 signal GameOver(winner)
 
 var player: Player = null
@@ -327,13 +328,10 @@ func _input(event):
 			hand_over_turn()
 	
 	if event.is_action_released("menu"):
-		if visible:
-			visible = false
-			get_tree().root.get_child(1).visible = true
-		else:
-			visible = true
-			get_tree().root.get_child(1).visible = false
-			
+		#var menu = menu_scene.instantiate() as Node2D
+		#get_tree().root.add_child(menu)
+		pass
+		
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
 		Globals.current_player = computer

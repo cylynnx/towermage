@@ -36,6 +36,9 @@ func _process(_delta):
 		send_card_off_screen = false
 		
 func _send_card_off_screen(card: Card) -> void:
+	if not is_instance_valid(card) or card == null:
+		return
+		
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(card, "position", Vector2(-1100, -700,), 0.8)
