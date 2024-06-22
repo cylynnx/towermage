@@ -15,7 +15,6 @@ func _ready():
 	
 func _input(event):
 	if event.is_action_pressed("left_click"):
-		Globals.player.hand.add_card_from_drop(Globals.current_card)
 		_card = Globals.current_card
 		if _card == null:
 			return
@@ -28,7 +27,6 @@ func _input(event):
 		tween.tween_property(_card, "position", Vector2(5, 40), 0.3)
 		tween.tween_property(_card, "scale", Vector2(1.2, 1.2), 0.4)
 		$SuspendCardTimer.start()
-		Globals.current_card = null
 		
 func _process(_delta):
 	if send_card_off_screen:
@@ -50,10 +48,14 @@ func _on_suspend_card_timer_timeout():
 	send_card_off_screen = true
 
 func _on_next_pressed():
-	Globals.current_card = null
-	get_tree().root.get_child(0).queue_free()
+	get_tree().root.get_child(1).queue_free()
+	get_tree().root.get_child(1).remove_child(Globals.player)
 	var level_scene: PackedScene = preload("res://scenes/level.tscn")
 	var level = level_scene.instantiate()
-	level.set_players(Globals.player, Globals.enemy)
+	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+	var enemy = enemy_scene.instantiate() as Player
+	level.set_players(Globals.player, enemy)
+	Globals.player.hand.add_card_from_drop($CardsOnScreen.get_child(0))
+	Globals.player.hand.reset_hand()
 	get_tree().root.add_child(level)
 	queue_free()

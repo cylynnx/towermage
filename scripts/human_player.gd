@@ -2,12 +2,14 @@ extends Player
 class_name HumanPlayer
 
 var starting_deck: Array[String] = [
-	"Full Moon", "Portcullis", "Husbandry", "Agriculture", "Crystal Matrix", "Gemstone Flaw",
-	"Rabbid Sheep", "Ogre", "Slasher", "Friendly Terrain", "Foundation", "Basic Wall", "Sturdy Wall",
-	"Miner", "Big Wall", "Stone Giant", "Smoky Quartz", "Prism", "Ruby", "Emerald"
+	"Portcullis", "Crystal Matrix", "Gemstone Flaw", "Reinforced Wall",
+	"Rabbid Sheep", "Slasher", "Friendly Terrain", "Foundation", "Sturdy Wall", "Big Wall",
+	"Miner", "Big Wall", "Stone Giant", "Smoky Quartz", "Ruby", "Emerald", "Werewolf", "Dwarf",
+	"Harmonic Ore", "Tower Gremlin"
+	
 ]
 var hand = Hand.new(5, deck, starting_deck)
-			
+
 func _ready():
 	tower = 1
 	

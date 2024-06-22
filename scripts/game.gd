@@ -38,16 +38,17 @@ var turn_pause_timer_ended: bool = true
 var game_over: bool = false
 
 func _ready():
-	fade_in_scene()	
+	fade_in_scene()
 	init_players()
 	draw_player_hand_on_screen()
 	draw_buildings([player, computer])
+	update_buildings([player, computer])
 	update_player_ui([player, computer])
 	
 func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
 	var init_tween = create_tween()
-	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
+	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.8)
 	
 func set_players(_player: Player, _computer: Player):
 	player = _player
@@ -56,10 +57,19 @@ func set_players(_player: Player, _computer: Player):
 func init_players():
 	add_child(player)
 	add_child(computer)
-	
+	Globals.player = player
+	player.tower = 10
+	player.wall = 10
+	player.magic = 2
+	player.mine = 2
+	player.food = 2
+	player.resources = 5
+	player.mana = 5
+	player.creatures = 5
+	Globals.enemy = computer
 	Globals.current_player = player
 	Globals.current_enemy = computer
-
+	
 func draw_player_hand_on_screen():
 	for i in player.hand.size():
 		draw_card(player.hand.get_card(i))
@@ -123,14 +133,17 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 			# Visually cap the tower or wall at MAX_BUILDING_HEIGHT slices tall
 			if total > MAX_BUILDING_HEIGHT:
 				# Unnecessary tween just to shut up the debugger???
-				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
+				if is_instance_valid(new_slice):
+					_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
 				break
 			building.add_child(new_slice)
-			_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.2)
+			if is_instance_valid(new_slice):
+				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.2)
 			offset.y += OFFSET_Y
 			total += 1
 	var t = create_tween()
-	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
+	if is_instance_valid(top_piece):
+		t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(card: Card):
 	if not is_instance_valid(card) or card == null:
@@ -369,10 +382,7 @@ func _on_game_over(_winner):
 	#set_process_input(false) dunno if this needed yet
 	$UI/CardInfo.text = " "
 	game_over = true
-	#---------Disable card hover-over interaction-------------------------------
-	for _card in $PlayerCards.get_children():
-		_card.get_child(0).disconnect("mouse_entered", _card._on_area_2d_mouse_entered)
-	#---------------------------------------------------------------------------	
+
 	modify_hand_color(HALF_DARK)
 	if _winner == null:
 		$UI/Winner.text = "It's a draw!"
@@ -380,12 +390,15 @@ func _on_game_over(_winner):
 	elif _winner == computer:
 		$UI/Winner.text = "You lose."
 		$Audio/YouLose.play()
+		$UI/RestartButton.visible = true
 	else:
+	#---------Disable card hover-over interaction-------------------------------
+		for _card in $PlayerCards.get_children():
+			_card.get_child(0).disconnect("mouse_entered", _card._on_area_2d_mouse_entered)
+	#---------------------------------------------------------------------------	
 		$UI/Winner.text = "You Win!"
 		$Audio/YouWin.play()
-		
-	#$UI/GameOverMsg.text = "Press ESC to exit to main menu."
-	$UI/NextButton.visible = true
+		$UI/NextButton.visible = true
 
 func _on_texture_button_pressed():
 	var card_drop_node = card_drop_scene.instantiate() as Node2D
@@ -393,3 +406,20 @@ func _on_texture_button_pressed():
 		_card.queue_free()
 	get_tree().root.add_child(card_drop_node)
 	$UI/NextButton.visible = false
+
+
+func _on_restart_button_pressed():
+	remove_child(Globals.player)
+	Globals.player.hand.reset_hand()
+	for slice in player.get_child(TOWER).get_children():
+		slice.queue_free()
+	for slice in player.get_child(WALL).get_children():
+		slice.queue_free()
+	var level_scene: PackedScene = preload("res://scenes/level.tscn")
+	var level = level_scene.instantiate()
+	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+	var enemy = enemy_scene.instantiate()
+	level.set_players(Globals.player, enemy)
+	get_tree().root.add_child(level)
+	queue_free()
+	

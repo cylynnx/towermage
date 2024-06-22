@@ -16,6 +16,7 @@ class Hand:
 	var cards_in_hand: Array[Card] = []
 	var _deck: Deck = null
 	var card_list: Array = []
+	
 	func _init(num_of_cards: int, deck: Deck, cards: Array):
 		self._deck = deck
 		self.card_list = cards
@@ -23,16 +24,25 @@ class Hand:
 			var _card: Card = self._deck.create_random_card_from_list(self.card_list)
 			_card.card_order = i
 			cards_in_hand.append(_card)
-		
+			
+	func reset_hand():
+		self.cards_in_hand = []
+		for i in 5:
+			var _card: Card = self._deck.create_random_card_from_list(self.card_list)
+			_card.card_order = i
+			cards_in_hand.append(_card)
+			
 	func _reindex_hand():
 		for i in self.cards_in_hand.size():
 			cards_in_hand[i].card_order = i
 			
 	func add_card_from_drop(card: Card):
+
 		if not is_instance_valid(card):
 			return
 			
-		if card.card_name not in card_list:
+		if card.card_name not in self.card_list:
+			print("Added card")
 			card_list.append(card.card_name)
 			
 	func update_hand():
@@ -62,7 +72,7 @@ class Hand:
 		for i in range(n):
 			_cards.append(self._deck.create_random_card_from_list(self.card_list))
 		return _cards
-			
+	
 	func get_random_card_from_hand() -> Card:
 		return cards_in_hand.pick_random()
 

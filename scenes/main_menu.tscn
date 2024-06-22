@@ -1,16 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbwuoovwd6ugu"]
+[gd_scene load_steps=7 format=3 uid="uid://cbwuoovwd6ugu"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5kmvk"]
 [ext_resource type="Texture2D" uid="uid://cqpfcpfxg7j0" path="res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_0.jpg" id="2_syha5"]
 [ext_resource type="FontFile" uid="uid://c5pdj675uo2bm" path="res://assets/fonts/Bulletin Gothic/BulletinGothic.otf" id="3_ni3j2"]
+[ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="4_jvrh3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bbibf"]
 line_spacing = 3.33
 font = ExtResource("3_ni3j2")
 font_size = 100
-font_color = Color(0.930834, 0.836347, 0.955322, 1)
+font_color = Color(0.591287, 0.823585, 0.959594, 1)
 shadow_size = 12
-shadow_color = Color(0, 0, 0, 0.913725)
+shadow_color = Color(0.0858334, 0.221501, 0, 0.913725)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cxh7e"]
+font = ExtResource("4_jvrh3")
+font_size = 20
+font_color = Color(0.4, 0.623529, 0.627451, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0.113725, 0, 0.952941)
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_5kmvk")
@@ -32,29 +42,41 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -169.0
-offset_top = 31.15
-offset_right = 169.0
-offset_bottom = 121.15
+offset_left = -257.0
+offset_top = 50.0
+offset_right = 257.0
+offset_bottom = 140.0
 grow_horizontal = 2
 text = "T o w e r m a g e"
 label_settings = SubResource("LabelSettings_bbibf")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
-layout_mode = 0
-offset_left = 292.0
-offset_top = 243.0
-offset_right = 1366.0
-offset_bottom = 777.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -534.0
+offset_right = 250.0
+offset_bottom = -334.0
+grow_horizontal = 2
+grow_vertical = 0
 alignment = 1
 
 [node name="NewGame" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
-text = "NEW GAME"
+text = "________________"
+icon_alignment = 1
 
-[node name="QuitGame" type="Button" parent="Control/VBoxContainer"]
-layout_mode = 2
-text = "EXIT GAME"
+[node name="Label" type="Label" parent="Control/VBoxContainer/NewGame"]
+layout_mode = 0
+offset_left = 216.5
+offset_top = 6.0
+offset_right = 324.5
+offset_bottom = 29.0
+text = "New Game"
+label_settings = SubResource("LabelSettings_cxh7e")
 
 [connection signal="button_down" from="Control/VBoxContainer/NewGame" to="." method="_on_new_game_button_down"]
-[connection signal="button_down" from="Control/VBoxContainer/QuitGame" to="." method="_on_button_2_button_down"]
