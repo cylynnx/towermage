@@ -30,7 +30,6 @@ font_color = Color(0.345098, 0.984314, 1, 1)
 shadow_color = Color(0, 0, 0, 0.952941)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0x5cg"]
-font = ExtResource("3_3co5g")
 font_size = 20
 font_color = Color(1, 0.258351, 0.21558, 1)
 shadow_size = 4
@@ -125,13 +124,6 @@ action_mode = 0
 texture_normal = ExtResource("4_18m66")
 texture_hover = ExtResource("5_rghnc")
 
-[node name="RestartButton" parent="UI" index="6"]
-offset_left = 722.0
-offset_top = 496.0
-offset_right = 872.0
-offset_bottom = 536.0
-action_mode = 0
-
 [node name="YouLose" type="AudioStreamPlayer" parent="Audio" index="0"]
 stream = ExtResource("4_im8th")
 volume_db = -2.811
@@ -149,5 +141,4 @@ wait_time = 2.612
 wait_time = 1.5
 one_shot = true
 
-[connection signal="pressed" from="UI/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="timeout" from="Timers/TurnPauseTimer" to="." method="_on_turn_pause_timer_timeout"]

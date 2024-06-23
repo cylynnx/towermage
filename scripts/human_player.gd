@@ -1,10 +1,17 @@
 extends Player
 class_name HumanPlayer
 
-var hand = Hand.new(5, deck, deck.card_map.keys())
-			
+var starting_deck: Array[String] = [
+	"Portcullis", "Crystal Matrix", "Gemstone Flaw", "Reinforced Wall",
+	"Rabbid Sheep", "Slasher", "Friendly Terrain", "Foundation", "Sturdy Wall", "Big Wall",
+	"Miner", "Big Wall", "Stone Giant", "Smoky Quartz", "Ruby", "Emerald", "Werewolf", "Dwarf",
+	"Harmonic Ore", "Tower Gremlin"
+	
+]
+var hand = Hand.new(5, deck, starting_deck)
+
 func _ready():
-	tower = 10
+	tower = 1
 	
 	$TowerTop.texture = load("res://assets/WallTower/BlueSlices/Top.png")
 	tower_offset = BuildingOffset.new(70, 0)

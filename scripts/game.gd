@@ -16,12 +16,11 @@ const FULL_BRIGHT = Color(1, 1, 1, 1)
 @export var settings_particles: bool = false
 @export var tower_win_condition: int = 50
 # ----------------------------------
-var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
+
 var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
 var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
 var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
-var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
-var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+var card_drop_scene: PackedScene = preload("res://scenes/card_drop.tscn")
 
 signal GameOver(winner)
 
@@ -39,27 +38,38 @@ var turn_pause_timer_ended: bool = true
 var game_over: bool = false
 
 func _ready():
-	fade_in_scene()	
+	fade_in_scene()
 	init_players()
 	draw_player_hand_on_screen()
 	draw_buildings([player, computer])
+	update_buildings([player, computer])
 	update_player_ui([player, computer])
 	
 func fade_in_scene():
 	modulate = Color(0.3, 0.3, 0.2, 1)
 	var init_tween = create_tween()
-	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
-
+	init_tween.tween_property(self, "modulate", Color(1, 1, 1, 1), 0.8)
+	
+func set_players(_player: Player, _computer: Player):
+	player = _player
+	computer = _computer
+	
 func init_players():
-	player = human_player_scene.instantiate() as HumanPlayer
 	add_child(player)
-	
-	computer = computer_player_scene.instantiate() as ComputerPlayer
 	add_child(computer)
-	
+	Globals.player = player
+	player.tower = 10
+	player.wall = 10
+	player.magic = 2
+	player.mine = 2
+	player.food = 2
+	player.resources = 5
+	player.mana = 5
+	player.creatures = 5
+	Globals.enemy = computer
 	Globals.current_player = player
 	Globals.current_enemy = computer
-
+	
 func draw_player_hand_on_screen():
 	for i in player.hand.size():
 		draw_card(player.hand.get_card(i))
@@ -120,37 +130,39 @@ func update_building(building: Node2D, scene: PackedScene, offset, top_piece: No
 			var _t = create_tween()
 			new_slice = scene.instantiate() as Node2D
 			new_slice.position = Vector2(offset.x, 700)
-			# Visually cap the tower or wall at 50 nodes tall
+			# Visually cap the tower or wall at MAX_BUILDING_HEIGHT slices tall
 			if total > MAX_BUILDING_HEIGHT:
-				# Unnecessary tween just to shut up the debugger
-				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
+				# Unnecessary tween just to shut up the debugger???
+				if is_instance_valid(new_slice):
+					_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.03)
 				break
 			building.add_child(new_slice)
-			_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.2)
+			if is_instance_valid(new_slice):
+				_t.tween_property(new_slice, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y), 0.2)
 			offset.y += OFFSET_Y
 			total += 1
 	var t = create_tween()
-	t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
+	if is_instance_valid(top_piece):
+		t.tween_property(top_piece, "position", Vector2(offset.x, TOWER_Y_CONST - offset.y - top_offset), 0.2) # change 48 to variable
 	
 func draw_card(card: Card):
-	# Place the card off-screen.
-	card.global_position = Vector2(800, -300)
 	if not is_instance_valid(card) or card == null:
 		print("draw_card(card: Card) --- card instance invalid or null!")
 		return
+	card.global_position = Vector2(800, -300) # Place the card off-screen.
 	$PlayerCards.add_child(card)
-	# Move the card into position.
-	var tween = create_tween() 
+	var tween = create_tween() # Move the card into position.
 	tween.tween_property(card, "position", Vector2(CARD_X_CONST + card.card_order * CARD_OFFSET_X, CARD_Y_CONST), 0.4)
+
+#-------Stuff for debugging.TODO: Remove/Refactor later.------------------------
+func debug_card(card_name: String):
+	draw_custom_card(card_name)
 
 func draw_custom_card(card_name: String):
 	var custom_card: Card = deck.create_single_card(card_name)
 	custom_card.global_position = Vector2(900, 400)
 	add_child(custom_card)
-	
-func debug_card(card_name: String):
-	draw_custom_card(card_name)
-	
+		
 func debug_get_card_info(card) -> void:
 	if not is_instance_valid(card):
 		return
@@ -162,6 +174,7 @@ func debug_get_card_info(card) -> void:
 		$UI/CardInfo.text = info_string
 	else:
 		$UI/CardInfo.text = ""
+#-------------------------------------------------------------------------------
 		
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
@@ -324,13 +337,10 @@ func _input(event):
 			hand_over_turn()
 	
 	if event.is_action_released("menu"):
-		if visible:
-			visible = false
-			get_tree().root.get_child(1).visible = true
-		else:
-			visible = true
-			get_tree().root.get_child(1).visible = false
-			
+		#var menu = menu_scene.instantiate() as Node2D
+		#get_tree().root.add_child(menu)
+		pass
+		
 func hand_over_turn() -> void:
 	if Globals.current_player == player:
 		Globals.current_player = computer
@@ -369,15 +379,47 @@ func _on_turn_pause_timer_timeout():
 	turn_pause_timer_ended = true
 
 func _on_game_over(_winner):
+	#set_process_input(false) dunno if this needed yet
+	$UI/CardInfo.text = " "
 	game_over = true
+
+	modify_hand_color(HALF_DARK)
 	if _winner == null:
 		$UI/Winner.text = "It's a draw!"
 		$Audio/YouWin.play()
 	elif _winner == computer:
 		$UI/Winner.text = "You lose."
 		$Audio/YouLose.play()
+		$UI/RestartButton.visible = true
 	else:
+	#---------Disable card hover-over interaction-------------------------------
+		for _card in $PlayerCards.get_children():
+			_card.get_child(0).disconnect("mouse_entered", _card._on_area_2d_mouse_entered)
+	#---------------------------------------------------------------------------	
 		$UI/Winner.text = "You Win!"
 		$Audio/YouWin.play()
-		
-	$UI/GameOverMsg.text = "Press ESC to exit to main menu."
+		$UI/NextButton.visible = true
+
+func _on_texture_button_pressed():
+	var card_drop_node = card_drop_scene.instantiate() as Node2D
+	for _card in $EnemyCard.get_children():
+		_card.queue_free()
+	get_tree().root.add_child(card_drop_node)
+	$UI/NextButton.visible = false
+
+
+func _on_restart_button_pressed():
+	remove_child(Globals.player)
+	Globals.player.hand.reset_hand()
+	for slice in player.get_child(TOWER).get_children():
+		slice.queue_free()
+	for slice in player.get_child(WALL).get_children():
+		slice.queue_free()
+	var level_scene: PackedScene = preload("res://scenes/level.tscn")
+	var level = level_scene.instantiate()
+	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+	var enemy = enemy_scene.instantiate()
+	level.set_players(Globals.player, enemy)
+	get_tree().root.add_child(level)
+	queue_free()
+	

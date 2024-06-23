@@ -16,6 +16,9 @@ func create_random_card_from_list(cards: Array) -> Card:
 	return create_single_card(cards.pick_random())
 	
 func create_single_card(_name: String) -> Card:
+	if _name not in card_map.keys():
+		print("Card " + _name + " doesn't exist")
+		return null
 	var card = card_scene.instantiate() as Card
 	var pic = card.get_child(0).get_child(0)
 	var boarder = card.get_child(0).get_child(1)

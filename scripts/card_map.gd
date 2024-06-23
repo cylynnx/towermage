@@ -142,7 +142,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Imp/art_Imp.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
 		"6 damage. All players lose 5 resources, 5 mana, 5 creatures.",
-		0, 0, 3,
+		0, 0, 6,
 		true
 	],
 	
@@ -198,7 +198,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Harmonic Ore/art_HarmonicOre.jpg",
 		"res://assets/Borders/Creature_Boarder.png",
 		"+6 wall, +3 tower.",
-		11, 0, 0,
+		10, 0, 0,
 		true
 	],
 	
@@ -294,7 +294,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Focused Designs/art_FocusedDesigns.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
 		"+8 wall, +5 tower.",
-		14, 0, 0,
+		12, 0, 0,
 		true
 	],
 	
@@ -302,7 +302,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Crystal Shield/art_CrystalShield.jpg",
 		"res://assets/Borders/Mana_Boarder.png",
 		"+8 tower, +3 wall.",
-		0, 12, 0,
+		0, 11, 0,
 		true
 	],
 	

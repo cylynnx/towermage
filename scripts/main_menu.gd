@@ -1,19 +1,14 @@
 extends Node2D
 
 var level_scene: PackedScene = preload("res://scenes/level.tscn")
+var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
+var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 var level = null
 
-func _on_button_2_button_down():
-	get_tree().quit()
-
 func _on_new_game_button_down():
-	if level and is_instance_valid(level):
-		level.queue_free()
-		level = level_scene.instantiate()
-		get_tree().root.add_child(level)
-		return
-		
+	var player: Player = human_player_scene.instantiate() as Player
+	var enemy: Player = computer_player_scene.instantiate() as Player
 	level = level_scene.instantiate()
+	level.set_players(player, enemy)
 	get_tree().root.add_child(level)
-	visible = false
-	
+	queue_free()
