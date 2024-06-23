@@ -390,7 +390,7 @@ var card_map: Dictionary = {
 		"res://assets/Cards/Fire Ruby/art_FireRuby.jpg",
 		"res://assets/Borders/Mana_Boarder2.png",
 		"+6 tower. 4 damage to enemy tower.",
-		0, 15, 0,
+		0, 12, 0,
 		true
 	],
 	

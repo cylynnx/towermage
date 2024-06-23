@@ -13,9 +13,24 @@ func play_card() -> Card:
 		return _card
 	return null
 	
-func _ready():
+func set_ai(enemy_name):
 	ai = packed_ai.instantiate() as AI
-	ai.init_ai("Goblin Lord")
+	ai.init_ai(enemy_name)
+	
+func _ready():
+	match ai.ai_type:
+		"Goblin Lord":
+			$Portrait.texture = load("res://assets/Portraits/Goblin.png")
+			tower = 20
+			wall = 10
+		"Dark Knight":
+			$Portrait.texture = load("res://assets/PLACEHOLDER.png")
+			tower = 25
+			wall = 20
+		"Dragon Mage":
+			$Portrait.texture = load("res://assets/PLACEHOLDER.png")
+			tower = 25
+			wall = 20
 	hand = Hand.new(5, deck, ai.cards)
 	$TowerTop.texture = load("res://assets/WallTower/RedSlices/Top.png")
 	tower_offset = BuildingOffset.new(1540, 0)
@@ -29,5 +44,4 @@ func _ready():
 	$Stats/Food.position = Vector2(1440, 150)
 	$Bottom.texture = load("res://assets/WallTower/RedSlices/bottom.png")
 	$Bottom.position = Vector2(1540, 810)
-	$Portrait.texture = load("res://assets/Portraits/Goblin.png")
 	$Portrait.position = Vector2(1540, 48)

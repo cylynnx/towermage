@@ -38,6 +38,12 @@ var turn_pause_timer_ended: bool = true
 var game_over: bool = false
 
 func _ready():
+	if Globals.enemy_selector == 0:
+		$Background.texture = load("res://assets/backgrounds/goblin_village.png")
+	elif Globals.enemy_selector == 1:
+		$Background.texture = load("res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_0 (1).jpg")
+	elif Globals.enemy_selector == 2:
+		$Background.texture = load("res://assets/backgrounds/Default_Fantasy_Nature_Background_Painting_Forest_Mountains_Al_1.jpg")
 	fade_in_scene()
 	init_players()
 	draw_player_hand_on_screen()
@@ -178,9 +184,9 @@ func debug_get_card_info(card) -> void:
 		
 func update_resources(players: Array[Player]) -> void:
 	for _player in players:
-		_player.resources += player.mine
-		_player.mana += player.magic
-		_player.creatures += player.food
+		_player.resources += _player.mine
+		_player.mana += _player.magic
+		_player.creatures += _player.food
 
 func update_player_ui(players: Array[Player]) -> void:
 	for _player in players:
@@ -411,14 +417,15 @@ func _on_texture_button_pressed():
 func _on_restart_button_pressed():
 	remove_child(Globals.player)
 	Globals.player.hand.reset_hand()
-	for slice in player.get_child(TOWER).get_children():
-		slice.queue_free()
-	for slice in player.get_child(WALL).get_children():
-		slice.queue_free()
+	Globals.player.tower_offset.y = 0
+	Globals.player.wall_offset.y = 0
 	var level_scene: PackedScene = preload("res://scenes/level.tscn")
 	var level = level_scene.instantiate()
 	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 	var enemy = enemy_scene.instantiate()
+	if Globals.enemy_selector > 2:
+		Globals.enemy_selector = 2
+	enemy.set_ai(Globals.enemy_list[Globals.enemy_selector])
 	level.set_players(Globals.player, enemy)
 	get_tree().root.add_child(level)
 	queue_free()

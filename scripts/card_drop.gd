@@ -54,6 +54,10 @@ func _on_next_pressed():
 	var level = level_scene.instantiate()
 	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
 	var enemy = enemy_scene.instantiate() as Player
+	Globals.enemy_selector += 1
+	if Globals.enemy_selector > 2:
+		Globals.enemy_selector = 2
+	enemy.set_ai(Globals.enemy_list[Globals.enemy_selector])
 	level.set_players(Globals.player, enemy)
 	Globals.player.hand.add_card_from_drop($CardsOnScreen.get_child(0))
 	Globals.player.hand.reset_hand()

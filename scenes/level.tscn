@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://dkk6mhwl7d20c"]
 
 [ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
-[ext_resource type="Texture2D" uid="uid://c2qo1ajnx6bhj" path="res://assets/backgrounds/goblin_village.png" id="2_v4xar"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
 [ext_resource type="Texture2D" uid="uid://u5u2c0dqva0n" path="res://assets/buttons/next01.png" id="4_18m66"]
 [ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
 [ext_resource type="AudioStream" uid="uid://cmkn8fgqakuju" path="res://assets/sounds/victory_6.mp3" id="5_bij0n"]
 [ext_resource type="Texture2D" uid="uid://bw3e57csg3q8t" path="res://assets/buttons/next02.png" id="5_rghnc"]
+[ext_resource type="Texture2D" uid="uid://cabb1frhb1y7y" path="res://assets/buttons/base_button2.png" id="5_ycfnb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_go3km"]
 font = ExtResource("3_3co5g")
@@ -38,10 +38,9 @@ shadow_color = Color(0, 0, 0, 1)
 
 [node name="Game" instance=ExtResource("1_t22q8")]
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+[node name="Background" type="Sprite2D" parent="." index="0"]
 position = Vector2(799.392, 446.457)
 scale = Vector2(1.03855, 1.01699)
-texture = ExtResource("2_v4xar")
 
 [node name="UI" parent="." index="1"]
 offset_left = -2.0
@@ -131,6 +130,7 @@ offset_top = 496.0
 offset_right = 872.0
 offset_bottom = 536.0
 action_mode = 0
+texture_hover = ExtResource("5_ycfnb")
 
 [node name="YouLose" type="AudioStreamPlayer" parent="Audio" index="0"]
 stream = ExtResource("4_im8th")
