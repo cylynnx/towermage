@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://efdy018k0tmg"]
+
+[ext_resource type="PackedScene" uid="uid://da81j1yv7pxew" path="res://scenes/cards/base_card.tscn" id="1_karo1"]
+[ext_resource type="Script" path="res://scenes/cards/scripts/Agriculture.gd" id="2_71vbl"]
+[ext_resource type="Texture2D" uid="uid://bf6jn7aonk5qi" path="res://assets/Cards/Agriculture/art_Agriculture.jpg" id="3_a3ner"]
+[ext_resource type="Texture2D" uid="uid://dvbpojdd0mg30" path="res://assets/Borders/Resource_Boarder.png" id="4_b05xo"]
+
+[node name="Agriculture" instance=ExtResource("1_karo1")]
+position = Vector2(334, 680)
+script = ExtResource("2_71vbl")
+
+[node name="Image" parent="Area2D" index="0"]
+texture = ExtResource("3_a3ner")
+
+[node name="Border" parent="Area2D" index="2"]
+texture = ExtResource("4_b05xo")
