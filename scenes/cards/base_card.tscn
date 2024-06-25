@@ -1,13 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://da81j1yv7pxew"]
+[gd_scene load_steps=8 format=3 uid="uid://da81j1yv7pxew"]
 
 [ext_resource type="Script" path="res://scenes/cards/scripts/base_card.gd" id="1_f82t3"]
-[ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="2_85epj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0r76j"]
 size = Vector2(667, 942)
-
-[sub_resource type="LabelSettings" id="LabelSettings_lvmg8"]
-font_size = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y0oud"]
 
@@ -37,13 +33,7 @@ scale = Vector2(1.04, 1.04)
 [node name="Sound" type="Node" parent="."]
 
 [node name="SoundPlayer" type="AudioStreamPlayer" parent="Sound"]
-stream = ExtResource("2_85epj")
 volume_db = -5.0
-
-[node name="Cost" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_lvmg8")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -329.0

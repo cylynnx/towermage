@@ -11,17 +11,9 @@ const CREATURE_COLOR: Color = Color(0.89, 0.58, 0.878)
 @export var card_cost: int
 
 func _ready():
-	match card_type:
-		CardType.RESOURCE:
-			$Cost.font_color = RESOURCE_COLOR
-		CardType.MAGIC:
-			$Cost.font_color = MAGIC_COLOR
-		CardType.CREATURE:
-			$Cost.font_color = CREATURE_COLOR
-		_:
-			$Cost.font_color = Color(0, 0, 0, 1)
-			
-	$Cost.text = str(card_cost)
+	print(RESOURCE_COLOR.to_html())
+	print(MAGIC_COLOR.to_html())
+	print(CREATURE_COLOR.to_html())
 	
 func _on_area_2d_mouse_entered():
 	$Sound/SoundPlayer.play()
