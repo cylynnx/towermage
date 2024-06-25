@@ -6,7 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://dvbpojdd0mg30" path="res://assets/Borders/Resource_Boarder.png" id="4_b05xo"]
 
 [node name="Agriculture" instance=ExtResource("1_karo1")]
+position = Vector2(179, 199)
 script = ExtResource("2_71vbl")
+description = "+2 food."
+card_type = 2
+card_cost = 5
 
 [node name="Image" parent="Area2D" index="0"]
 texture = ExtResource("3_a3ner")
@@ -14,6 +18,17 @@ texture = ExtResource("3_a3ner")
 [node name="Border" parent="Area2D" index="2"]
 texture = ExtResource("4_b05xo")
 
+[node name="Cost" parent="." index="2"]
+offset_left = -377.143
+offset_top = 462.857
+offset_right = -298.143
+offset_bottom = 490.857
+text = "5"
+
 [node name="Button" parent="." index="3"]
+offset_left = -351.429
+offset_top = -457.143
+offset_right = 308.571
+offset_bottom = 479.857
 shortcut_feedback = false
 shortcut_in_tooltip = false

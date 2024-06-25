@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://chrgdy2h0oakt"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_g3e3j"]
+[ext_resource type="Script" path="res://scripts/game_old.gd" id="1_ihonj"]
 [ext_resource type="Texture2D" uid="uid://ewm7l1ilf64i" path="res://assets/buttons/base_button.png" id="2_dt1mw"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_dxc5q"]
 
@@ -21,7 +21,7 @@ scale_max = 20.0
 color = Color(0.229295, 0.217154, 0.245542, 1)
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_g3e3j")
+script = ExtResource("1_ihonj")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
