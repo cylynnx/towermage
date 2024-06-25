@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://efdy018k0tmg"]
+[gd_scene load_steps=7 format=3 uid="uid://efdy018k0tmg"]
 
 [ext_resource type="PackedScene" uid="uid://da81j1yv7pxew" path="res://scenes/cards/base_card.tscn" id="1_karo1"]
 [ext_resource type="Script" path="res://scenes/cards/scripts/Agriculture.gd" id="2_71vbl"]
 [ext_resource type="Texture2D" uid="uid://bf6jn7aonk5qi" path="res://assets/Cards/Agriculture/art_Agriculture.jpg" id="3_xkebh"]
 [ext_resource type="Texture2D" uid="uid://dvbpojdd0mg30" path="res://assets/Borders/Resource_Boarder.png" id="4_rgjf4"]
 [ext_resource type="AudioStream" uid="uid://cg1d8xa5xgm34" path="res://assets/sounds/card-flip.mp3" id="5_ga4b4"]
+[ext_resource type="LabelSettings" uid="uid://ckgtiw1ebolkm" path="res://resources/creature_label.tres" id="6_gi3sq"]
 
 [node name="Agriculture" instance=ExtResource("1_karo1")]
 script = ExtResource("2_71vbl")
@@ -30,8 +31,9 @@ shortcut_feedback = false
 shortcut_in_tooltip = false
 
 [node name="Label" type="Label" parent="." index="3"]
-offset_left = -371.429
-offset_top = 414.286
-offset_right = -291.429
-offset_bottom = 524.286
+offset_left = -371.0
+offset_top = 417.0
+offset_right = -320.0
+offset_bottom = 527.0
 text = "5"
+label_settings = ExtResource("6_gi3sq")
