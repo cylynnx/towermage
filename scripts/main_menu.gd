@@ -1,8 +1,8 @@
 extends Node2D
 
-var level_scene: PackedScene = preload("res://scenes/level.tscn")
-var human_player_scene: PackedScene = preload("res://scenes/human_player.tscn")
-var computer_player_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+var level_scene: PackedScene = preload("res://scenes/old/level.tscn")
+var human_player_scene: PackedScene = preload("res://scenes/old/human_player.tscn")
+var computer_player_scene: PackedScene = preload("res://scenes/old/computer_player.tscn")
 var level = null
 
 func _on_new_game_pressed():

@@ -17,10 +17,10 @@ const FULL_BRIGHT = Color(1, 1, 1, 1)
 @export var tower_win_condition: int = 50
 # ----------------------------------
 
-var blue_tower_scene: PackedScene = preload("res://scenes/blue_tower.tscn")
-var red_tower_scene: PackedScene = preload("res://scenes/red_tower.tscn")
-var wall_scene: PackedScene = preload("res://scenes/wall.tscn")
-var card_drop_scene: PackedScene = preload("res://scenes/card_drop.tscn")
+var blue_tower_scene: PackedScene = preload("res://scenes/old/blue_tower.tscn")
+var red_tower_scene: PackedScene = preload("res://scenes/old/red_tower.tscn")
+var wall_scene: PackedScene = preload("res://scenes/old/wall.tscn")
+var card_drop_scene: PackedScene = preload("res://scenes/old/card_drop.tscn")
 
 signal GameOver(winner)
 
@@ -419,9 +419,9 @@ func _on_restart_button_pressed():
 	Globals.player.hand.reset_hand()
 	Globals.player.tower_offset.y = 0
 	Globals.player.wall_offset.y = 0
-	var level_scene: PackedScene = preload("res://scenes/level.tscn")
+	var level_scene: PackedScene = preload("res://scenes/old/level.tscn")
 	var level = level_scene.instantiate()
-	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+	var enemy_scene: PackedScene = preload("res://scenes/old/computer_player.tscn")
 	var enemy = enemy_scene.instantiate()
 	if Globals.enemy_selector > 2:
 		Globals.enemy_selector = 2

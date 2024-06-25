@@ -4,8 +4,8 @@ extends Node2D
 const DECK_SIZE: int = 64
 enum {TEXTURE, BOARDER, DESCRIPTION, RESOURCE_COST, MANA_COST, CREATURE_COST, CAN_DISCARD}
 
-var card_scene: PackedScene = preload("res://scenes/card.tscn")
-var card_map_scene: PackedScene = preload("res://scenes/card_map.tscn")
+var card_scene: PackedScene = preload("res://scenes/old/card.tscn")
+var card_map_scene: PackedScene = preload("res://scenes/old/card_map.tscn")
 var cm = card_map_scene.instantiate() as CardMap
 var card_map = cm.card_map
 		

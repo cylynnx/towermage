@@ -9,7 +9,7 @@ class BuildingOffset:
 		self.x = _x
 		self.y = _o
 		
-var deck_scene: PackedScene = preload("res://scenes/deck.tscn")
+var deck_scene: PackedScene = preload("res://scenes/old/deck.tscn")
 var deck: Deck = deck_scene.instantiate() as Deck
 
 class Hand:

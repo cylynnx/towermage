@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4osrl5xesb12"]
 
-[ext_resource type="PackedScene" uid="uid://cb7rdg6qtckbr" path="res://scenes/player.tscn" id="1_5f2wj"]
+[ext_resource type="PackedScene" uid="uid://cb7rdg6qtckbr" path="res://scenes/old/player.tscn" id="1_5f2wj"]
 [ext_resource type="Script" path="res://scripts/computer_player.gd" id="2_phg8s"]
 
 [node name="ComputerPlayer" instance=ExtResource("1_5f2wj")]

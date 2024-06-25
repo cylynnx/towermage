@@ -1,7 +1,7 @@
 extends Player
 class_name ComputerPlayer
 
-var packed_ai: PackedScene = preload("res://scenes/computer_ai.tscn")
+var packed_ai: PackedScene = preload("res://scenes/old/computer_ai.tscn")
 var ai: AI = null
 var hand: Hand
 

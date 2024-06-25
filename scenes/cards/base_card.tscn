@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://da81j1yv7pxew"]
+[gd_scene load_steps=9 format=3 uid="uid://da81j1yv7pxew"]
 
 [ext_resource type="Script" path="res://scenes/cards/scripts/base_card.gd" id="1_f82t3"]
 
@@ -7,6 +7,16 @@ size = Vector2(667, 942)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lvmg8"]
 font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y0oud"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xfhb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d40ml"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_igkde"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k13i3"]
 
 [node name="BaseCard" type="Node2D"]
 scale = Vector2(0.35, 0.35)
@@ -38,6 +48,11 @@ offset_top = -471.0
 offset_right = 331.0
 offset_bottom = 466.0
 mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_y0oud")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xfhb5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d40ml")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_igkde")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_k13i3")
 action_mode = 0
 flat = true
 

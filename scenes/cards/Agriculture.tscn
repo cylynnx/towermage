@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dvbpojdd0mg30" path="res://assets/Borders/Resource_Boarder.png" id="4_b05xo"]
 
 [node name="Agriculture" instance=ExtResource("1_karo1")]
-position = Vector2(334, 680)
 script = ExtResource("2_71vbl")
 
 [node name="Image" parent="Area2D" index="0"]
@@ -14,3 +13,7 @@ texture = ExtResource("3_a3ner")
 
 [node name="Border" parent="Area2D" index="2"]
 texture = ExtResource("4_b05xo")
+
+[node name="Button" parent="." index="3"]
+shortcut_feedback = false
+shortcut_in_tooltip = false

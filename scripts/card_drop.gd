@@ -50,9 +50,9 @@ func _on_suspend_card_timer_timeout():
 func _on_next_pressed():
 	get_tree().root.get_child(1).queue_free()
 	get_tree().root.get_child(1).remove_child(Globals.player)
-	var level_scene: PackedScene = preload("res://scenes/level.tscn")
+	var level_scene: PackedScene = null #preload("res://scenes/old/level.tscn")
 	var level = level_scene.instantiate()
-	var enemy_scene: PackedScene = preload("res://scenes/computer_player.tscn")
+	var enemy_scene: PackedScene = preload("res://scenes/old/computer_player.tscn")
 	var enemy = enemy_scene.instantiate() as Player
 	Globals.enemy_selector += 1
 	if Globals.enemy_selector > 2:

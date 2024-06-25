@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dkk6mhwl7d20c"]
 
-[ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/game.tscn" id="1_t22q8"]
+[ext_resource type="PackedScene" uid="uid://chrgdy2h0oakt" path="res://scenes/old/game.tscn" id="1_t22q8"]
 [ext_resource type="FontFile" uid="uid://bnlgshcsqw3lo" path="res://assets/fonts/Kaiju/KaijuMonsterG-05pr.ttf" id="3_3co5g"]
 [ext_resource type="Texture2D" uid="uid://u5u2c0dqva0n" path="res://assets/buttons/next01.png" id="4_18m66"]
 [ext_resource type="AudioStream" uid="uid://o1o3rdj7eydl" path="res://assets/sounds/uh-ow-trumpets.mp3" id="4_im8th"]
